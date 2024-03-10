@@ -6,11 +6,10 @@ const UserSchema=mongoose.Schema({
         required:true,
         ref:'Profile',
      },
-     Project:{
+     Project:[{
         type:mongoose.Schema.Types.ObjectId,
-        required:true,
         ref:'Project',
-     },
+     }],
     
 })
 

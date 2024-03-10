@@ -18,7 +18,12 @@ const ProfileSchema=mongoose.Schema({
      TechStack:{
         type:Array,
         required:true
-     }
-})
+     },
+     password:{
+      type:String,
+      required:true
+     },
+    
+},{ timestamps: true })
 
 module.exports=mongoose.model("Profile",ProfileSchema)
