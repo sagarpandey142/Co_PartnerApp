@@ -3,10 +3,12 @@ const Profile = require("../Models/Profile");
 const bcrypt = require("bcrypt");
 const jwt=require("jsonwebtoken")
 const Otp =require("../Models/Otp")
-
+const otpTemplate=require("../Template/MailVerification.js")
+const nodemamailSender=require("../Utils/MailSender.js")
 // genrate a unique otp
 
 exports.GetOtp = async (req, res) => {
+  console.log("Hiiiiiii")
   try {
     const { Email } = req.body;
 
@@ -39,8 +41,9 @@ exports.GetOtp = async (req, res) => {
 
     await otpDocument.save();
 
-    // Here, you might send the OTP via email or SMS in a real-world scenario
-    // For simplicity, sending the OTP as part of the response
+    // sending mail in email
+    const sendingMail=await nodemamailSender(Email,"Email Verification Code",otpTemplate(generatedOtp))
+    console.log(sendingMail);
     return res.status(200).json({
       success: true,
       message: "OTP generated successfully",
