@@ -8,10 +8,10 @@ const nodemamailSender=require("../Utils/MailSender.js")
 // genrate a unique otp
 
 exports.GetOtp = async (req, res) => {
-  console.log("Hiiiiiii")
+  
   try {
     const { Email } = req.body;
-
+    console.log("body",Email)
     // Check if the email is provided
     if (!Email) {
       return res.status(400).json({
@@ -32,10 +32,10 @@ exports.GetOtp = async (req, res) => {
 
     // Generate a random OTP (4 digits for simplicity)
     const generatedOtp = Math.floor(1000 + Math.random() * 9000);
-
+      
     // Store the OTP in the database (you may need a separate OTP model)
     const otpDocument = new Otp({
-      profileId: userProfile._id,
+      Email: Email,
       otp: generatedOtp,
     });
 
@@ -58,6 +58,41 @@ exports.GetOtp = async (req, res) => {
     });
   }
 };
+
+exports.verifyOtp = async (req, res) => {
+  try {
+     const { Email, user_Otp } = req.body;
+
+     const OtpModel = await Otp.findOne({ Email: Email }).sort({ createdAt: -1 }).exec();
+
+     if (!OtpModel) {
+        return res.status(404).json({
+           success: false,
+           message: "No OTP found for the provided email.",
+        });
+     }
+
+
+
+     if (user_Otp != OtpModel.otp) {
+        return res.status(200).json({
+           success: false,
+           message: "OTP doesn't match.",
+        });
+     }
+
+     return res.status(200).json({
+        success: true,
+        message: "OTP matched successfully.",
+     });
+  } catch (error) {
+     return res.status(500).json({
+        success: false,
+        message: "An error occurred.",
+        error: error.message,
+     });
+  }
+}
 
 
 exports.signup = async (req, res) => {

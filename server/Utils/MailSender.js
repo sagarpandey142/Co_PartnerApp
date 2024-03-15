@@ -1,7 +1,7 @@
 const nodemailer=require("nodemailer");
 
 const nodemamailSender=async (email,title,body)=>{
-  console.log("nodemailer",email,title,body);
+  
     try{
 
       let transporter=nodemailer.createTransport({
@@ -13,7 +13,7 @@ const nodemamailSender=async (email,title,body)=>{
       })
 
       let info=await transporter.sendMail({
-        from:'StudyNotion ',
+        from:'CoPartner ',
         to:`${email}`,
         subject:`${title}`,
         html:`${body}`,
