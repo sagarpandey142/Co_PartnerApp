@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 // import { CheckBox } from '@react-native-community/checkbox';
-import { useDispatch } from 'react-redux';
-import { updateSignupData } from '../../actions/index';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateSignupData } from '../../reducers/signupReducer';
 import {fontDeliusSwashCaps} from "../Fonts/FetchFonts"
 import { AppLoading } from 'expo-app-loading';
 import tw from 'twrnc';
-import { useNavigation } from '@react-navigation/native';
+// import { useNavigation } from '@react-navigation/native';
 
 
 const Signup = () => {
@@ -18,10 +18,13 @@ const Signup = () => {
   const [country, setCountry] = useState('India');
   const [agreeTerms, setAgreeTerms] = useState(false);
   const dispatch = useDispatch();
+  const data=useSelector((state)=>state.signup);
+  
+
 
   const handleSignup = () => {
-    const navigation = useNavigation();
-    navigation?.navigate('Upload');
+    // const navigation = useNavigation();
+    // navigation?.navigate('Upload');
     const formData = {
       firstName,
       lastName,

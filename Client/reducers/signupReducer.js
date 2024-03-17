@@ -1,24 +1,23 @@
-// reducers/signupReducer.js
+import { createSlice } from '@reduxjs/toolkit';
+
 const initialState = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    country: 'India',
-    agreeTerms: false,
-  };
-  
-  const signupReducer = (state = initialState, action) => {
-    switch (action.type) {
-      case 'UPDATE_SIGNUP_DATA':
-        return {
-          ...state,
-          [action.payload.field]: action.payload.value,
-        };
-      default:
-        return state;
+    data: {},
+    professionalRole: null
+};
+
+const signupSlice = createSlice({
+    name: 'signup',
+    initialState,
+    reducers: {
+        updateSignupData: (state, action) => {
+                state.data= action.payload
+                console.log("first", state.data.firstName)
+        },
+        updateProfessionalRole: (state, action) => {
+          state.professionalRole = action.payload
+        }
     }
-  };
-  
-  export default signupReducer;
-  
+});
+
+export const { updateSignupData, updateProfessionalRole } = signupSlice.actions;
+export default signupSlice.reducer;

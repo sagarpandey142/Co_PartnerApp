@@ -11,12 +11,13 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <Provider store={store}>
-      <NavigationContainer>
+      {/* <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="GetStarted" component={GetStarted} />
           <Stack.Screen name="Signup" component={Signup} />
         </Stack.Navigator>
-      </NavigationContainer>
+      </NavigationContainer> */}
+      <Signup/>
     </Provider>
   )
 }
