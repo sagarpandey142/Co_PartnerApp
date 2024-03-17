@@ -5,36 +5,30 @@ import Navbar from '../Common/Navbar';
 import {FontMadimi} from "../Fonts/FetchFonts"
 import {fontNuecha} from "../Fonts/FetchFonts"
 import { AppLoading } from 'expo-app-loading';
+import { useFonts } from 'expo-font';
 import Footer from '../Common/Footer';
 
 
 
 const ProfessionalRole = () => {
    
-  const [dataLoaded, setDataLoaded] = useState(false);
+  const [fontsLoaded] = useFonts({
+    MadimiOne:require("../../assets/Fonts/2V0YKIEADpA8U6RygDnZZFQoBoHMd2U.ttf"),
+    TwinkleStar:require("../../assets/Fonts/pe0pMI6IL4dPoFl9LGEmY6WaA_Rue1UwVg.ttf")
+  });
 
-  useEffect(() => {
-    const loadData = async () => {
-      await FontMadimi;
-      await fontNuecha;
-      setDataLoaded(true);
-    };
-
-    loadData();
-  }, []);
-    if(!dataLoaded){
-       <AppLoading/>
-    }
- 
+  if (!fontsLoaded) {
+    return null; 
+  }
 
 
   return (
     <View style={tw`h-full w-full `}>
       <Navbar />
-      <Text style={{ fontFamily: 'madimi-one', fontSize:  28,marginLeft: 15,marginTop:20}}>
+      <Text style={{ fontFamily: 'MadimiOne', fontSize:  28,marginLeft: 15,marginTop:20}}>
         Craft your professional identity with precision and flair.
       </Text>
-      <Text style={{fontFamily:"Neucha",fontSize:18,marginTop:10,marginLeft:15}} >
+      <Text style={{fontFamily:"TwinkleStar",fontSize:18,marginTop:10,marginLeft:15}} >
         Make a striking first impression. Let your profile radiate expertise, passion, and uniqueness.
       </Text>
       <View>
