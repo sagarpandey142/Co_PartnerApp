@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 // import { CheckBox } from '@react-native-community/checkbox';
 import { useDispatch } from 'react-redux';
 import { updateSignupData } from '../../actions/index';
+import {fontDeliusSwashCaps} from "../Fonts/FetchFonts"
+import { AppLoading } from 'expo-app-loading';
+import tw from 'twrnc';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Signup = () => {
@@ -16,7 +20,8 @@ const Signup = () => {
   const dispatch = useDispatch();
 
   const handleSignup = () => {
-
+    const navigation = useNavigation();
+    navigation?.navigate('Upload');
     const formData = {
       firstName,
       lastName,
@@ -33,16 +38,18 @@ const Signup = () => {
     setPassword('');
     setCountry('India');
     setAgreeTerms(false);
+
   };
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20 }}>
-      <Text style={{ fontSize: 20, marginBottom: 10 }}>Sign up to find your love</Text>
-      <View style={{ width: '100%', marginBottom: 10 }}>
+      <Text style={{ fontSize: 40, fontWeight: 'bold', marginBottom: 10, fontFamily: 'fontDeliusSwashCaps' }}>Sign up to find</Text>
+      <Text style={{ fontSize: 40, fontWeight: 'bold', marginBottom: 10, fontFamily: 'fontDeliusSwashCaps' }}>your love</Text>
+      <View style={{ width: '100%', marginBottom: 10}}>
       <View style={{ flexDirection: 'row' }}>
         <View style={{flexDirection:'column', marginRight: 30}}>
 
-        <Text>First Name</Text>
+        <Text style={tw`font-bold`}>First Name</Text>
         <TextInput
         style={{ borderWidth: 1, borderColor: 'gray', paddingHorizontal: 40, marginBottom: 10, borderRadius: 4,  height: 35}}
         placeholder="First name"
@@ -52,7 +59,7 @@ const Signup = () => {
         </View>
 
         <View style={{flexDirection:'column'}}>
-        <Text>Last Name</Text>
+        <Text style={tw`font-bold`}>Last Name</Text>
         <TextInput
         style={{ borderWidth: 1, borderColor: 'gray', paddingHorizontal: 40, borderRadius: 4, marginBottom: 10, height: 35}}
         placeholder="Last name"
@@ -61,14 +68,14 @@ const Signup = () => {
         />
         </View>
       </View>
-        <Text>Email</Text>
+        <Text style={tw`font-bold`}>Email</Text>
         <TextInput
           style={{ borderWidth: 1, borderColor: 'gray', paddingHorizontal: 8, marginBottom: 10,borderRadius: 4, height: 35 }}
           placeholder="Email"
           value={email}
           onChangeText={setEmail}
         />
-        <Text>password</Text>
+        <Text style={tw`font-bold`}>Password</Text>
         <TextInput
           style={{ borderWidth: 1, borderColor: 'gray', paddingHorizontal: 8, marginBottom: 10, borderRadius: 4, height: 35 }}
           placeholder="Password (8 or more characters)"
@@ -76,7 +83,7 @@ const Signup = () => {
           onChangeText={setPassword}
           secureTextEntry
         />
-        <Text>Country</Text>
+        <Text style={tw`font-bold`}>Country</Text>
         <View style={{ borderWidth: 1, borderColor: 'gray', paddingHorizontal: 8, marginBottom: 10, }}>
           <Picker
             selectedValue={country}
@@ -90,8 +97,10 @@ const Signup = () => {
         {/* <CheckBox value={agreeTerms} onValueChange={setAgreeTerms} /> */}
         <Text style={{ marginLeft: 8 }}>Yes, I understand and agree to the Upwork terms of Service, including the User Agreement and Privacy Policy.</Text>
       </View>
-      <View style={{backgroundColor:'green'}}>
-      <Button title="Create my account"  onPress={handleSignup} />
+      <View>
+      <TouchableOpacity style={[tw`bg-[#16e60b] p-5 px-16 text-lg rounded-full`, ]} onPress={handleSignup}>
+          <Text style={tw`text-white mx-auto font-semibold`}>Create my account</Text>
+        </TouchableOpacity>
       </View>
       <Text style={{ marginTop: 10 }}>Already have an account? <Text>Log In</Text></Text>
     </View>
