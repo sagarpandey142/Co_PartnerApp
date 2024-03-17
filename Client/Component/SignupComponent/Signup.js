@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { CheckBox } from '@react-native-community/checkbox';
+// import { CheckBox } from '@react-native-community/checkbox';
 import { useDispatch } from 'react-redux';
 import { updateSignupData } from '../../actions/index';
 
