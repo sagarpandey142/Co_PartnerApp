@@ -12,4 +12,14 @@ exports.fontNuecha=()=>{
      })
 }
 
+exports.fontEczar=()=>{
+  return Font.loadAsync({
+     "Eczar":require("../../assets/Fonts/BXR2vF3Pi-DLmxcpJB-qbNTyTMDXHd6WqTIVKWJKWg.ttf")
+  })
+}
 
+exports.fontDeliusSwashCaps=()=>{
+  return Font.loadAsync({
+     "Delius Swash Caps":require("../../assets/Fonts/DeliusSwashCaps-Regular.ttf")
+  })
+}
