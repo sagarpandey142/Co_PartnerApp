@@ -10,7 +10,7 @@ const Footer = ({button1Text,button2Text}) => {
                  <Text style={tw` border border-gray-300 p-2 rounded-full px-5`}>{button1Text}</Text>
             </TouchableOpacity>
             <TouchableOpacity>
-                 <Text style={tw` bg-green-500 p-3 px-6 rounded-full text-white font-bold`}>{button2Text}</Text>
+                 <Text style={tw` bg-green-600 p-3 px-6 rounded-full text-white font-bold`}>{button2Text}</Text>
             </TouchableOpacity>
         </View>
     </View>
