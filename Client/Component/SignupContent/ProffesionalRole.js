@@ -5,6 +5,7 @@ import Navbar from '../Common/Navbar';
 import {FontMadimi} from "../Fonts/FetchFonts"
 import {fontNuecha} from "../Fonts/FetchFonts"
 import { AppLoading } from 'expo-app-loading';
+import Footer from '../Common/Footer';
 
 
 
@@ -21,7 +22,9 @@ const ProfessionalRole = () => {
 
     loadData();
   }, []);
-    
+    if(dataLoaded==false){
+       <AppLoading/>
+    }
  
 
 
@@ -38,11 +41,12 @@ const ProfessionalRole = () => {
         <Text style={tw` mt-7 ml-8 font-semibold text-[15px]`}>Your Professional Role</Text>
         {/*input */}
         <TextInput
-          placeholder=''
+          placeholder='Software Engineer | Full Stack Developer'
           style={tw`w-10/12 mt-3  mx-auto border border-b-1 rounded-xl p-2 border-gray-200`}
         />
         
       </View>
+       <Footer button1Text="Back" button2Text="Add Skills"/>
     </View>
   );
 };
