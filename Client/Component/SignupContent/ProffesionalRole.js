@@ -22,7 +22,7 @@ const ProfessionalRole = () => {
 
     loadData();
   }, []);
-    if(dataLoaded==false){
+    if(!dataLoaded){
        <AppLoading/>
     }
  
