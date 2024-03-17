@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "Client",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -9,18 +9,24 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-community/checkbox": "^0.5.17",
+    "@react-native-picker/picker": "^2.6.1",
+    "@reduxjs/toolkit": "^2.2.1",
     "axios": "^1.6.8",
     "expo": "~50.0.13",
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",
     "react-native": "0.73.5",
+    "react-native-check-box": "^2.1.7",
     "react-redux": "^9.1.0",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
-    "twrnc": "^4.1.0"
+    "twrnc": "^4.1.0",
+    "react-native-web": "~0.19.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.6.0"
   },
   "private": true
 }
