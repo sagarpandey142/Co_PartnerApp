@@ -20,6 +20,7 @@ export default function App() {
               <Stack.Screen name="Signup" component={Signup}/>
               <Stack.Screen name="GetStarted" component={GetStarted}/>
               <Stack.Screen name="ProffesionalInfo" component={ProfessionalRole}/>
+              <Stack.Screen name="userBio" component={UserBio}/>
           </Stack.Navigator>
          
           </NavigationContainer>
