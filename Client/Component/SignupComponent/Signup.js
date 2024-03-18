@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateSignupData } from '../../reducers/signupReducer';
 import { useFonts } from 'expo-font';
 import tw from 'twrnc';
-import logo from '../../assets/logo.png'
 // import { useNavigation } from '@react-navigation/native';
 
 
@@ -54,20 +53,20 @@ const Signup = () => {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20, paddingTop:40 }}>
-      <Image
+      {/* <Image
       source={require('../../assets/logo.png')}
       style={{ width: 100, height: 100 }}
-    />
+    /> */}
 
       <Text style={{ fontSize: 40, fontWeight: 'semibold', marginBottom: 10, fontFamily: 'MadimiOne'}}>Sign up to find</Text>
       <Text style={{ fontSize: 40, fontWeight: 'semibold', marginBottom: 10, fontFamily: 'MadimiOne' }}>your love</Text>
       <View style={{ width: '100%', marginBottom: 10}}>
-      <View style={{ flexDirection: 'row' }}>
+      <View style={tw`flex flex-row justify-between `}>
 
-        <View style={{flexDirection:'column', marginRight: 30}}>
-        <Text style={[tw`font-semibold p-2 text-black`,{fontFamily: 'TwinkleStar',fontSize:15 }]}>First Name</Text>
+        <View style={{flexDirection:'column'}}>
+        <Text style={[tw`font-bold p-2 text-black`,{fontFamily: 'TwinkleStar',fontSize:15 }]}>First Name</Text>
         <TextInput
-        style={{ borderWidth: 1,borderColor:'gray', paddingHorizontal: 40, marginBottom: 10, borderRadius: 4,  height: 40, }}
+        style={tw`border border-gray-200 p-1 rounded-xl `}
         placeholder="First name"
         placeholderTextColor="gray"
         value={firstName}
@@ -78,14 +77,17 @@ const Signup = () => {
         <View style={{flexDirection:'column'}}>
         <Text style={[tw`font-semibold p-2 text-black`,{fontFamily: 'TwinkleStar',fontSize:15, }]}>Last Name</Text>
         <TextInput
-        style={{ borderWidth: 1, borderColor: 'gray', paddingHorizontal: 40, borderRadius: 4, marginBottom: 10, height: 40, borderColor: '#d4cdcd'}}
+        style={{ borderWidth: 1, borderColor: 'gray', borderRadius: 4, marginBottom: 10, height: 40, borderColor: '#d4cdcd'}}
         placeholder="Last name"
         placeholderTextColor="gray"
         value={lastName}
         onChangeText={setLastName}
         />
         </View>
+
       </View>
+
+
       <Text style={[tw`font-semibold p-2 text-black`,{fontFamily: 'TwinkleStar',fontSize:15, }]}>Email</Text>
         <TextInput
           style={{ borderWidth: 1, borderColor: '#d4cdcd', paddingHorizontal: 8, marginBottom: 10,borderRadius: 8, height: 45, borderColor: '#d4cdcd' }}
