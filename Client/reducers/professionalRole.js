@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    professionalRole: null,
+    professionalRole: '',
     description: ''
 }
 
