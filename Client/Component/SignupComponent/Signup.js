@@ -50,7 +50,7 @@ const Signup = () => {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20, paddingTop: 40 }}>
 
-        <Image source={logo} style={[tw`  `, { width: 150, height: 110, alignSelf: 'center', marginTop: 20 }]} />
+        <Image source={logo} style={[tw`  `, { width: 150, height: 100, alignSelf: 'center', marginTop: 20 }]} />
         <Text style={{ fontSize: 40, fontWeight: 'semibold', marginBottom: 10, fontFamily: 'MadimiOne' }}>Sign up to find</Text>
         <Text style={{ fontSize: 40, fontWeight: 'semibold', marginBottom: 10, fontFamily: 'MadimiOne' }}>your love</Text>
         <View style={{ width: '100%', marginBottom: 10 }}>

@@ -11,10 +11,18 @@ import UserBio from './Component/SignupComponent/UserBio';
 const Stack = createStackNavigator();
 
 export default function App() {
+  const Stack = createStackNavigator();
   return (
     <Provider store={store}>
-         {/* <UserBio/> */}
-         <Signup/>
+          <NavigationContainer>
+
+          <Stack.Navigator initialRouteName="GetStarted" screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Signup" component={Signup}/>
+              <Stack.Screen name="GetStarted" component={GetStarted}/>
+              <Stack.Screen name="ProffesionalInfo" component={ProfessionalRole}/>
+          </Stack.Navigator>
+         
+          </NavigationContainer>
     </Provider>
   )
 }
