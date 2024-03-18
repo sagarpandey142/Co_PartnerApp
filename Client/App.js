@@ -12,11 +12,18 @@ import Upload from './Component/SignupComponent/Upload'
 const Stack = createStackNavigator();
 
 export default function App() {
+  const Stack = createStackNavigator();
   return (
     <Provider store={store}>
-         {/* <UserBio/> */}
-         {/* <Signup/> */}
-         <Upload/>
+          <NavigationContainer>
+
+          <Stack.Navigator initialRouteName="GetStarted" screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Signup" component={Signup}/>
+              <Stack.Screen name="GetStarted" component={GetStarted}/>
+              <Stack.Screen name="ProffesionalInfo" component={ProfessionalRole}/>
+          </Stack.Navigator>
+         
+          </NavigationContainer>
     </Provider>
   )
 }
