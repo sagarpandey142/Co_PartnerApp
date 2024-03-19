@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 const GetStarted = () => {
   const navigation = useNavigation();
   const handlePress = () => {
-    navigation?.navigate('ProffesionalInfo');
+    navigation?.navigate('Signup');
   };
   return (
     <ImageBackground source={office} style={tw`flex-1`}>
