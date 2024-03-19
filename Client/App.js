@@ -7,7 +7,8 @@ import Signup from './Component/SignupComponent/Signup';
 import GetStarted from './Component/GetStarted';
 import ProfessionalRole from './Component/SignupComponent/ProfessionalRole';
 import UserBio from './Component/SignupComponent/UserBio';
-import Upload from './Component/SignupComponent/Upload'
+
+import Verification from './Component/SignupComponent/Verification';
 
 const Stack = createStackNavigator();
 
@@ -15,7 +16,7 @@ export default function App() {
   const Stack = createStackNavigator();
   return (
     <Provider store={store}>
-          <NavigationContainer>
+          {/* <NavigationContainer>
 
           <Stack.Navigator initialRouteName="GetStarted" screenOptions={{ headerShown: false }}>
               <Stack.Screen name="Signup" component={Signup}/>
@@ -23,7 +24,8 @@ export default function App() {
               <Stack.Screen name="ProffesionalInfo" component={ProfessionalRole}/>
           </Stack.Navigator>
          
-          </NavigationContainer>
+          </NavigationContainer> */}
+          <Verification/>
     </Provider>
   )
 }

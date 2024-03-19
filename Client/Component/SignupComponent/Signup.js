@@ -6,6 +6,7 @@ import { updateSignupData } from '../../reducers/signupReducer';
 import { useFonts } from 'expo-font';
 import tw from 'twrnc';
 import logo from '../../assets/logo.jpg'
+import { generateOTP } from '../../services/operations/generate&verifyOTP';
 
 const Signup = () => {
   const [firstName, setFirstName] = useState('');
@@ -27,7 +28,9 @@ const Signup = () => {
     return null;
   }
 
-  const handleSignup = () => {
+  const handleSignup = async() => {
+
+
     const formData = {
       firstName,
       lastName,
@@ -36,6 +39,9 @@ const Signup = () => {
       country,
       agreeTerms,
     };
+    
+    await generateOTP(email)
+
     dispatch(updateSignupData(formData));
 
     setFirstName('');
