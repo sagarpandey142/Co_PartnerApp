@@ -122,6 +122,7 @@ const Signup = () => {
           </TouchableOpacity>
 
         </View>
+
       </View>
     </ScrollView>
   );
