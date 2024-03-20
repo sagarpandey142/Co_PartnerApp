@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import { View, Text,TouchableOpacity, Alert } from 'react-native';
-import OTPInputView from '../Common/OtpInput'
+import OTPInputView from '@twotalltotems/react-native-otp-input';
 import tw from 'twrnc'
 import { useFonts } from 'expo-font';
+import { verifyOTP } from '../../services/operations/generate&verifyOTP';
+import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
-const Verification = ({ email }) => {
+const Verification = () => {
     const [otp, setOtp] = useState('');
-    const [loading, setLoading] = useState(false);
+    const navigate = useNavigation();
+    const {data} = useSelector((state)=>state.signup);
+
+    const handleOTPChange = (code) => {
+        setOtp(code);
+      };
+    
+
+    const email = data.email
+    console.log("first", email)
 
     const [fontsLoaded] = useFonts({
         MadimiOne: require("../../assets/Fonts/2V0YKIEADpA8U6RygDnZZFQoBoHMd2U.ttf"),
@@ -17,34 +29,15 @@ const Verification = ({ email }) => {
         return null;
       }
   
-    const handleVerifyOtp = async () => {
-      try {
-        setLoading(true); // Start loading
-  
-        const response = await fetch('http://10.6.135.17:4000/v1/VerifyOtp', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: email,
-            otp: otp,
-          }),
-        });
-  
-        const data = await response.json();
-  
-        if (response.ok) {
-          Alert.alert('Success', 'OTP Verified Successfully');
-          // You can navigate the user to the next screen or perform any other action here upon successful verification
-        } else {
-          Alert.alert('Error', data.message || 'Failed to verify OTP. Please try again.');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        Alert.alert('Error', 'Something went wrong. Please try again later.');
-      } finally {
-        setLoading(false); // Stop loading
+    const handleVerifyOtp = async (e) => {
+        e.preventDefault();
+        console.log("here", otp)
+      const response = await verifyOTP(email, otp);
+
+      console.log("tt", response.statusText)
+      
+      if(response.statusText=='OK'){
+        navigate.navigate?.('Upload')
       }
     };
 
@@ -55,11 +48,16 @@ const Verification = ({ email }) => {
         minutes. Please enter the code below:
       </Text>
       <OTPInputView
-        pinCount={4}
-        onCodeFilled={(code) => setOtp(code)}
-      />
-      <TouchableOpacity style={tw`bg-green-600 px-8 py-2 rounded-3xl `}>
-              <Text style={tw`text-white text-base font-semibold mx-auto`}>Continue</Text>
+      style={{ width: '80%', height: 200 }}
+      pinCount={4} // Change the pinCount to match your OTP length
+      autoFocusOnLoad
+      codeInputFieldStyle={{ width: 60, height: 60, borderWidth: 0, borderBottomWidth: 1 }}
+      codeInputHighlightStyle={{ borderColor: 'blue' }}
+      onCodeFilled={handleOTPChange}
+      textColor="black"
+    />
+      <TouchableOpacity style={tw`bg-green-600 px-8 py-2 rounded-3xl `} onPress={handleVerifyOtp}>
+        <Text style={tw`text-white text-base font-semibold mx-auto`}>Continue</Text>
       </TouchableOpacity>
       <Text style={[tw`text-xl`,{fontFamily: 'TwinkleStar'}]}>Don't receive the email? Try checking your junk and spam folders. <Text style={tw`font-bold text-xl`}>Resend</Text></Text>
     </View>

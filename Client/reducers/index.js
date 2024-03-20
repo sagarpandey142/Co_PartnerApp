@@ -4,7 +4,7 @@ import professionalRoleReducer from './professionalRole';
 
 const rootReducer = combineReducers({
   signup: signupReducer,
-  professionalRole: professionalRoleReducer
+  professionalRole: professionalRoleReducer,
 });
 
 export default rootReducer;

@@ -11,7 +11,6 @@ const professionalRoleSlice = createSlice({
     reducers: {
         updateProfessionalRole : (state, action) => {
             state.professionalRole = action.payload;
-           
         },
         updateProfessionalDes : (state, action) => {
             console.log("hiiii")
