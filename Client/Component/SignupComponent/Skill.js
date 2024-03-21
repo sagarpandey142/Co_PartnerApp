@@ -100,7 +100,7 @@ const Skill = () => {
             backgroundColor: selectedSkills.length > 0 ? '#E5E7EB' : 'transparent',
         }]}
         placeholder='Your skills will be visible here'
-        value={selectedSkills.concat(allSkills).join(', ')} // Joining selected and typed skills with a comma
+        value={selectedSkills.concat(allSkills).join(', ')} 
         onChangeText={handleChangeText}
         />
 

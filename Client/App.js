@@ -10,6 +10,7 @@ import store from './store/configureStore';
 // import Upload from './Component/SignupComponent/Upload'
 // import Verification from './Component/SignupComponent/Verification';
 import Skill from './Component/SignupComponent/Skill'
+import Login from './Component/LoginComponent/Login'
 
 
 
@@ -28,8 +29,7 @@ export default function App() {
                <Stack.Screen name="Upload" component={Upload}/> 
                <Stack.Screen name="Skill" component={Skill}/> 
           </Stack.Navigator> */}
-          <Skill/>
-         
+          <Login/>
           </NavigationContainer> 
 
       

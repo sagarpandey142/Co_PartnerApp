@@ -28,6 +28,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/v1", User);
+console.log("hiii")
 app.use("/v1", Profile);
 
 app.listen(PORT, () => {
