@@ -93,32 +93,34 @@ exports.verifyOtp = async (req, res) => {
 
 
 exports.signup = async (req, res) => {
+  
   try {
     const {
       Full_Name,
-      Dob,
       Tech,
-      Year,
       Email,
       GithubLink,
       LinkedinLink,
       password,
+      proffesional_Role,
+      user_Dec
     } = req.body;
 
     if (
       !Full_Name ||
-      !Dob ||
+      !proffesional_Role ||
+      !user_Dec ||
       !Tech ||
-      !Year ||
       !Email ||
-      !GithubLink ||
-      !LinkedinLink ||
+      
       !password
     ) {
       return res.status(400).json({
         message: "All Field are Required",
       });
     }
+
+   
 
     const existingUser = await Profile.findOne({ Email: Email });
 
@@ -127,21 +129,24 @@ exports.signup = async (req, res) => {
         message: "Email Already Exists",
       });
     }
-
+   
     // Hashing password
     const hashedPassword = await bcrypt.hash(password, 10);
-
+    //converting values
+    const techArray = Object.values(req.body.Tech);
     // Create a new profile
     const profile = await Profile.create({
       name: Full_Name,
       Email: Email,
-      ContactInf: "",
-      CurrentYear: Year,
-      TechStack: [...Tech],
+      Proffessional_Role:proffesional_Role,
+      User_Bio:user_Dec,
+      LinkedIn:LinkedinLink,
+      GithubLink:GithubLink,
+      TechStack: techArray,
       password: hashedPassword,
     });
+ 
 
-  
     const user = await User.create({
       profileInf: profile._id,
       Project: [],
@@ -149,7 +154,6 @@ exports.signup = async (req, res) => {
 
 
   
-
     return res.status(200).json({
       success: true,
       message: "User Created Successfully",

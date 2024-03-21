@@ -18,7 +18,7 @@ const Verification = () => {
     
 
     const email = data.email
-    console.log("first", email)
+   
 
     const [fontsLoaded] = useFonts({
         MadimiOne: require("../../assets/Fonts/2V0YKIEADpA8U6RygDnZZFQoBoHMd2U.ttf"),
@@ -31,13 +31,13 @@ const Verification = () => {
   
     const handleVerifyOtp = async (e) => {
         e.preventDefault();
-        console.log("here", otp)
+  
       const response = await verifyOTP(email, otp);
 
       console.log("tt", response.statusText)
       
       if(response.statusText=='OK'){
-        navigate.navigate?.('Upload')
+        navigate.navigate?.('ProffesionalInfo')
       }
     };
 
@@ -47,15 +47,15 @@ const Verification = () => {
         We need to verify your email address. We have sent an email containing a 6-digit code which expires in 15
         minutes. Please enter the code below:
       </Text>
-      <OTPInputView
-      style={{ width: '80%', height: 200 }}
-      pinCount={4} // Change the pinCount to match your OTP length
-      autoFocusOnLoad
-      codeInputFieldStyle={{ width: 60, height: 60, borderWidth: 0, borderBottomWidth: 1 }}
-      codeInputHighlightStyle={{ borderColor: 'blue' }}
-      onCodeFilled={handleOTPChange}
-      textColor="black"
-    />
+        <OTPInputView
+          style={{ width: '80%', height: 200 }}
+          pinCount={4} 
+          autoFocusOnLoad
+          codeInputFieldStyle={{ width: 60, height: 60, borderWidth: 0, borderBottomWidth: 1 }}
+          codeInputHighlightStyle={{ borderColor: 'blue' }}
+          onCodeFilled={handleOTPChange}
+          textColor="black"
+      />
       <TouchableOpacity style={tw`bg-green-600 px-8 py-2 rounded-3xl `} onPress={handleVerifyOtp}>
         <Text style={tw`text-white text-base font-semibold mx-auto`}>Continue</Text>
       </TouchableOpacity>

@@ -22,13 +22,11 @@
     "axios": "^1.6.8",
     "expo": "~50.0.13",
     "expo-app-loading": "^2.1.1",
-<<<<<<< HEAD
     "expo-auth-session": "~5.4.0",
-=======
     "expo-checkbox": "^2.7.0",
->>>>>>> eff2736bbb9efb68ef310c63028287bfe1b860c1
     "expo-font": "^11.10.3",
     "expo-status-bar": "~1.11.1",
+    "native-base": "^3.4.28",
     "nodemailer": "^6.9.12",
     "react": "18.2.0",
     "react-icons": "^5.0.1",
@@ -40,11 +38,10 @@
     "react-native-gesture-handler": "^2.15.0",
     "react-native-google-drive-api-wrapper": "^1.4.0",
     "react-native-link": "^4.1.0",
+    "react-native-loading-spinner-overlay": "^3.0.1",
     "react-native-toast-message": "^2.2.0",
-<<<<<<< HEAD
-=======
+    "react-native-toast-notifications": "^3.4.0",
     "react-native-vector-icons": "^10.0.3",
->>>>>>> eff2736bbb9efb68ef310c63028287bfe1b860c1
     "react-native-web": "~0.19.6",
     "react-native-webview": "^13.8.1",
     "react-redux": "^9.1.0",

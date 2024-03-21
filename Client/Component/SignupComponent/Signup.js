@@ -9,6 +9,9 @@ import logo from '../../assets/logo.jpg'
 import { generateOTP } from '../../services/operations/generate&verifyOTP';
 import { useNavigation } from '@react-navigation/native'
 import CheckBox from 'expo-checkbox';
+import { useToast } from "react-native-toast-notifications";
+import Spinner from 'react-native-loading-spinner-overlay';
+
 
 const Signup = () => {
   const [firstName, setFirstName] = useState('');
@@ -19,6 +22,8 @@ const Signup = () => {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [isSelected, setSelection] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const[loading,setLoading]=useState(false)
+  const { showToast } = useToast();
   const navigate = useNavigation();
   const dispatch = useDispatch();
   const data = useSelector((state) => state.signup);
@@ -31,14 +36,17 @@ const Signup = () => {
   if (!fontsLoaded) {
     return null;
   }
-
+  
+  async function handleLoginNavigate(){
+    navigate?.navigate("Login")
+  }
   const handleSignup = async(e) => {
-    console.log("first",firstName, lastName, email,password, country, agreeTerms )
+    e.preventDefault()
     if (!firstName || !lastName || !email || !password || !country || !agreeTerms) {
-      setShowModal(true);
+      showToast("All Field Are Required")
       return;
     }
-
+    
     // Email validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -46,21 +54,21 @@ const Signup = () => {
       return;
     }
 
-          e.preventDefault();
+         
+          const Full_Name=firstName+lastName
           const formData = {
-            firstName,
-            lastName,
-            email,
+            Full_Name,
+            Email:email,
             password,
             country,
             agreeTerms,
           };
-          
+          setLoading(true)
           await generateOTP(email)
-      
+           setLoading(false)
           dispatch(updateSignupData(formData));
       
-          navigate.navigate?.('Verification')
+          navigate.navigate?.('ProffesionalInfo')
       
           setFirstName('');
           setLastName('');
@@ -70,13 +78,13 @@ const Signup = () => {
           setAgreeTerms(false);
 
           setShowModal(false);
-          console.log("ttt", Modal)
+     
   
         }
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20, paddingTop: 40 }}>
-
+        <View style={{backgroundColor:'white', flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20, paddingTop: 40 }}>
+          
           <Image source={logo} style={[{ width: 150, height: 100, alignSelf: 'center', marginTop: 20 }]} />
           <Text style={{ fontSize: 40, fontWeight: 'semibold', marginBottom: 10, fontFamily: 'MadimiOne' }}>Sign up to find</Text>
           <Text style={{ fontSize: 40, fontWeight: 'semibold', marginBottom: 10, fontFamily: 'MadimiOne' }}>your love</Text>
@@ -93,7 +101,11 @@ const Signup = () => {
                   onChangeText={setFirstName}
                 />
               </View>
-
+               
+              <Spinner
+                visible={loading}
+                textStyle={styles.spinnerText}
+              />
               <View style={{ flexDirection: 'column' }}>
                 <Text style={[tw`font-bold p-2 text-black`, { fontFamily: '', fontSize: 15, }]}>Last Name</Text>
                 <TextInput
@@ -167,7 +179,7 @@ const Signup = () => {
             <View>
               <Text style={{ fontFamily: 'TwinkleStar' }}>Already have an account? </Text>
             </View>
-            <TouchableOpacity onPress={() => { /* Add navigation logic */ }}>
+            <TouchableOpacity onPress={handleLoginNavigate}>
               <Text style={{ color: 'green', textDecorationLine: 'underline' ,padding:5}}> Log In</Text>
             </TouchableOpacity>
 

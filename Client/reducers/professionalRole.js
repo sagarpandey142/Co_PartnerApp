@@ -13,9 +13,7 @@ const professionalRoleSlice = createSlice({
             state.professionalRole = action.payload;
         },
         updateProfessionalDes : (state, action) => {
-            console.log("hiiii")
             state.description = action.payload
-            console.log("state",state.description)
         }
     }
 });
