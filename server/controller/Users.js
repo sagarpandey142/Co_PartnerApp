@@ -4,14 +4,14 @@ const bcrypt = require("bcrypt");
 const jwt=require("jsonwebtoken")
 const Otp =require("../Models/Otp")
 const otpTemplate=require("../Template/MailVerification.js")
-const nodemamailSender=require("../Utils/MailSender.js")
+const nodemailerSender=require("../Utils/MailSender.js")
 // genrate a unique otp
 
 exports.GetOtp = async (req, res) => {
   
   try {
     const { Email } = req.body;
-    console.log("body",Email)
+    console.log("Email",Email)
     // Check if the email is provided
     if (!Email) {
       return res.status(400).json({
@@ -23,7 +23,7 @@ exports.GetOtp = async (req, res) => {
     // Check if the profile with the provided email exists
     const userProfile = await Profile.findOne({ Email });
 
-    if (!userProfile) {
+    if (userProfile) {
       return res.status(404).json({
         success: false,
         message: "Profile not found",
@@ -42,8 +42,8 @@ exports.GetOtp = async (req, res) => {
     await otpDocument.save();
  
     // sending mail in email
-    const sendingMail=await nodemamailSender(Email,"Email Verification Code",otpTemplate(generatedOtp))
-    console.log(sendingMail);
+    const sendingMail=await nodemailerSender(Email,"Email Verification Code",otpTemplate(generatedOtp))
+    console.log("ggg",sendingMail);
     return res.status(200).json({
       success: true,
       message: "OTP generated successfully",
@@ -64,16 +64,13 @@ exports.verifyOtp = async (req, res) => {
      const { Email, user_Otp } = req.body;
 
      const OtpModel = await Otp.findOne({ Email: Email }).sort({ createdAt: -1 }).exec();
-
+     
      if (!OtpModel) {
         return res.status(404).json({
            success: false,
            message: "No OTP found for the provided email.",
         });
      }
-
-
-
      if (user_Otp != OtpModel.otp) {
         return res.status(200).json({
            success: false,
@@ -168,9 +165,10 @@ exports.signup = async (req, res) => {
 
 exports.login=async(req,res)=>{
   try{
-    
+    console.log("login back k andar")
      
       const {email,password}=req.body;
+      console.log("email pass", email, password)
      
       //validation
       if(!email || !password){

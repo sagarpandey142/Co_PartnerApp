@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ImageBackground, ScrollView, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, StyleSheet,Modal,Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateSignupData } from '../../reducers/signupReducer';
 import { useFonts } from 'expo-font';
 import tw from 'twrnc';
 import logo from '../../assets/logo.jpg'
+import { generateOTP } from '../../services/operations/generate&verifyOTP';
+import { useNavigation } from '@react-navigation/native'
+import CheckBox from 'expo-checkbox';
 
 const Signup = () => {
   const [firstName, setFirstName] = useState('');
@@ -14,7 +17,9 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [country, setCountry] = useState('India');
   const [agreeTerms, setAgreeTerms] = useState(false);
-
+  const [isSelected, setSelection] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigation();
   const dispatch = useDispatch();
   const data = useSelector((state) => state.signup);
 
@@ -27,105 +32,171 @@ const Signup = () => {
     return null;
   }
 
-  const handleSignup = () => {
-    const formData = {
-      firstName,
-      lastName,
-      email,
-      password,
-      country,
-      agreeTerms,
-    };
-    dispatch(updateSignupData(formData));
+  const handleSignup = async(e) => {
+    console.log("first",firstName, lastName, email,password, country, agreeTerms )
+    if (!firstName || !lastName || !email || !password || !country || !agreeTerms) {
+      setShowModal(true);
+      return;
+    }
 
-    setFirstName('');
-    setLastName('');
-    setEmail('');
-    setPassword('');
-    setCountry('India');
-    setAgreeTerms(false);
-  };
+    // Email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setShowModal(true);
+      return;
+    }
 
-  return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20, paddingTop: 40 }}>
+          e.preventDefault();
+          const formData = {
+            firstName,
+            lastName,
+            email,
+            password,
+            country,
+            agreeTerms,
+          };
+          
+          await generateOTP(email)
+      
+          dispatch(updateSignupData(formData));
+      
+          navigate.navigate?.('Verification')
+      
+          setFirstName('');
+          setLastName('');
+          setEmail('');
+          setPassword('');
+          setCountry('India');
+          setAgreeTerms(false);
 
-        <Image source={logo} style={[tw`  `, { width: 150, height: 100, alignSelf: 'center', marginTop: 20 }]} />
-        <Text style={{ fontSize: 40, fontWeight: 'semibold', marginBottom: 10, fontFamily: 'MadimiOne' }}>Sign up to find</Text>
-        <Text style={{ fontSize: 40, fontWeight: 'semibold', marginBottom: 10, fontFamily: 'MadimiOne' }}>your love</Text>
-        <View style={{ width: '100%', marginBottom: 10 }}>
-          <View style={{ flexDirection: 'row' }}>
+          setShowModal(false);
+          console.log("ttt", Modal)
+  
+        }
+    return (
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20, paddingTop: 40 }}>
 
-            <View style={{ flexDirection: 'column', marginRight: 30 }}>
-              <Text style={[tw`font-bold p-2 text-black`, { fontFamily: '', fontSize: 15 }]}>First Name</Text>
-              <TextInput
-                style={tw` border border-gray-200 p-2 rounded-xl   w-[9rem]`}
-                placeholder="First name"
-                placeholderTextColor="gray"
-                value={firstName}
-                onChangeText={setFirstName}
-              />
+          <Image source={logo} style={[{ width: 150, height: 100, alignSelf: 'center', marginTop: 20 }]} />
+          <Text style={{ fontSize: 40, fontWeight: 'semibold', marginBottom: 10, fontFamily: 'MadimiOne' }}>Sign up to find</Text>
+          <Text style={{ fontSize: 40, fontWeight: 'semibold', marginBottom: 10, fontFamily: 'MadimiOne' }}>your love</Text>
+          <View style={{ width: '100%', marginBottom: 10 }}>
+            <View style={{ flexDirection: 'row' }}>
+
+              <View style={{ flexDirection: 'column', marginRight: 30 }}>
+                <Text style={[tw`font-bold p-2 text-black`, { fontFamily: '', fontSize: 15 }]}>First Name</Text>
+                <TextInput
+                  style={tw` border border-gray-200 p-2 rounded-xl   w-[9rem]`}
+                  placeholder="First name"
+                  placeholderTextColor="gray"
+                  value={firstName}
+                  onChangeText={setFirstName}
+                />
+              </View>
+
+              <View style={{ flexDirection: 'column' }}>
+                <Text style={[tw`font-bold p-2 text-black`, { fontFamily: '', fontSize: 15, }]}>Last Name</Text>
+                <TextInput
+                  style={tw` border border-gray-200 p-2 rounded-xl  w-[9rem]`}
+                  placeholder="Last name"
+                  placeholderTextColor="gray"
+                  value={lastName}
+                  onChangeText={setLastName}
+                />
+              </View>
             </View>
-
-            <View style={{ flexDirection: 'column' }}>
-              <Text style={[tw`font-bold p-2 text-black`, { fontFamily: '', fontSize: 15, }]}>Last Name</Text>
-              <TextInput
-                style={tw` border border-gray-200 p-2 rounded-xl   w-[9rem]`}
-                placeholder="Last name"
-                placeholderTextColor="gray"
-                value={lastName}
-                onChangeText={setLastName}
-              />
+            <Text style={[tw`font-bold p-2 text-black`, { fontFamily: '', fontSize: 15, }]}>Email</Text>
+            <TextInput
+              style={{ borderWidth: 1, borderColor: '#d4cdcd', paddingHorizontal: 8, marginBottom: 10, borderRadius: 8, height: 45, borderColor: '#d4cdcd' }}
+              placeholder="Email"
+              placeholderTextColor="gray"
+              value={email}
+              onChangeText={setEmail}
+            />
+            <Text style={[tw`font-bold p-2 text-black`, { fontFamily: '', fontSize: 15, }]}>Password</Text>
+            <TextInput
+              style={tw` border border-gray-200 p-4 rounded-xl py-2`}
+              placeholder="Password (8 or more characters)"
+              placeholderTextColor="gray"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
+            <Text style={[tw`font-bold p-2 text-black`, { fontFamily: '', fontSize: 15, }]}>Country</Text>
+            <View style={tw` border border-gray-200  rounded-xl`}>
+              <Picker
+                selectedValue={country}
+                style={{ height: 50, width: '100%', }}
+                onValueChange={(itemValue, itemIndex) => setCountry(itemValue)}>
+                <Picker.Item label="India" value="India" />
+              </Picker>
             </View>
           </View>
-          <Text style={[tw`font-bold p-2 text-black`, { fontFamily: '', fontSize: 15, }]}>Email</Text>
-          <TextInput
-            style={{ borderWidth: 1, borderColor: '#d4cdcd', paddingHorizontal: 8, marginBottom: 10, borderRadius: 8, height: 45, borderColor: '#d4cdcd' }}
-            placeholder="Email"
-            placeholderTextColor="gray"
-            value={email}
-            onChangeText={setEmail}
-          />
-          <Text style={[tw`font-bold p-2 text-black`, { fontFamily: '', fontSize: 15, }]}>Password</Text>
-          <TextInput
-            style={tw` border border-gray-200 p-4 rounded-xl py-2`}
-            placeholder="Password (8 or more characters)"
-            placeholderTextColor="gray"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
-          <Text style={[tw`font-bold p-2 text-black`, { fontFamily: '', fontSize: 15, }]}>Country</Text>
-          <View style={tw` border border-gray-200  rounded-xl`}>
-            <Picker
-              selectedValue={country}
-              style={{ height: 50, width: '100%', }}
-              onValueChange={(itemValue, itemIndex) => setCountry(itemValue)}>
-              <Picker.Item label="India" value="India" />
-            </Picker>
+          <View style={tw`flex flex-row`}>
+            <CheckBox
+                value={isSelected}
+                onValueChange={(newValue) => {
+                  setSelection(newValue);
+                  setAgreeTerms(newValue); // Update agreeTerms state
+                }}
+                style={styles.checkbox}
+              />
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5, marginTop: 7 }}>
+                <Text style={{ marginLeft: 8, fontSize: 15, fontFamily: 'TwinkleStar' }}>Yes, I understand and agree to the Upwork terms of Service, including the User Agreement and Privacy Policy.</Text>
+              </View>
           </View>
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5, marginTop: 7 }}>
-          <Text style={{ marginLeft: 8, fontSize: 15, fontFamily: 'TwinkleStar' }}>Yes, I understand and agree to the Upwork terms of Service, including the User Agreement and Privacy Policy.</Text>
-        </View>
-        <View>
-          <TouchableOpacity style={[tw`bg-green-700 py-4 px-25 text-lg rounded-full mt-8`,]} onPress={handleSignup}>
-            <Text style={[tw`text-white mx-auto font-semibold`, { fontSize: 14, fontFamily: 'MadimiOne' }]}>Create my account</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={tw` flex flex-row items-center justify-center mt-3`}>
           <View>
-            <Text style={{ fontFamily: 'TwinkleStar' }}>Already have an account? </Text>
+            <TouchableOpacity style={[tw`bg-green-700 py-4 px-25 text-lg rounded-full mt-8`,]} onPress={handleSignup}>
+              <Text style={[tw`text-white mx-auto font-semibold`, { fontSize: 14, fontFamily: 'MadimiOne' }]}>Create my account</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={() => { /* Add navigation logic */ }}>
-            <Text style={{ color: 'green', textDecorationLine: 'underline' ,padding:5}}> Log In</Text>
-          </TouchableOpacity>
+          <Modal
+          animationType="slide"
+          transparent={true}
+          visible={showModal}
+          onRequestClose={() => setShowModal(false)}
+        >
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
+              <Text style={{ marginBottom: 10 }}>All fields are required</Text>
+              <Button title="OK" onPress={() => setShowModal(false)} />
+            </View>
+          </View>
+        </Modal>
+          <View style={tw` flex flex-row items-center justify-center mt-3`}>
+            <View>
+              <Text style={{ fontFamily: 'TwinkleStar' }}>Already have an account? </Text>
+            </View>
+            <TouchableOpacity onPress={() => { /* Add navigation logic */ }}>
+              <Text style={{ color: 'green', textDecorationLine: 'underline' ,padding:5}}> Log In</Text>
+            </TouchableOpacity>
+
+          </View>
 
         </View>
+      </ScrollView>
+    );
+  }
 
-      </View>
-    </ScrollView>
-  );
-}
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    checkboxContainer: {
+      flexDirection: 'row',
+      marginBottom: 20,
+    },
+    checkbox: {
+      alignSelf: 'center',
+    },
+    label: {
+      margin: 8,
+    },
+  });
+
+
 
 export default Signup;

@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react';
 import tw from 'twrnc'
 import { Link } from '@react-navigation/native';
 import { Button, View, Text} from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
-// import FilePickerManager from 'react-native-file-picker';
 import Navbar from '../Common/Navbar';
 import Footer from '../Common/Footer';
+import DocumentPicker from 'react-native-document-picker'
+// import { pick, keepLocalCopy } from '@react-native-documents/picker'
+
+
 
 const Upload = () => {
   const [fontsLoaded] = useFonts({
@@ -18,19 +21,40 @@ const Upload = () => {
     return null;
   }
 
-  
-
- 
   const handleUpload = async () => {
+    try {
+      const doc = await DocumentPicker.pickSingle({
+        type: [DocumentPicker.types.pdf]
+      });
+      console.log(doc);
+    } catch (error) {
+      if (DocumentPicker.isCancel(error)) {
+        console.log("User cancelled the upload", error);
+      } else {
+        console.log(error);
+      }
+    }
+
     // try {
-    //   const res = await FilePickerManager.pick(); 
-    //   console.log('File picked:', res);
-    //   // Handle the picked file
+    //   const [{ name, uri }] = await pick()
+
+    //   const [copyResult] = await keepLocalCopy({
+    //     files: [
+    //       {
+    //         uri,
+    //         fileName: name ?? 'fallback-name',
+    //       },
+    //     ],
+    //     destination: 'documentDirectory',
+    //   })
+    //   if (copyResult.status === 'success') {
+    //     // do something
+    //   }
     // } catch (err) {
-    //   console.log('Error occurred:', err);
+    //   // see error handling
     // }
   };
-  
+   
   return (
     <View style={tw`flex justify-center items-center flex-col gap-y-5`}>
         <Navbar/>
