@@ -1,7 +1,7 @@
 const nodemailer=require("nodemailer");
 
 const nodemamailSender=async (email,title,body)=>{
-  
+    
     try{
 
       let transporter=nodemailer.createTransport({
@@ -9,20 +9,23 @@ const nodemamailSender=async (email,title,body)=>{
         auth:{
             user:process.env.MAIL_USER,
             pass:process.env.MAIL_PASS,
-        }
+        },
+        tls: {
+          rejectUnauthorized: false
+      }
       })
-
+   
       let info=await transporter.sendMail({
         from:'CoPartner ',
         to:`${email}`,
         subject:`${title}`,
         html:`${body}`,
       })
-
+   console.log("info",info)
       return info;
 
     } catch(err){
-      console.log(err.message)
+      console.log(err)
 
     }
 }

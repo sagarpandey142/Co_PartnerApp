@@ -3,11 +3,19 @@ import { View ,Text, TouchableOpacity} from 'react-native'
 import tw from 'twrnc'
 import {useDispatch} from "react-redux"
 import { useNavigation } from '@react-navigation/native'
+import ToastManager, { Toast } from 'toastify-react-native'
 
 const Footer = ({button1Text,button2Text,reducerName,data,navigate}) => {
   const dispatch= useDispatch();
   const navigation=useNavigation();
-  async function handlePress(){
+
+  async function handlePress(e){
+    e.preventDefault();
+     if(data===''){
+     console.log("first")
+      Toast.error("All Field Are Mandatory")
+      return;
+     }
       dispatch(reducerName(data));
       navigation?.navigate(navigate)
   }

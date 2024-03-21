@@ -8,6 +8,8 @@ import GetStarted from './Component/GetStarted';
 import ProfessionalRole from './Component/SignupComponent/ProfessionalRole';
 import UserBio from './Component/SignupComponent/UserBio';
 import Upload from './Component/SignupComponent/Upload'
+import HomePage from './Component/Pages/HomePage';
+
 
 
 
@@ -17,15 +19,18 @@ export default function App() {
     <Provider store={store}>
           <NavigationContainer>
 
-          <Stack.Navigator initialRouteName="GetStarted" screenOptions={{ headerShown: false }}>
+          <Stack.Navigator initialRouteName="HomePage" screenOptions={{ headerShown: false }}>
               <Stack.Screen name="Signup" component={Signup}/>
               <Stack.Screen name="GetStarted" component={GetStarted}/>
               <Stack.Screen name="ProffesionalInfo" component={ProfessionalRole}/> 
               <Stack.Screen name="userBio" component={UserBio}/>
-               <Stack.Screen name="UploadResume" component={Upload}/> 
+              <Stack.Screen name="UploadResume" component={Upload}/> 
+              <Stack.Screen name='HomePage' component={HomePage}/>
           </Stack.Navigator>
          
           </NavigationContainer>
     </Provider>
+ 
+ 
   )
 }

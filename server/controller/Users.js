@@ -40,7 +40,7 @@ exports.GetOtp = async (req, res) => {
     });
 
     await otpDocument.save();
-
+ 
     // sending mail in email
     const sendingMail=await nodemamailSender(Email,"Email Verification Code",otpTemplate(generatedOtp))
     console.log(sendingMail);

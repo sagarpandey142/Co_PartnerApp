@@ -5,9 +5,9 @@ import tw from "twrnc"
 
 const Navbar = () => {
   return (
-      <View style={[tw`border-gray-200 border-b-[3px] p-4  flex flex-row w-full`, ]}>
-         <Text style={[tw`mx-auto flex items-center font-semibold text-xl mt-4`,{ }]}>Create Your Profile</Text>
-         <TouchableOpacity style={tw` mt-4`}>
+      <View style={[tw`border-gray-200 border-b-[3px]  p-4  flex flex-row  w-full mt-3`, ]}>
+         <Text style={[tw`mx-auto flex font-semibold text-xl  mt-3  `,{ }]}>Create Your Profile</Text>
+         <TouchableOpacity style={tw` mt-3`}>
             <Ionicons name="ellipsis-vertical" size={24} color="black" />
          </TouchableOpacity>
      </View>
