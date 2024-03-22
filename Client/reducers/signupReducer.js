@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     data: {},
-    skill: {}
+    skill: []
 };
 
 const signupSlice = createSlice({
@@ -13,7 +13,6 @@ const signupSlice = createSlice({
                 state.data= action.payload
         },
         updateSkill: (state, action) => {
-            console.log("skill")
             state.skill = action.payload
         }
     }

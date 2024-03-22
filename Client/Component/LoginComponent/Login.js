@@ -24,11 +24,11 @@ const Login = () => {
       return;
     }
     e.preventDefault();
-    console.log("eamil pass", email,password)
+   
     const response = await login(email,password);
-
+     
     navigate.navigate?.('HomePage');
-    console.log("response", response);
+  
     
 
   };

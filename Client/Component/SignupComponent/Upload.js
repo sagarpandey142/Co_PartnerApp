@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
 import Navbar from '../Common/Navbar';
 import Footer from '../Common/Footer';
-import DocumentPicker from 'react-native-document-picker'
+// import DocumentPicker from 'react-native-document-picker'
 // import { pick, keepLocalCopy } from '@react-native-documents/picker'
 
 

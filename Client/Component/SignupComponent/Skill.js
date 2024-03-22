@@ -77,7 +77,6 @@ const Skill = () => {
   };
 
   const handleDispatchSkill = () => {
-    console.log("first")
     dispatch(updateSkill(selectedSkills));
     console.log("selected",selectedSkills)
   };
@@ -93,21 +92,21 @@ const Skill = () => {
             value={typedSkills}
             onChangeText={handleChangeText}
             onKeyPress={handleKeyPress}
-            style={tw`w-10/12 mt-3 mx-auto border border-b-1 rounded-xl p-2 border-gray-200`}
+            style={tw`w-11/12 mt-3 mx-auto border border-b-1 rounded-xl p-2 border-gray-200`}
             placeholder="Type your skill"
         />
         </View>
 
-        <TextInput
+        {/* <TextInput
         style={[tw`border border-gray-400 px-4 py-2 m-4 rounded-lg`, {
             backgroundColor: selectedSkills.length > 0 ? '#E5E7EB' : 'transparent',
         }]}
         placeholder='Your skills will be visible here'
         value={selectedSkills.concat(allSkills).join(', ')} 
         onChangeText={handleChangeText}
-        />
+        /> */}
 
-
+ <Text style={[tw`ml-3 text-base mt-6 pb-4`,{fontFamily:'MadimiOne'}]}>Your All Skills</Text>
 <View style={tw`flex flex-row flex-wrap items-center`}>
   {availableSkills.map((skill, index) => (
     <TouchableOpacity
@@ -117,13 +116,13 @@ const Skill = () => {
         backgroundColor: selectedSkills.includes(skill) ? '#bfdbfe' : 'transparent',
       }]}
     >
-      <Text style={tw`text-gray-500 border border-gray-400 rounded-full py-2 px-6 z-10 flex flex-row items-center`}>
+      <Text style={tw`text-gray-500 border border-gray-400 rounded-full p-2 px-3   flex flex-row  items-center`}>
         {skill}
         {selectedSkills.includes(skill) && (
-          <Icon name="times-circle" size={20} color="gray" style={tw`ml-2`} />
+          <Icon name="times-circle" size={20} color="gray" style={tw``} />
         )}
         {!selectedSkills.includes(skill) && (
-          <Icon name="plus-circle" size={20} color="gray" style={tw`ml-2`} />
+          <Icon name="plus-circle" size={20} color="gray" style={tw``} />
         )}
       </Text>
     </TouchableOpacity>
@@ -132,10 +131,10 @@ const Skill = () => {
 
         <Footer
             button1Text="Back"
-            button2Text="Write an overview"
+            button2Text="One Last Step"
             reducerName={updateSkill} 
             data={selectedSkills} 
-            navigate="skill" 
+            navigate="userBio" 
         />
 
     </View>

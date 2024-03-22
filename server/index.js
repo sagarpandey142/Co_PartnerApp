@@ -15,7 +15,6 @@ dbConnect();
 // Enable CORS middleware
 app.use(cors({
   origin: "*",
-  credentials: true // If you're sending cookies or using sessions
 }));
 
 
@@ -28,7 +27,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/v1", User);
-console.log("hiii")
 app.use("/v1", Profile);
 
 app.listen(PORT, () => {

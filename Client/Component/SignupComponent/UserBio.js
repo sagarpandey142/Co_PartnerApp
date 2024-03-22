@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, View ,TextInput,Image} from 'react-native'
+import { Text, View ,TextInput,Image,TouchableOpacity} from 'react-native'
 import Navbar from '../Common/Navbar'
 import { useFonts } from 'expo-font';
 import tw from "twrnc"
@@ -7,11 +7,21 @@ import Footer from '../Common/Footer';
 import image from "../../assets/userImage.png"
 import { ScrollView } from 'react-native-gesture-handler';
 import { updateProfessionalDes,updateProfessionalRole } from '../../reducers/professionalRole';
-
+import {signupHandler} from "../../services/operations/SignupHandler"
+import { useDispatch, useSelector } from 'react-redux';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { useNavigation } from '@react-navigation/native';
 
 
 const UserBio = () => {
    const[value,setValue]=useState();
+   const {data,skill}=useSelector((state)=>state.signup)
+   const[loading,setLoading]=useState(false);
+   const navigate=useNavigation()
+   const dispatch=useDispatch()
+   const{professionalRole,description}=useSelector((state=>state.professionalRole));
+
+  const updatedDesc=description.text
     const [fontsLoaded] = useFonts({
         MadimiOne:require("../../assets/Fonts/2V0YKIEADpA8U6RygDnZZFQoBoHMd2U.ttf"),
         TwinkleStar:require("../../assets/Fonts/X7nP4b87HvSqjb_WIi2yDCRwoQ_k7367_B-i2yQag0-mac3OryLMFuOLlNldbw.ttf")
@@ -20,7 +30,24 @@ const UserBio = () => {
       if (!fontsLoaded) {
         return null; 
       }
-
+    
+    async  function handlePress(){
+     await dispatch(updateProfessionalDes(value));
+      const Tech={
+          ...skill
+      }
+      const GithubLink="sagarpandey141"
+      const LinkedinLink="pandeyshs"
+      
+      const updatedData = { ...data,Tech, proffesional_Role:professionalRole, user_Dec:updatedDesc ,GithubLink,LinkedinLink};
+      setLoading(true);
+      const response=await signupHandler(updatedData);
+      setLoading(false);
+      console.log("res",response);
+        if(response.status===200){
+           navigate.navigate("HomePage")
+        }
+      }
   return (
 
      <View style={tw`  h-[100%] `}>
@@ -50,6 +77,12 @@ const UserBio = () => {
                   />
                   
               </View>
+
+              {/*spinner*/}
+              <Spinner
+                visible={loading}
+               
+              />
         </View>
           <View style={tw`mt-20 border border-gray-300 rounded-2xl w-11/12 mx-auto flex  gap-5 p-2`}>
                 <View>
@@ -66,10 +99,18 @@ const UserBio = () => {
                       <Text style={[tw`mx-auto mt-3 text-[16px] ml-3`,{fontFamily:'TwinkleStar'}]}>&#8226; I ensure efficient backend functionality using Node.js.</Text>
                     </View>
                   </View>
-        
           </View>
-          <Footer button1Text="Back" button2Text="One Last Step" reducerName={updateProfessionalDes} data={value} navigate="userBio"/>
+         
+       
        </ScrollView>
+       <View style={{ borderTopWidth: 1, borderTopColor: '#E5E7EB',padding:10,display:'flex',flexDirection:'row', justifyContent:'space-between' }}>
+            <TouchableOpacity>
+                 <Text style={tw` border border-gray-300 p-2 rounded-full px-5`}>Back</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handlePress}>
+                 <Text style={tw` bg-green-600 p-3 px-6 rounded-full text-white font-bold`}>Finish</Text>
+            </TouchableOpacity>
+        </View>
     </View>
   
   )

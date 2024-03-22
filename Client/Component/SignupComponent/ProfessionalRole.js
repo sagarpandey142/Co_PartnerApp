@@ -54,7 +54,7 @@ const ProfessionalRole = () => {
           </TouchableOpacity>
         </View>
       </View>
-       <Footer button1Text="Back" button2Text="Add Professional Bio" reducerName={updateProfessionalRole} data={value} navigate="userBio" />
+       <Footer button1Text="Back" button2Text="Add Professional Bio" reducerName={updateProfessionalRole} data={value} navigate="Skill" />
     </View>
   );
 };

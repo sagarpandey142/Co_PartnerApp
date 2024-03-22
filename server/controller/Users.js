@@ -40,10 +40,9 @@ exports.GetOtp = async (req, res) => {
     });
 
     await otpDocument.save();
- 
+      console.log("otp",otpDocument)
     // sending mail in email
     const sendingMail=await nodemailerSender(Email,"Email Verification Code",otpTemplate(generatedOtp))
-    console.log("ggg",sendingMail);
     return res.status(200).json({
       success: true,
       message: "OTP generated successfully",
@@ -61,16 +60,18 @@ exports.GetOtp = async (req, res) => {
 
 exports.verifyOtp = async (req, res) => {
   try {
+    console.log("hii")
      const { Email, user_Otp } = req.body;
-
+    console.log("email",Email)
      const OtpModel = await Otp.findOne({ Email: Email }).sort({ createdAt: -1 }).exec();
-     
+     console.log(OtpModel)
      if (!OtpModel) {
         return res.status(404).json({
            success: false,
            message: "No OTP found for the provided email.",
         });
      }
+     console.log("data",user_Otp,OtpModel.otp)
      if (user_Otp != OtpModel.otp) {
         return res.status(200).json({
            success: false,
@@ -93,32 +94,34 @@ exports.verifyOtp = async (req, res) => {
 
 
 exports.signup = async (req, res) => {
+  
   try {
     const {
       Full_Name,
-      Dob,
       Tech,
-      Year,
       Email,
       GithubLink,
       LinkedinLink,
       password,
+      proffesional_Role,
+      user_Dec
     } = req.body;
 
     if (
       !Full_Name ||
-      !Dob ||
+      !proffesional_Role ||
+      !user_Dec ||
       !Tech ||
-      !Year ||
       !Email ||
-      !GithubLink ||
-      !LinkedinLink ||
+      
       !password
     ) {
       return res.status(400).json({
         message: "All Field are Required",
       });
     }
+
+   
 
     const existingUser = await Profile.findOne({ Email: Email });
 
@@ -127,21 +130,24 @@ exports.signup = async (req, res) => {
         message: "Email Already Exists",
       });
     }
-
+   
     // Hashing password
     const hashedPassword = await bcrypt.hash(password, 10);
-
+    //converting values
+    const techArray = Object.values(req.body.Tech);
     // Create a new profile
     const profile = await Profile.create({
       name: Full_Name,
       Email: Email,
-      ContactInf: "",
-      CurrentYear: Year,
-      TechStack: [...Tech],
+      Proffessional_Role:proffesional_Role,
+      User_Bio:user_Dec,
+      LinkedIn:LinkedinLink,
+      GithubLink:GithubLink,
+      TechStack: techArray,
       password: hashedPassword,
     });
+ 
 
-  
     const user = await User.create({
       profileInf: profile._id,
       Project: [],
@@ -149,7 +155,6 @@ exports.signup = async (req, res) => {
 
 
   
-
     return res.status(200).json({
       success: true,
       message: "User Created Successfully",

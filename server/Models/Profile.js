@@ -8,16 +8,23 @@ const ProfileSchema=mongoose.Schema({
         type:String,
         required:true
      },
-     ContactInf:{
-        type:String,
+     Proffessional_Role:{
+       type:String,
+       required:true
      },
-     CurrentYear:{
-        type:String,
-        required:true
-     },
+     User_Bio:{
+      type:String,
+      required:true
+    },
      TechStack:{
         type:Array,
         required:true
+     },
+     GithubLink:{
+      Type:String,
+     },
+     LinkedIn:{
+      Type:String,
      },
      password:{
       type:String,
