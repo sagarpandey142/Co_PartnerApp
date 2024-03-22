@@ -68,7 +68,7 @@ const Signup = () => {
            setLoading(false)
           dispatch(updateSignupData(formData));
       
-          navigate.navigate?.('ProffesionalInfo')
+          navigate.navigate?.('Verification')
       
           setFirstName('');
           setLastName('');

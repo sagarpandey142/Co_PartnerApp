@@ -1,32 +1,74 @@
-import React from 'react'
-import { Text, View } from 'react-native'
-import tw from "twrnc"
-import MainHeader from '../Common/MainHeader'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import React, { useState } from 'react';
+import { Text, View, TouchableOpacity, Image, Linking } from 'react-native';
+import tw from "twrnc";
+import MainHeader from '../Common/MainHeader';
+import { successArray } from "../../ArrayUsable/SucessStoryArray";
+import { useFonts } from 'expo-font';
+import { ScrollView } from 'react-native-gesture-handler';
+import MainFooter from '../Common/MainFooter';
 
 const HomePage = () => {
+    const Successarray = [
+        { name: "All" },
+        { name: "Artificial Engineer" },
+        { name: "Work & Career" },
+        {name:"Blockchain"}
+    ];
 
-    const Successarray=[
-        {name:"All"},
-        {name:"Design & Creative"},
-        {name:"Work & Career"}
-    ]
+    const [fontsLoaded] = useFonts({
+        MadimiOne: require("../../assets/Fonts/2V0YKIEADpA8U6RygDnZZFQoBoHMd2U.ttf"),
+        TwinkleStar: require("../../assets/Fonts/X7nP4b87HvSqjb_WIi2yDCRwoQ_k7367_B-i2yQag0-mac3OryLMFuOLlNldbw.ttf")
+    });
 
-  return (
-    <View style={tw` w-[100%] h-[100%] bg-white `} >
-         <View style={tw` w-11/12 mx-auto`}>
-            <MainHeader mainName="CoPartner" nameHeader="" icon1=""  icon2 ="notifications"/>
-            <Text >All Success stories</Text>
-            {
-                Successarray.map((data,index)=>(
-                    <TouchableOpacity style={tw``}>
-                        <Text>{data.name}</Text>
-                    </TouchableOpacity>
-                ))
-            }
-         </View>
-    </View>
-  )
+    const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
+
+    const handleItemClick = (redirectUrl) => {
+        Linking.openURL(redirectUrl);
+    };
+
+    return (
+        <View style={tw`w-full h-full bg-white relative`}>
+            <MainHeader mainName="CoPartner" nameHeader="" icon1="" icon2="notifications" />
+            <ScrollView style={tw`flex-1`}>
+                <View style={tw`w-10/12 mx-auto`}>
+                    <Text style={[tw` text-lg`,{fontFamily:"MadimiOne"}]}>Tech Stories Simplified</Text>
+                    <View style={tw`flex flex-row justify-between mt-6 gap-5`}>
+                        {Successarray.map((data, index) => (
+                            <View key={index}>
+                                <TouchableOpacity
+                                    style={[
+                                        tw`px-6 py-2 rounded-2xl`,
+                                        index === selectedButtonIndex
+                                            ? tw`bg-green-200 border border-green-700`
+                                            : tw`bg-white border border-gray-200`
+                                    ]}
+                                    onPress={() => setSelectedButtonIndex(index)}
+                                >
+                                    <Text style={index === selectedButtonIndex ? tw`text-green-700` : tw`text-gray-400 font-bold`}>{data.name}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        ))}
+                    </View>
+                    <View style={tw`mt-8 gap-6 border-b-2 border-gray-200 pb-6`}>
+                        {successArray.map((data, index) => (
+                            <TouchableOpacity key={index} onPress={() => handleItemClick(data.redirect)}>
+                                <Image style={tw` h-[14rem] w-[19rem] border border-gray-200 rounded-xl`} source={data.images} />
+                                <Text style={[tw`text-green-800 text-lg mt-2`, { fontFamily: 'MadimiOne' }]}>{data.heading}</Text>
+                                <View style={tw`flex flex-row mt-2 flex-wrap gap-3`}>
+                                    {data.tags.map((data, index) => (
+                                        <View key={index}>
+                                            <Text style={tw`bg-white border border-gray-200 px-4 py-2 rounded-2xl text-gray-400 font-bold`}>{data}</Text>
+                                        </View>
+                                    ))}
+                                </View>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                </View>
+            </ScrollView>
+            <MainFooter  />
+        </View>
+    );
 }
 
-export default HomePage
+export default HomePage;

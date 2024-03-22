@@ -40,10 +40,9 @@ exports.GetOtp = async (req, res) => {
     });
 
     await otpDocument.save();
- 
+      console.log("otp",otpDocument)
     // sending mail in email
     const sendingMail=await nodemailerSender(Email,"Email Verification Code",otpTemplate(generatedOtp))
-    console.log("ggg",sendingMail);
     return res.status(200).json({
       success: true,
       message: "OTP generated successfully",
@@ -61,16 +60,18 @@ exports.GetOtp = async (req, res) => {
 
 exports.verifyOtp = async (req, res) => {
   try {
+    console.log("hii")
      const { Email, user_Otp } = req.body;
-
+    console.log("email",Email)
      const OtpModel = await Otp.findOne({ Email: Email }).sort({ createdAt: -1 }).exec();
-     
+     console.log(OtpModel)
      if (!OtpModel) {
         return res.status(404).json({
            success: false,
            message: "No OTP found for the provided email.",
         });
      }
+     console.log("data",user_Otp,OtpModel.otp)
      if (user_Otp != OtpModel.otp) {
         return res.status(200).json({
            success: false,

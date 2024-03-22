@@ -13,7 +13,7 @@ const MainHeader = ( {mainName, nameHeader, icon1, icon2} ) => {
       });
 
   return (
-    <View style={tw` w-10/12 mx-auto mt-10 bg-white flex flex-row justify-between items-center mb-5 `}>
+    <View style={tw` w-10/12 mx-auto mt-10 bg-white flex flex-row justify-between items-center mb-7 `}>
          <View>
                 {mainName ? (
                 <View>
