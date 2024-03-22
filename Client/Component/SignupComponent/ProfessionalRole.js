@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Linking } from 'react-native';
 import tw from 'twrnc';
 import Navbar from '../Common/Navbar';
-import { AppLoading } from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 import Footer from '../Common/Footer';
 import { updateProfessionalRole } from '../../reducers/professionalRole';

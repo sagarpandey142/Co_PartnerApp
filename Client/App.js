@@ -25,19 +25,21 @@ export default function App() {
     <Provider store={store}>
           <NavigationContainer>
 
-          <Stack.Navigator initialRouteName="GetStarted" screenOptions={{ headerShown: false }}>
+           <Stack.Navigator initialRouteName="GetStarted" screenOptions={{ headerShown: false }}>
               <Stack.Screen name="Signup" component={Signup}/>
-              {/* <Stack.Screen name="Verification" component={Verification}/>  */}
+               <Stack.Screen name="Verification" component={Verification}/> 
               <Stack.Screen name="GetStarted" component={GetStarted}/>
               <Stack.Screen name="ProffesionalInfo" component={ProfessionalRole}/> 
               <Stack.Screen name="userBio" component={UserBio}/>
               <Stack.Screen name="Skill" component={Skill}/> 
               <Stack.Screen name='HomePage' component={HomePage}/>
               <Stack.Screen name="Login" component={Login}/>
+              
           </Stack.Navigator>
        
           </NavigationContainer>
      </Provider>
+
  
  
   )
