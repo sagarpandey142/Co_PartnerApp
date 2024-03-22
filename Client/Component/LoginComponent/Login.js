@@ -3,6 +3,7 @@ import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useFonts } from 'expo-font';
 import tw from 'twrnc';
 import { login } from '../../services/operations/generate&verifyOTP';
+import { useNavigation } from '@react-navigation/native';
 
 const Login = () => {
   const [fontsLoaded] = useFonts({
@@ -13,6 +14,7 @@ const Login = () => {
   // State variables for email and password
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigation();
 
 
   const handleLogin = async (e) => {
@@ -25,6 +27,7 @@ const Login = () => {
     console.log("eamil pass", email,password)
     const response = await login(email,password);
 
+    navigate.navigate?.('HomePage');
     console.log("response", response);
     
 
@@ -52,7 +55,7 @@ const Login = () => {
         secureTextEntry
       />
       <TouchableOpacity onPress={handleLogin}>
-        <Text style={[tw`text-2xl bg-green-500 px-25 py-2 rounded-full `, { fontFamily: 'MadimiOne' }]}>Sign in</Text>
+        <Text style={[tw`text-2xl bg-green-500 px-25 py-2 rounded-full `, { fontFamily: 'MadimiOne' }]} >Sign in</Text>
       </TouchableOpacity>
       <TouchableOpacity>
         <Text style={[tw`text-base text-green-500`, { fontFamily: 'TwinkleStar' }]}>Forgot your password?</Text>

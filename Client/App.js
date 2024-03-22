@@ -10,6 +10,8 @@ import UserBio from './Component/SignupComponent/UserBio';
 // import Upload from './Component/SignupComponent/Upload'
 import HomePage from './Component/Pages/HomePage';
 import Verification from "./Component/SignupComponent/Verification"
+import Skill from './Component/SignupComponent/Skill'
+import Login from './Component/LoginComponent/Login'
 
 
 
@@ -31,7 +33,7 @@ export default function App() {
           </Stack.Navigator> */}
 
 
-          <Verification/>
+       <Login/>
           </NavigationContainer>
 
 

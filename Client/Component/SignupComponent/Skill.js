@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import Navbar from '../Common/Navbar';
 import Footer from '../Common/Footer';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -39,6 +39,9 @@ const Skill = () => {
     } else {
       if (selectedSkills.length < 12) {
         setSelectedSkills([...selectedSkills, skill]);
+      }
+      else if(selectedSkills.length == 0){
+        Alert.alert("No skills have been selected yet. Please select atlease 3 to continue")
       }
     }
   };
