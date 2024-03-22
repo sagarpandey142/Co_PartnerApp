@@ -1,10 +1,9 @@
 import React from 'react';
-import MainHeader from '../Common/MainHeader'
+// import MainHeader from '../Common/MainHeader'
 
 const JobPage = () =>{
     return (
         <View>
-            <MainHeader/>
         </View>
     )
 }
