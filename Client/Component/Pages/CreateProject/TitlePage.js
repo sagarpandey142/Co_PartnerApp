@@ -6,11 +6,13 @@ import { useFonts } from 'expo-font'
 import Footer from '../../Common/Footer'
 import Navbar from '../../Common/Navbar'
 import { updateStep, updateTitle } from '../../../reducers/CreateProject'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 
 const TitlePage = () => {
     const{step}=useSelector((state)=>state.createProject);
     const[data,setData]=useState("")
+    const[loading,setLoading]=useState(false)
     const dispatch=useDispatch()
     const [fontsLoaded] = useFonts({
         MadimiOne: require('../../../assets/Fonts/2V0YKIEADpA8U6RygDnZZFQoBoHMd2U.ttf'),
@@ -18,8 +20,10 @@ const TitlePage = () => {
       });
   
     async function setTitleState(){
-         await dispatch(updateTitle(data))
-         await dispatch(updateStep(2));
+          setLoading(true)
+          dispatch(updateTitle(data))
+          dispatch(updateStep(2));
+          setLoading(false)
     }
   return (
     <View style={tw`h-[100%]`}>
@@ -42,6 +46,8 @@ const TitlePage = () => {
             <Text  style={[tw` mt-2 text-[17px]`,{fontFamily:"TwinkleStar"}]}>3. VoxPop: Revolutionizing Job Posting Engagement</Text>
            
           </View>
+          {/*spinner*/}
+          <Spinner visible={loading}/>
           <View style={tw` flex-1 justify-end `}>
                 <View style={{ borderTopWidth: 5, borderTopColor: '#E5E7EB',padding:17,display:'flex',flexDirection:'row-reverse', justifyContent:'space-between' }}>
                     

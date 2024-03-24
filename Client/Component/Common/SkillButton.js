@@ -8,8 +8,10 @@ const SkillButton = ({ text, setSelectedButton, selectedButton, flag }) => {
   const [isSelected, setIsSelected] = useState(false);
 
   const handlePress = () => {
-    if (isSelected) {
-      setSelectedButton((prevSelectedSkills) => prevSelectedSkills.filter(skill => skill !== text));
+    const hasText= selectedButton.includes(text)
+    if (hasText) {
+      const updatedSkill=selectedButton.filter(skill => skill !== text);
+      setSelectedButton(updatedSkill)
     } else {
       setSelectedButton((prevSelectedSkills) => [...prevSelectedSkills, text]);
     }
@@ -27,7 +29,7 @@ const SkillButton = ({ text, setSelectedButton, selectedButton, flag }) => {
       ]}
     >
       <Text style={tw`text-green-700 font-bold text-[15px]`}>{text}</Text>
-      {flag ? (
+      {flag=="true" ? (
         <MaterialIcons name="cancel" size={19} color="#15803d" />
       ) : (
         <AntDesign name="pluscircle" size={19} color="#15803d" />

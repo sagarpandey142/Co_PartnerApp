@@ -53,7 +53,7 @@ const Verification = () => {
       e.preventDefault();
       const response = await generateOTP(email);
       console.log("res", response)
-      if (response.statusText === 'Ok') {
+      if (response.statusText === 'OK') {
         console.log('Verification email resent successfully.');
       } else {
         console.error('Failed to resend verification email:', response.error);

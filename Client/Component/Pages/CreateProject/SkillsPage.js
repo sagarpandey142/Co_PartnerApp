@@ -8,12 +8,14 @@ import Navbar from '../../Common/Navbar'
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import SkillButton from '../../Common/SkillButton'
 import { SkillRequired } from '../../../ArrayUsable/SkillsRequired'
-import { updateSkill } from '../../../reducers/signupReducer'
-import { updateStep } from '../../../reducers/CreateProject'
+import { updateSkills ,updateStep} from '../../../reducers/CreateProject'
+import Spinner from 'react-native-loading-spinner-overlay'
+
 
 
 const SkillsPage = () => {
     const{step,title}=useSelector((state)=>state.createProject);
+    const[loading,setLoading]=useState(false);
     const [skillInput, setSkillInput] = useState("");
     const[selectedButton,setSelectedButton]=useState([])
     const dispatch=useDispatch();
@@ -22,9 +24,11 @@ const SkillsPage = () => {
         TwinkleStar: require('../../../assets/Fonts/-W_oXI_oSymQ8Qj-Apx3HGN_Hu1RTCk5FtSDETgf0cK_NOeFgpRt9rN5.ttf'),
       });
 
-      async function setSkillState(){
-           useDispatch(updateStep(3));
-           useDispatch(updateSkill(selectedButton));
+      const setSkillState=()=>{
+           setLoading(true)
+           dispatch(updateStep(3));
+           dispatch(updateSkills(selectedButton));
+           setLoading(false)
       }
   return (
     <View style={tw` h-[100%]`}>
@@ -49,36 +53,43 @@ const SkillsPage = () => {
         />
         <View style={tw` flex flex-row gap-2 items-center mt-4 `}>
             <Image source={image1} style={{color:"gray", height: 18,width:18 }} />
-             <Text style={tw` text-slate-500`}>For The Bet Results, add 2-5 Skills</Text>
+             <Text style={tw` text-slate-500`}>For The Best Results, add 2-5 Skills</Text>
         </View>
-        {
-           selectedButton.length>0 && (
-             <View >
-                  <Text style={[tw` mt-7 text-xl  `,{fontFamily:"MadimiOne"}]}>Your Selected Skill</Text>
-                  <ScrollView>
-                          <View style={tw` flex flex-row max-w-[97%] gap-1  flex-wrap`}>
-                               {
-                                 selectedButton.map((data,index)=>(
-                                    <SkillButton key={index} text={data}  flag="true" />
-                                 ))
-                               }
-                          </View>
-                  </ScrollView>
-             </View>
-           )
-         }
-        <Text style={[tw` mt-7 text-xl  `,{fontFamily:"MadimiOne"}]}>Popular Skill For Full Stack Developer </Text>
-         <ScrollView>
-          <View style={tw` flex flex-row max-w-[97%] gap-1  flex-wrap`}>
-              {
-                SkillRequired.map((data,index)=>(
-                    <SkillButton key={index} text={data.name}  setSelectedButton={setSelectedButton}  selectedButton={selectedButton} />
-                ))
-              }
-          </View>
-         </ScrollView>
+        <ScrollView style={tw`h-[47%]`}>
+            { 
+              selectedButton.length>0 && (
+                <View >
+                      <Text style={[tw` mt-7 text-xl  `,{fontFamily:"MadimiOne"}]}>Your Selected Skill</Text>
+                    
+                              <View style={tw` flex flex-row max-w-[97%] gap-1  flex-wrap`}>
+                                  {
+                                    selectedButton.map((data,index)=>(
+                                        <SkillButton key={index} text={data} setSelectedButton={setSelectedButton} selectedButton={selectedButton}   flag="true" />
+                                    ))
+                                  }
+                              </View>
+                    
+                </View>
+              )
+            }
+            <Text style={[tw` mt-7 text-xl  `,{fontFamily:"MadimiOne"}]}>Popular Skill For Full Stack Developer </Text>
+          
+              <View style={tw` flex flex-row max-w-[97%] gap-1  flex-wrap`}>
+                  {
+                    SkillRequired.map((data,index)=>(
+                        <SkillButton key={index} text={data.name}  setSelectedButton={setSelectedButton}  selectedButton={selectedButton}  flag="false"/>
+                    ))
+                  }
+              </View>
+          
+        </ScrollView>
+        {/*spinner*/}
+        <Spinner
+          visible={loading}
+        />
+
        </View>
-       <View style={{marginTop:70, borderTopWidth: 1, borderTopColor: '#E5E7EB',padding:10,display:'flex',flexDirection:'row', justifyContent:'space-between' }}>
+       <View style={{ borderTopWidth: 1, borderTopColor: '#E5E7EB',padding:10,display:'flex',flexDirection:'row', justifyContent:'space-between' }}>
             <TouchableOpacity>
                  <Text style={tw` border border-gray-300 p-2 rounded-full px-5`}>Back</Text>
             </TouchableOpacity>
