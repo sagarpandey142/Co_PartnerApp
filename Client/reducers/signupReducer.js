@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     data: {},
-    skill: []
+    skill: [],
+    desc: []
 };
 
 const signupSlice = createSlice({
@@ -14,9 +15,13 @@ const signupSlice = createSlice({
         },
         updateSkill: (state, action) => {
             state.skill = action.payload
+        },
+        updateDesc : (state,action) =>{
+            state.desc = action.payload
+            console.log("redux", state.desc)
         }
     }
 });
 
-export const { updateSignupData, updateSkill } = signupSlice.actions;
+export const { updateSignupData, updateSkill, updateDesc } = signupSlice.actions;
 export default signupSlice.reducer;

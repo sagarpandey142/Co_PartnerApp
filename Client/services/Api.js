@@ -10,5 +10,6 @@ exports.SignupRoute={
 }
 
 exports.projectsRoute={
-    project: "http://10.6.135.17:4000/v1/projects/findProjects"
+    project: "http://10.6.135.17:4000/v1/projects/findProjects",
+    projectByName : "http://10.6.135.17:4000/v1/projects/findProjectByProjectName"
 }
