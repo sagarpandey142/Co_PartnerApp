@@ -60,27 +60,26 @@ exports.GetOtp = async (req, res) => {
 
 exports.verifyOtp = async (req, res) => {
   try {
-    console.log("hii")
+    
      const { Email, user_Otp } = req.body;
-    console.log("email",Email)
      const OtpModel = await Otp.findOne({ Email: Email }).sort({ createdAt: -1 }).exec();
-     console.log(OtpModel)
      if (!OtpModel) {
         return res.status(404).json({
            success: false,
            message: "No OTP found for the provided email.",
         });
      }
-     console.log("data",user_Otp,OtpModel.otp)
-     if (user_Otp != OtpModel.otp) {
+     console.log("data", typeof( parseInt(user_Otp)),typeof(OtpModel.otp))
+     if ( parseInt(user_Otp) !== OtpModel.otp) {
         return res.status(200).json({
            success: false,
            message: "OTP doesn't match.",
         });
      }
-
+    console.log("done")
      return res.status(200).json({
         success: true,
+        matched:true,
         message: "OTP matched successfully.",
      });
   } catch (error) {

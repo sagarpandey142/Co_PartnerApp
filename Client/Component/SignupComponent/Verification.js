@@ -15,13 +15,12 @@ const Verification = () => {
   const[loading,setLoading]=useState(false);
   const navigate = useNavigation();
   const { data } = useSelector((state) => state.signup);
-
+  
   const handleOTPChange = (code) => {
     setOtp(code);
   };
 
-  const email = data.email;
- 
+  const email = data.Email;
 
   const [fontsLoaded, error] = useFonts({
     MadimiOne: require("../../assets/Fonts/2V0YKIEADpA8U6RygDnZZFQoBoHMd2U.ttf"),
@@ -41,8 +40,8 @@ const Verification = () => {
     setLoading(true);
     const response = await verifyOTP(email, otp);
     setLoading(false);
-
-    if (response.statusText === 'OK') {
+    console.log("first")
+    if (response.data.matched ===true) {
       navigate.navigate?.('ProffesionalInfo');
     } else{
        alert("Otp Dosen't Match")

@@ -13,6 +13,8 @@ import Verification from "./Component/SignupComponent/Verification"
 import Skill from './Component/SignupComponent/Skill';
 import { ToastContainer } from 'react-native-toast-message';
 import Login from './Component/LoginComponent/Login';
+import TitlePage from './Component/Pages/CreateProject/TitlePage';
+import Index from './Component/Pages/CreateProject/Index';
 
 
 
@@ -24,8 +26,7 @@ export default function App() {
  
     <Provider store={store}>
           <NavigationContainer>
-
-           <Stack.Navigator initialRouteName="GetStarted" screenOptions={{ headerShown: false }}>
+           <Stack.Navigator initialRouteName="Create" screenOptions={{ headerShown: false }}>
               <Stack.Screen name="Signup" component={Signup}/>
                <Stack.Screen name="Verification" component={Verification}/> 
               <Stack.Screen name="GetStarted" component={GetStarted}/>
@@ -33,8 +34,8 @@ export default function App() {
               <Stack.Screen name="userBio" component={UserBio}/>
               <Stack.Screen name="Skill" component={Skill}/> 
               <Stack.Screen name='HomePage' component={HomePage}/>
-              <Stack.Screen name="Login" component={Login}/>
-              
+              <Stack.Screen name="Login" component={Login}/>    
+              <Stack.Screen name="Create" component={Index}/>          
           </Stack.Navigator>
        
           </NavigationContainer>

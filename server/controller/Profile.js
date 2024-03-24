@@ -70,3 +70,16 @@ exports.DeleteProfile=async(req,res)=>{
     }
 }
 
+// find by id
+exports.FindById=async(req,res)=>{
+    try{
+       console.log("req",req.body);
+       const {id} =req.body
+       const response=await Project.findById("65fd86417aa3f5be1848489a")
+       console.log("res",response)
+
+       return response
+    } catch(error){
+       console.log("error",error)
+    }
+}

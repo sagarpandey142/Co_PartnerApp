@@ -10,7 +10,6 @@ const Project=mongoose.Schema({
         type:Array,
         required:true,
      },
-    
 })
 
 module.exports=mongoose.model("Project",Project)
