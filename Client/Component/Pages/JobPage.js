@@ -90,8 +90,8 @@ const JobPage = () => {
       <MainHeader mainName="CoPartner" nameHeader="" icon1="" icon2="notifications" />
       <ScrollView>
         <View>
-          <View style={[tw`flex flex-row  w-11/12 mx-auto justify-between`, {}]}>
-             <TextInput placeholder='       Search for jobs' style={tw` border-[2px] border-gray-300 p-2 rounded-full w-[80%]`}/>
+          <View style={[tw`flex flex-row w-11/12 mx-auto justify-between`, {}]}>
+             <TextInput placeholder='Search for jobs' style={tw` border-[2px] border-gray-300 p-2 rounded-full w-[80%]`}/>
             <MaterialCommunityIcons name="heart-circle-outline" size={24} color="black" style={[tw`flex items-center text-5xl text-green-600`, {}]} />
           </View>
           <View style={[tw`mx-4 mt-5`]} />
