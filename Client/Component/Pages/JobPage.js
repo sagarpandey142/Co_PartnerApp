@@ -11,7 +11,8 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native'
 import { updateDesc } from '../../reducers/signupReducer';
-
+import { MaterialIcons } from '@expo/vector-icons';
+import { Octicons } from '@expo/vector-icons';
 
 const JobPage = () => {
 
@@ -21,6 +22,7 @@ const JobPage = () => {
   const [state, setState] = useState([]);
   const [expandedDescriptions, setExpandedDescriptions] = useState({});
   const [showAllSkills, setShowAllSkills] = useState(false);
+  const [verified, setVerified] = useState(false);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   
@@ -86,7 +88,7 @@ const JobPage = () => {
       <MainHeader mainName="CoPartner" nameHeader="" icon1="" icon2="notifications" />
       <ScrollView>
         <View>
-          <View style={[tw`flex flex-row mx-auto`, {}]}>
+          <View style={[tw`flex flex-row ml-6`, {}]}>
             <View style={[tw`flex flex-row items-center border border-gray-300 rounded-full h-10 px-25 mr-4`, {}]}>
               <AntDesign name="search1" size={24} color="black" style={[tw`mr-2`]} />
               <TextInput placeholder="Search for jobs" style={[tw`flex-1`, {}]} />
@@ -95,30 +97,30 @@ const JobPage = () => {
           </View>
           <View style={[tw`mx-4 mt-5`]} />
          
-          <View style={[tw`flex border-b border-gray-400 flex-row gap-3 mx-auto m-2 mt-3`, {}]}>
-            <TouchableOpacity onPress={toggleMyFeed} style={[myFeed && tw`border-b border-green-700`]}>
-              <Text style={[tw`text-xl text-gray-400 pb-1`, myFeed && tw`text-green-700`,{fontFamily:'MadimiOne'}]}>My Feed</Text>
+          <View style={[tw`flex  flex-row gap-3 mx-auto mt-3 p-3`, {}]}>
+            <TouchableOpacity onPress={toggleMyFeed} style={[myFeed && tw`border-b-2 border-green-700`]}>
+              <Text style={[tw`text-lg text-gray-400 font-semibold pb-1`, myFeed && tw`text-semibold text-green-600`]}>{'My Feed'}</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={toggleMatches} style={[matches && tw`border-b border-green-700`]}>
-              <Text style={[tw`text-xl font-semibold text-gray-400 pb-1`, matches && tw`text-green-700`,{fontFamily:'MadimiOne'}]}>Best Matches</Text>
+            <TouchableOpacity onPress={toggleMatches} style={[matches && tw`border-b-2 border-green-700`]}>
+              <Text style={[tw`text-lg font-semibold text-gray-400 pb-1`, matches && tw`text-green-600 font-semibold`]}>{'Best Matches'}</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={toggleRecent} style={[recent && tw`border-b border-green-700`]}>
-              <Text style={[tw`text-xl font-semibold text-gray-400 pb-1`, recent && tw`text-green-700`,{fontFamily:'MadimiOne'}]}>Most Recent</Text>
+            <TouchableOpacity onPress={toggleRecent} style={[recent && tw`border-b-2 border-green-700`]}>
+              <Text style={[tw`text-lg font-semibold text-gray-400 pb-1`, recent && tw`text-green-600 font-semibold`]}>{'Most Recent'}</Text>
             </TouchableOpacity>
           </View>
           {myFeed && (
-            <View style={[tw`mt-2 p-4 flex flex-row justify-between mb-20`, { width: '100%' }]}>
+            <View style={[tw`mt-2 pl-4 flex flex-row justify-between mb-20`, { width: '100%' }]}>
 
-              <View style={[tw`flex-1 border-b border-gray-400 p-3`]}>
+              <View style={[tw`flex-1 p-3`]}>
                 {state?.map((project, index) => (
                     <View key={index}>
                     <TouchableOpacity onPress={() => handleDesc(project.projectName, project.projectDescription,project.Skill)}>
                     <Text style={[tw`text-slate-700 text-xs`]}>Posted 59 mins ago</Text>
-                        <Text style={[tw`text-lg font-semibold`,{fontFamily:'MadimiOne'}]}>{project.projectName}</Text>
-                        <Text style={[tw`p-3`]}>Fixed price - intermediate - Est,Budget: $50</Text>
+                        <Text style={[tw`text-lg font-bold text-[#334155]`]}>{project.projectName}</Text>
+                        <Text style={[tw`pt-3 text-gray-500`]}>Fixed price - intermediate - Est,Budget: $50</Text>
                      </TouchableOpacity>
                         <TouchableOpacity onPress={() => handleDesc(project.projectName, project.projectDescription,project.Skill)}>
-                            <Text numberOfLines={expandedDescriptions[index] ? undefined : 3} style={[tw`text-base text-gray-700 pt-5 `, {}]}>
+                            <Text numberOfLines={expandedDescriptions[index] ? undefined : 3} style={[tw`text-base text-[#020617] pt-5`, {}]}>
                             {project.projectDescription}
                             </Text>
                         </TouchableOpacity>
@@ -131,11 +133,14 @@ const JobPage = () => {
                             {project.Skill &&
                                 (showAllSkills ? (
                                 project.Skill.map((skill, skillIndex) => (
-                                    <View key={skillIndex} style={[tw`flex flex-row items-center`]}>
-                                    <Text style={[tw`bg-gray-200 rounded-full px-3 py-2`]}>
-                                        {skill}
-                                    </Text>
-                                    </View>
+                                    
+                                    <TouchableOpacity key={skillIndex}
+                                          style={[
+                                            tw` bg-gray-300 gap-3 text-[#e2e8f0] px-5 py-1 rounded-full flex items-center mt-4`
+                                          ]}
+                                        >{skill}
+                                        </TouchableOpacity>
+                                    
                                 ))
                                 ) : (
                                 project.Skill.slice(0, 3).map((skill, skillIndex) => (
@@ -151,6 +156,17 @@ const JobPage = () => {
                                 <AntDesign name={showAllSkills ? "upcircleo" : "downcircleo"} size={24} color="black" />
                                 </TouchableOpacity>
                             )}
+                            <View style={[tw`flex flex-row items-center`, {}]}>
+                                {
+                                  verified ? (
+                                    <MaterialIcons name="verified-user" size={24} color="black" style={[tw`flex items-center mr-2 text-slate-500 text-base`]}/>
+                                  ) : (
+                                    <Octicons name="unverified" size={24} color="black" style={[tw`flex items-center mr-2 text-gray-500 text-base`]}/>
+                                  )
+                                }
+                                <Text style={[tw`text-gray-500 font-semibold`]}>User Verified</Text>
+                            </View>
+                            <View style={[tw`border-b border-gray-400 w-full`]}/>
                         </View>
                     </View>
                 ))}

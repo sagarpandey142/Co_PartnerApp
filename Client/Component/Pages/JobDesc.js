@@ -6,7 +6,7 @@ import { useFonts } from 'expo-font';
 import tw from 'twrnc'
 import MainHeader from '../Common/MainHeader';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Footer from '../Common/Footer'
+import { AntDesign } from '@expo/vector-icons';
 
 const JobDesc = ({ projectName, projectDescription, Skill}) => {
   console.log("pname", projectName, projectDescription, Skill)
@@ -41,9 +41,13 @@ const JobDesc = ({ projectName, projectDescription, Skill}) => {
     <View style={[tw``]}>
         <MainHeader mainName="CoPartner" nameHeader="" icon1="" icon2="notifications" />
         <ScrollView>
-            <View style={[tw`flex mx-auto justify-between mt-4 items-center ml-3 w-10/12 mb-4 border `]}>   
-              <Text style={[tw`text-3xl mb-3`,{fontFamily:'MadimiOne'}]}>{desc.projectName}</Text>
-              <Text style={[tw`text-base`,{fontFamily:'TwinkleStar'}]}>{desc.projectDescription}</Text>
+            <View style={[tw`flex mt-4 ml-3 w-10/12 mb-4 border ml-4`]}>   
+              <Text style={[tw`text-lg font-bold mb-3`]}>{desc.projectName}</Text>
+              <View style={[tw`border-b border-gray-400 w-full mt-2 mb-2`]}/>
+              <Text style={[tw`text-slate-400 `]}>Posted 43 mins ago</Text>
+              <View style={[tw`border-b border-gray-400 w-full mt-2 mb-2`]}/>
+              <Text style={[tw`text-base`]}>{desc.projectDescription}</Text>
+              <View style={[tw`border-b border-gray-400 w-full mt-2 mb-2`]}/>
               <View style={[tw`flex flex-row items-center border w-[90%] mb-50`]}>
                     {
                       desc.Skill?.map((skill, index)=>(
@@ -57,7 +61,16 @@ const JobDesc = ({ projectName, projectDescription, Skill}) => {
               </View>
             </View>
         </ScrollView>
-        <Footer button1Text="Chat Now" button2Text="Save Post" reducerName="signup" data="" navigate="./"/>
+        <View style={[tw`flex flex-row mx-auto absolute inset-x-0 bottom-0`]}>
+          <TouchableOpacity>
+            <Text style={[tw`bg-green-700 rounded-full text-lg text-white text-semibold px-10 py-2`]}>Chat Now</Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+          <Text style={[tw`flex gap-5 ml-3 items-center border-2 text-lg text-green-600 border-green-700 rounded-full text-bold px-8 py-2`]}>
+            <AntDesign name="hearto" size={24} color="black"  style={[tw`mr-10 text-lg text-green-700`]}/>
+            Save Post</Text>
+          </TouchableOpacity>
+        </View>
     </View>
   );
 };

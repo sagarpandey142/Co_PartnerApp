@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
 import store from './store/configureStore'; 
+import Signup from './Component/SignupComponent/Signup';
+import professionalRole from './reducers/professionalRole';
 import JobPage from './Component/Pages/JobPage';
 import JobDesc from './Component/Pages/JobDesc';
 // import Signup from './Component/SignupComponent/Signup';
@@ -36,7 +38,7 @@ export default function App() {
                   <Stack.Screen name="Skill" component={Skill}/> 
                   <Stack.Screen name='HomePage' component={HomePage}/>
                   <Stack.Screen name="Login" component={Login}/> */}
-                  <Stack.Screen name="JobPage" component={JobPage}/>
+                  {/* <Stack.Screen name="JobPage" component={JobPage}/> */}
                   <Stack.Screen name="JobDesc" component={JobDesc}/>
                   
                </Stack.Navigator> 
