@@ -1,7 +1,7 @@
 exports.generateVerifyOTP = {
-    generateOTP : "http://10.6.135.17:4000/v1/getOtp",
-    verifyOTP : "http://10.6.135.17:4000/v1/verifyOtp",
-    login : "http:// 10.6.135.17:4000/v1/login"
+    generateOTP : "http://192.168.79.20:4000/v1/getOtp",
+    verifyOTP : "http://192.168.79.20:4000/v1/verifyOtp",
+    login : "http:// 192.168.79.20:4000/v1/login"
 
 }
 
@@ -10,6 +10,6 @@ exports.SignupRoute={
 }
 
 exports.projectsRoute={
-    project: "http://10.6.135.17:4000/v1/projects/findProjects",
-    projectByName : "http://10.6.135.17:4000/v1/projects/findProjectByProjectName"
+    project: "http://192.168.79.20:4000/v1/projects/findProjects",
+    projectByName : "http://192.168.79.20:4000/v1/projects/findProjectByProjectName"
 }

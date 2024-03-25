@@ -1,24 +1,44 @@
 import React, { useState } from 'react';
-import { View, Text } from "react-native";
+import { View, Text, ScrollView ,TouchableOpacity} from "react-native";
 import tw from "twrnc";
 import CheckBox from "expo-checkbox"; 
 import Navbar from '../../Common/Navbar';
 import { useFonts } from 'expo-font';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
+import { updateBasicDetail, updateStep } from '../../../reducers/CreateProject';
 
 const ScopeView = () => {
   const [projectLength, setProjectLength] = useState("");
+  const[toggle,setToggle]=useState()
   const[spanPeriod,setSpanPeriod]=useState("");
+  const[LevelExperience,setLevelExperience]=useState("")
   const[chance,setChance]=useState("");
+  const dispatch=useDispatch();
   
   const [fontsLoaded] = useFonts({
     MadimiOne: require('../../../assets/Fonts/2V0YKIEADpA8U6RygDnZZFQoBoHMd2U.ttf'),
     TwinkleStar: require('../../../assets/Fonts/-W_oXI_oSymQ8Qj-Apx3HGN_Hu1RTCk5FtSDETgf0cK_NOeFgpRt9rN5.ttf'),
   });
+
+  async function setBasicDetailState(){
+     const data1={
+        ...projectLength,...spanPeriod,...LevelExperience
+     }
+     console.log("data1",data1)
+     const data={
+       projectLength,
+       spanPeriod,
+       LevelExperience
+     }
+      dispatch(updateStep(5));
+      dispatch(updateBasicDetail(data))
+  }
   
   return (
     <View style={tw`h-[100%] mt-3`}>
       <Navbar />
+    <ScrollView style={tw` max-h-[77%]`}>
       <View style={tw`w-11/12 mx-auto`}>
         <Text style={[tw`mt-7 text-2xl`, { fontFamily: "MadimiOne" }]}>
           Could you please describe the scope of your work?
@@ -94,9 +114,13 @@ const ScopeView = () => {
                     "Span Period of 1 to 3 months (e.g., create logos for new Brands)"}
                 </Text>
                 </View>
-                <View style={tw` border-[3px] border-gray-300 rounded-full p-2`}>
+                <TouchableOpacity onPress={()=>{
+                   setChance(1),
+                   setProjectLength("");
+                   setSpanPeriod("");
+                }} style={tw` border-[3px] border-gray-300 rounded-full p-2`}>
                   <FontAwesome5 name="pencil-alt" size={17} color="#15803d" />
-                </View>
+                </TouchableOpacity>
             </View>
         )}
         {
@@ -154,6 +178,75 @@ const ScopeView = () => {
              </View>
           )
         }
+        {
+          (chance===3) && (
+            <View style={tw` mt-5`}>
+                  <Text style={[tw`text-xl`, { fontFamily: "MadimiOne" }]}>What level of experience will it need?</Text>
+                  <Text style={tw` text-slate-500 text-[17px] mt-2`}>This won't restrict any thing.But helps match expertise level of your projects.</Text>
+                  <ScrollView>
+                    <View>
+                          {/* entry */}
+                  <View style={tw`flex-row items-center gap-2 `}>
+                    <CheckBox
+                      value={LevelExperience === "entry"}
+                      onValueChange={() =>{
+                        setLevelExperience("entry")
+                       
+                      }}
+                      style={tw`rounded-full px-2`}
+                    />
+                    <View style={tw`mt-8`}>
+                      <Text style={[tw`text-lg ml-2`, { fontFamily: "MadimiOne" }]}>Entry</Text>
+                      <Text style={[tw`ml-2 text-slate-500 max-w-[90%] text-[15px]`, {}]}>Looking For someone relatively new to this field</Text>
+                    </View>
+                  </View>
+
+                  {/* intermediate */}
+                  <View style={tw`flex-row items-center gap-2 mt-3`}>
+                    <CheckBox
+                      value={LevelExperience === "intermediate"}
+                      onValueChange={() =>{
+                        setLevelExperience("intermediate")
+                
+                      }}
+                      style={tw`rounded-full px-2`}
+                    />
+                    <View style={tw`mt-5`}>
+                      <Text style={[tw`text-lg ml-2`, { fontFamily: "MadimiOne" }]}>Intermediate</Text>
+                      <Text style={[tw`ml-2 text-slate-500 max-w-[80%] text-[15px]`, {}]}>Looking for substantial experience in this field.</Text>
+                    </View>
+                  </View>
+
+                  {/* Expierence */}
+                  <View style={tw`flex-row items-center gap-2 mt-3`}>
+                    <CheckBox
+                      value={LevelExperience === "Expierence"}
+                      onValueChange={() =>{
+                        setLevelExperience("Expierence")
+            
+                      }}
+                      style={tw`rounded-full px-2`}
+                    />
+                    <View style={tw`mt-5`}>
+                      <Text style={[tw`text-lg ml-2`, { fontFamily: "MadimiOne" }]}>Expierence</Text>
+                      <Text style={[tw`ml-2 text-slate-500 max-w-[81.7%] text-[15px]`, {}]}>Looking For deep Knowledge In This Field</Text>
+                    </View>
+                  </View>
+            
+                  </View>
+                </ScrollView>
+            </View>
+          )
+        }
+      </View>
+    </ScrollView>
+      <View style={{ borderTopWidth: 1, borderTopColor: '#E5E7EB',padding:10,display:'flex',flexDirection:'row', justifyContent:'space-between' }}>
+            <TouchableOpacity>
+                 <Text style={tw` border border-gray-300 p-2 rounded-full px-5`}>Back</Text>
+            </TouchableOpacity>
+            <TouchableOpacity  onPress={setBasicDetailState}>
+                 <Text style={tw` bg-green-600 p-3 px-6 rounded-full text-white font-bold`}>Next : Description</Text>
+            </TouchableOpacity>
       </View>
     </View>
   );

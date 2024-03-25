@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import TitlePage from './TitlePage';
 import SkillsPage from './SkillsPage';
 import ScopeView from './ScopeView';
+import Conversation from './Conversation';
 
 const Index = () => {
     const{step}=useSelector((state)=>state.createProject);
@@ -22,6 +23,11 @@ const Index = () => {
          {
             step==3 && (
                <ScopeView/>
+            )
+         }
+         {
+            step==5 && (
+               <Conversation/>
             )
          }
     </View>

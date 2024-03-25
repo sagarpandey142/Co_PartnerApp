@@ -18,7 +18,6 @@ const signupSlice = createSlice({
         },
         updateDesc : (state,action) =>{
             state.desc = action.payload
-            console.log("redux", state.desc)
         }
     }
 });

@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     step:1,
     title:"",
-    skills:[]
+    skills:[],
+    BasicDetail:{}
 }
 
 const CreateProject = createSlice({
@@ -19,8 +20,11 @@ const CreateProject = createSlice({
     updateSkills:(state,data)=>{
         state.skills=data.payload
     },
+    updateBasicDetail:(state,data)=>{
+        state.BasicDetail=data.payload
+    }
     }
 });
 
-export const {updateStep, updateTitle,updateSkills} = CreateProject.actions;
+export const {updateStep, updateTitle,updateSkills,updateBasicDetail} = CreateProject.actions;
 export default CreateProject.reducer;

@@ -55,7 +55,7 @@ const SkillsPage = () => {
             <Image source={image1} style={{color:"gray", height: 18,width:18 }} />
              <Text style={tw` text-slate-500`}>For The Best Results, add 2-5 Skills</Text>
         </View>
-        <ScrollView style={tw`h-[47%]`}>
+        <ScrollView style={tw`h-[47%] `}>
             { 
               selectedButton.length>0 && (
                 <View >
