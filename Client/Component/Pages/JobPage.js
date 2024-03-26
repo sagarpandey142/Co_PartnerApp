@@ -61,9 +61,7 @@ const JobPage = () => {
 
   const func = async () => {
     const variable = await ProjectsHandler();
-    console.log('yeee', variable?.data?.projects[7]?.Skill.length);
     setState(variable?.data?.projects);
-    console.log('state', state);
   };
 
   useEffect(() => {
@@ -71,7 +69,6 @@ const JobPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log('Updated state:', state);
   }, [state]);
 
   const [fontsLoaded] = useFonts({
@@ -79,7 +76,6 @@ const JobPage = () => {
     TwinkleStar: require("../../assets/Fonts/X7nP4b87HvSqjb_WIi2yDCRwoQ_k7367_B-i2yQag0-mac3OryLMFuOLlNldbw.ttf")
   });   
   const handleDesc = (projectName, projectDescription, Skill) =>{
-    console.log("name", projectName, projectDescription, Skill)
     dispatch(updateDesc({ projectName, projectDescription, Skill }));
     navigation.navigate('JobDesc');
   }

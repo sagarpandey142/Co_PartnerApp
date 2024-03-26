@@ -5,6 +5,7 @@ import tw from 'twrnc';
 import { login } from '../../services/operations/generate&verifyOTP';
 import { useNavigation } from '@react-navigation/native';
 import signinImages from "../../assets/loginim.png"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
   const [fontsLoaded] = useFonts({
@@ -23,6 +24,9 @@ const Login = () => {
     }
    
     const response = await login(email, password);
+    console.log("res",response.data.token);
+    const res=await AsyncStorage.setItem('token',response.data.token)
+    console.log("res",res)
     navigate.navigate?.('HomePage');
   };
 

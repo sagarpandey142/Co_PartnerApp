@@ -12,7 +12,7 @@ router.delete('/projects/deleteProject/:projectId', projectController.deleteProj
 
 router.get('/projects/listProjects', projectController.list);
 
-router.post('/projects/addProject', projectController.addProject);
+router.post('/projects/addProject', projectController.AddProject);
 
 module.exports = router;
 

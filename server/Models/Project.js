@@ -6,6 +6,12 @@ const projectSchema = new Schema({
   profileId: { type: Schema.Types.ObjectId, ref: 'Profile', required: true },
   projectName: { type: String, required: true },
   projectDescription: { type: String, required: true },
+  Skill: { type: Array, required: true },
+  BasicDetail:{type:Object,required:true},
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  }
 });
 
 const Project = mongoose.model('Project', projectSchema);

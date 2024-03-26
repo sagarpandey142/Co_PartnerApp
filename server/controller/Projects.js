@@ -7,10 +7,8 @@ const Profile = require("../Models/Profile")
 async  function findProjects(req, res){
   try {
 
-    // const projects = await Project.findById("65fd86417aa3f5be1848489a");
     const response=await Project.find({})
-    console.log("res", response)
-    
+
     return res.status(200).json({
       success: true,
       message: "Projects retrieved successfully",
@@ -28,7 +26,6 @@ async  function findProjects(req, res){
 async function findProjectByProjectName(req,res){
   try{
     const {projectName} = req.body;
-    console.log("projectname", projectName)
     const response = await Project.findOne({projectName:projectName});
     return res.status(200).json({
       success: true,
@@ -88,8 +85,7 @@ async function updatedProject (req, res)  {
 async function deleteProject(req, res) {
     try {
       const { projectId } = req.params;
-      console.log("id", projectId)
-  
+     
       if (!projectId) {
         return res.status(400).json({
           success: false,
@@ -163,11 +159,11 @@ async function list(_criteria) {
 
 // Assuming you have the necessary imports and setup
 
-async function addProject(req, res){
+async function AddProject(req, res){
   try {
-    const { Email, projectName, projectDescription } = req.body;
-
-    if (!Email || !projectName || !projectDescription) {
+    const {Email, projectName, projectDescription,Skill,BasicDetail } = req.body;
+   console.log("hii")
+    if (!Email || !Skill || !projectName || !projectDescription || !BasicDetail) {
       return res.status(400).json({
         message: "Email, projectName, and projectDescription are required",
       });
@@ -188,6 +184,8 @@ async function addProject(req, res){
       profileId: profile._id,
       projectName: projectName,
       projectDescription: projectDescription,
+      Skill: Skill,
+      BasicDetail: BasicDetail,
     });
 
     const user = await User.findOne({
@@ -220,7 +218,7 @@ module.exports = {
   updatedProject,
   findProjects,
   deleteProject,
-  addProject,
+  AddProject,
   findProjectByProjectName
 };
 

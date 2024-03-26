@@ -169,7 +169,7 @@ exports.signup = async (req, res) => {
 
 exports.login=async(req,res)=>{
   try{
-    console.log("login back k andar")
+    
      
       const {email,password}=req.body;
       console.log("email pass", email, password)

@@ -10,6 +10,6 @@ exports.navigateArray=[
      
     {index:0,navigate:"HomePage"},
     {index:1,navigate:"HomePage"},
-    {index:2,navigate:"HomePage"},
+    {index:2,navigate:"Index"},
     {index:3,navigate:"HomePage"},
 ]

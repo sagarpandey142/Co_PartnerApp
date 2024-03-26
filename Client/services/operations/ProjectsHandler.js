@@ -5,7 +5,6 @@ import { projectsRoute } from '../Api';
 exports.ProjectsHandler = async() => {
        try{
             const response = await axios.get(projectsRoute.project);
-            console.log("res", response)
             if(response){
                 return response;
             }
@@ -17,11 +16,23 @@ exports.ProjectsHandler = async() => {
 exports.ProjectsByNameHandler = async(projectName) => {
     try{
          const response = await axios.post(projectsRoute.projectByName, projectName);
-         console.log("res", response)
          if(response){
              return response;
          }
     }catch(error){
      console.log("error", error);
+    }
+}
+
+exports.createProjectHandler=async(data)=>{
+    try{
+         console.log("come",data)
+        const response = await axios.post(projectsRoute.createProject, data);
+        console.log("res", response)
+        if(response){
+            return response;
+        }
+    } catch(error){
+        console.log("error", error);
     }
 }
