@@ -12,12 +12,9 @@ import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native'
 import { updateDesc } from '../../reducers/signupReducer';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Octicons } from '@expo/vector-icons';
-import { EvilIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-
-
+import { Entypo,FontAwesome6 } from '@expo/vector-icons';
+import { jobsHandler } from '../../services/operations/JobsHandler';
 
 const JobPage = () => {
 
@@ -30,7 +27,31 @@ const JobPage = () => {
   const [verified, setVerified] = useState(false);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const [jobs, setJobs] = useState([]);
+  const [expandedDescriptionIndex, setExpandedDescriptionIndex] = useState(null);
   
+  const findSavedJobs = async () => {
+    try {
+      const response = await jobsHandler();
+      console.log("response", response.data.savedJobs[0]);
+      setJobs(response.data.savedJobs);
+      console.log("jobs",typeof(jobs))
+    } catch (error) {
+      console.log("error", error.message);
+    }
+  }
+
+  useEffect(() => {
+    findSavedJobs();
+  }, []);
+
+  useEffect(()=>{
+    console.log("updated jobs",jobs);
+  },[jobs])
+
+  const toggleDesc = (index) => {
+    setExpandedDescriptionIndex(expandedDescriptionIndex === index ? null : index);
+  };
 
   const toggleMyFeed = () => {
     setMyFeed(!myFeed);
@@ -95,8 +116,7 @@ const JobPage = () => {
             <MaterialCommunityIcons name="heart-circle-outline" size={24} color="black" style={[tw`flex items-center text-5xl text-green-600`, {}]} />
           </View>
           <View style={[tw`mx-4 mt-5`]} />
-         
-          <View style={[tw`flex border-b-2 border-gray-200  flex-row gap-5 mx-auto mt-3 p-3`, {}]}>
+          <View style={[tw`flex flex-row gap-5 mx-auto mt-3 p-3`, {}]}>
             <TouchableOpacity onPress={toggleMyFeed} style={[myFeed && tw`border-b-2 border-green-700`]}>
               <Text style={[tw`text-lg text-gray-400 font-semibold pb-1`, myFeed && tw`text-semibold text-green-600`]}>{'My Feed'}</Text>
             </TouchableOpacity>
@@ -107,6 +127,7 @@ const JobPage = () => {
               <Text style={[tw`text-lg font-semibold text-gray-400 pb-1`, recent && tw`text-green-600 font-semibold`]}>{'Most Recent'}</Text>
             </TouchableOpacity>
           </View>
+
           {myFeed && (
             <View style={[tw`mt-2 pl-4 flex flex-row justify-between mb-20`, { width: '100%' }]}>
 
@@ -176,14 +197,64 @@ const JobPage = () => {
                           
                         </View>
                 ))}
-              </View>
-
-
-              
+              </View>  
             </View>
           )}
-          {matches && <View style={[tw`border border-gray-300 mx-4 mt-2 p-4`, {}]}>{'matches'}</View>}
-          {recent && <View style={[tw`border border-gray-300 mx-4 mt-2 p-4`, {}]}>{'recent'}</View>}
+
+          {matches && (
+            <View style={[tw`mx-auto mt-5 pl-4 w-[100%] p-2 pr-3`]}>
+              <Text style={[tw`text-slate-500 text-xs ml-4`]}>Posted 8 hours ago</Text>
+              <View style={[tw`mt-2 pl-4 flex flex-row justify-between mb-20`, { width: '100%' }]}>
+                  {
+                    jobs.map((save, index)=>(
+                      <View key={index}>
+                      <View style={tw`  flex flex-row justify-between `}>
+                          <Text style={[tw`text-lg font-bold text-[#334155]`]}>{save.name}</Text>
+                          <View style={tw` flex flex-row gap-4 `}>
+                              <Feather name="thumbs-down" size={24} color="#15803d" />
+                              <AntDesign name="hearto" size={24} color="#15803d" />
+                          </View>
+                      </View>
+                          <Text style={[tw`pt-3 text-gray-500`]}>Fixed price - intermediate - Est,Budget: $50</Text>
+                          <Text style={[tw`text-base text-[#020617] pt-5`, {}]}>{save.desc}</Text>
+                          <View style={[tw`flex flex-row mt-2`]}>
+                              <MaterialIcons name="verified" size={24} color="black" style={[tw`mr-1 text-gray-500 text-lg`]}/>
+                              <Text style={[tw`text-gray-500 font-semibold mt-1`]}> User Verified</Text>
+                              </View>
+                          </View>
+                    ))
+                  }
+              </View>
+            </View>
+          )}
+          
+          {recent && (
+            <View style={[tw`mx-auto mt-5 pl-4 w-[100%] p-2 pr-3`]}>
+            <Text style={[tw`text-slate-500 text-xs ml-4`]}>Posted 9 hours ago</Text>
+                <View style={[tw`mt-2 pl-4 flex flex-row justify-between mb-20`, { width: '100%' }]}>
+                  {jobs
+                    .sort((a, b) => new Date(b.datePosted) - new Date(a.datePosted)) // Sort jobs by datePosted in descending order
+                    .map((save, index) => (
+                      <View key={index}>
+                        <View style={tw`  flex flex-row justify-between `}>
+                          <Text style={[tw`text-lg font-bold text-[#334155]`]}>{save.name}</Text>
+                          <View style={tw` flex flex-row gap-4 `}>
+                            <Feather name="thumbs-down" size={24} color="#15803d" />
+                            <AntDesign name="hearto" size={24} color="#15803d" />
+                          </View>
+                        </View>
+                        <Text style={[tw`pt-3 text-gray-500`]}>Fixed price - intermediate - Est,Budget: $50</Text>
+                        <Text style={[tw`text-base text-[#020617] pt-5`, {}]}>{save.desc}</Text>
+                        <View style={[tw`flex flex-row mt-2`]}>
+                          <MaterialIcons name="verified" size={24} color="black" style={[tw`mr-1 text-gray-500 text-lg`]}/>
+                          <Text style={[tw`text-gray-500 font-semibold mt-1`]}> User Verified</Text>
+                        </View>
+                      </View>
+                    ))}
+                </View>
+            </View>
+          )}
+
         </View>
       </ScrollView>
     </View>
