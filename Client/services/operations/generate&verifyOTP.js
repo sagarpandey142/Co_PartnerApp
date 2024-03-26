@@ -32,3 +32,11 @@ exports.login = async(email, password) => {
     }
 }
 
+exports.DecodedTokenHandler=async(token)=>{
+    try{
+    const response=await axios.post(generateVerifyOTP.DecodedApi,{token});
+    return response
+    } catch(error){
+         console.log("error",error)
+    }
+}

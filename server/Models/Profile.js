@@ -30,6 +30,10 @@ const ProfileSchema=mongoose.Schema({
       type:String,
       required:true
      },
+   //   Job:[{
+   //    type:mongoose.Schema.Types.ObjectId,
+   //    ref:'Job',
+   //   }]
     
 },{ timestamps: true })
 

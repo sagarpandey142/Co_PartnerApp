@@ -21,6 +21,7 @@ const TitlePage = () => {
   
     async function setTitleState(){
           setLoading(true)
+          console.log("data",data)
           dispatch(updateTitle(data))
           dispatch(updateStep(2));
           setLoading(false)
@@ -36,7 +37,9 @@ const TitlePage = () => {
             <Text style={[tw` mt-7 text-2xl `,{fontFamily:"MadimiOne"}]}>Let's Start with a beautiful Title.</Text>
             <Text style={[tw` mt-3 max-w-[90%] `,{fontFamily:""}]}>Help your job post stand out: Suggest a project title in 20 words or less. Be concise and creative!</Text>
             <TextInput
-            onChange={(e)=>setData(e)}
+            onChangeText={(e)=>{
+              setData(e)
+            }}
             placeholder='Write a Title For Your Project'
             style={tw` mt-4 w-11/12  border border-b-1 rounded-xl p-2 border-gray-300`}
             />

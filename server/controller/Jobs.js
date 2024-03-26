@@ -1,10 +1,13 @@
-const User = require("../Models/User");
+const Profile = require("../Models/Profile");
 const Job = require("../Models/Job")
 
 exports.getSavedJobs = async (req, res) => {
     try {
+        const {profileId} = req.body; 
+        // const profile = await Profile.find({Email}).populate().exec();
+        // const profileId = profile.map(profile => profile._id);
 
-        const savedJobs = await Job.find({});
+        const savedJobs = await Job.find({profileId}).populate("ProfileId").exec();
 
         console.log("savedJobs", savedJobs)
 

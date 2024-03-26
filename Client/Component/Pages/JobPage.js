@@ -32,8 +32,9 @@ const JobPage = () => {
   
   const findSavedJobs = async () => {
     try {
+      console.log("first")
       const response = await jobsHandler();
-      console.log("response", response.data.savedJobs[0]);
+      console.log("response", response.data.savedJobs);
       setJobs(response.data.savedJobs);
       console.log("jobs",typeof(jobs))
     } catch (error) {
@@ -203,7 +204,7 @@ const JobPage = () => {
 
           {matches && (
             <View style={[tw`mx-auto mt-5 pl-4 w-[100%] p-2 pr-3`]}>
-              <Text style={[tw`text-slate-500 text-xs ml-4`]}>Posted 8 hours ago</Text>
+              <Text style={[tw`text-slate-500 text-xs  ml-4`]}>Posted 8 hours ago</Text>
               <View style={[tw`mt-2 pl-4 flex flex-row justify-between mb-20`, { width: '100%' }]}>
                   {
                     jobs.map((save, index)=>(
@@ -230,7 +231,7 @@ const JobPage = () => {
           
           {recent && (
             <View style={[tw`mx-auto mt-5 pl-4 w-[100%] p-2 pr-3`]}>
-            <Text style={[tw`text-slate-500 text-xs ml-4`]}>Posted 9 hours ago</Text>
+                <Text style={[tw`text-slate-500 text-xs`]}>Posted 9 hours ago</Text>
                 <View style={[tw`mt-2 pl-4 flex flex-row justify-between mb-20`, { width: '100%' }]}>
                   {jobs
                     .sort((a, b) => new Date(b.datePosted) - new Date(a.datePosted)) // Sort jobs by datePosted in descending order
@@ -245,7 +246,7 @@ const JobPage = () => {
                         </View>
                         <Text style={[tw`pt-3 text-gray-500`]}>Fixed price - intermediate - Est,Budget: $50</Text>
                         <Text style={[tw`text-base text-[#020617] pt-5`, {}]}>{save.desc}</Text>
-                        <View style={[tw`flex flex-row mt-2`]}>
+                        <View style={[tw`flex flex-row mt-`]}>
                           <MaterialIcons name="verified" size={24} color="black" style={[tw`mr-1 text-gray-500 text-lg`]}/>
                           <Text style={[tw`text-gray-500 font-semibold mt-1`]}> User Verified</Text>
                         </View>

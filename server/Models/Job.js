@@ -16,7 +16,11 @@ const jobSchema = new mongoose.Schema({
     userVerified:{
         type: Boolean,
         required: true,
-    }
+    },
+    ProfileId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Profile',
+       }
 })
 
 module.exports=mongoose.model("Job",jobSchema)
