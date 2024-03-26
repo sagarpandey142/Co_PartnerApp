@@ -4,7 +4,7 @@ import { jobsRoute } from "../Api";
 
 exports.jobsHandler = async() => {
     try{
-        const response = await axios.get(jobsRoute.getSavedJobs);
+        const response = await axios.post(jobsRoute.getSavedJobs);
         console.log("response of saved jobs", response);
         if(response){
             return response;

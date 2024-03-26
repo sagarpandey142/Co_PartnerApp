@@ -4,6 +4,7 @@ const { dbConnect } = require("./config/DbConnection");
 const Profile = require("./Routes/Profile");
 const User = require("./Routes/User");
 const Project = require('./Routes/Project')
+const Jobs = require('./Routes/Job')
 const cors = require("cors");
 const PORT = 4000;
 
@@ -29,8 +30,8 @@ app.get("/", (req, res) => {
 
 app.use("/v1", User);
 app.use("/v1", Profile);
-console.log("hnnnn")
-app.use("/v1",Project)
+app.use("/v1",Project);
+app.use("/v1",Jobs);
 
 app.listen(PORT, () => {
   console.log(`Your server is Up and Running on port number ${PORT}`);
