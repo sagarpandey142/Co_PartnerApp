@@ -1,4 +1,3 @@
-import { Entypo } from '@expo/vector-icons';
 
 exports.FooterArray=[
      {name:"Home",icon:"home"},
@@ -6,10 +5,9 @@ exports.FooterArray=[
      { name: "Create", icon: "circle-with-plus" },
      { name: "Profile", icon: "user" },
 ]
-exports.navigateArray=[
-     
+exports.navigateArray=[ 
     {index:0,navigate:"HomePage"},
-    {index:1,navigate:"HomePage"},
+    {index:1,navigate:"JobPage"},
     {index:2,navigate:"Index"},
     {index:3,navigate:"HomePage"},
 ]

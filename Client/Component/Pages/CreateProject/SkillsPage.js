@@ -27,6 +27,7 @@ const SkillsPage = () => {
       const setSkillState=()=>{
            setLoading(true)
            dispatch(updateStep(3));
+           console.log("ele",selectedButton)
            dispatch(updateSkills(selectedButton));
            setLoading(false)
       }

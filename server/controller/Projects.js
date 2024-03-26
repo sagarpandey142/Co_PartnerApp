@@ -162,7 +162,7 @@ async function list(_criteria) {
 async function AddProject(req, res){
   try {
     const {Email, projectName, projectDescription,Skill,BasicDetail } = req.body;
-   console.log("hii")
+   console.log("hii",req.body )
     if (!Email || !Skill || !projectName || !projectDescription || !BasicDetail) {
       return res.status(400).json({
         message: "Email, projectName, and projectDescription are required",

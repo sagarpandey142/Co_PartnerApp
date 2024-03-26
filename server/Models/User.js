@@ -10,6 +10,10 @@ const UserSchema=mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Project',
      }],
+     Job:[{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'Job',
+     }]
     
 })
 

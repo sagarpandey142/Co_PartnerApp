@@ -10,11 +10,12 @@ import {createProjectHandler} from '../../../services/operations/ProjectsHandler
 import { useNavigation } from '@react-navigation/native';
 import jwt_decode from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {DecodedTokenHandler} from "../../../services/operations/generate&verifyOTP"
 
 
 
 const Conversation = () => {
-  const { step ,title,skill,BasicDetail} = useSelector((state) => state.createProject);
+  const { step ,title,skills,BasicDetail} = useSelector((state) => state.createProject);
   const [description, setDescription] = useState('');
   const Navigate=useNavigation();
   const maxLength = 150;
@@ -52,19 +53,17 @@ const Conversation = () => {
 
     const allItems = await AsyncStorage.multiGet(allKeys);
     const token = allItems[0][1]; 
-    console.log("token",token)
-    // Decode the token
-    const decodedToken = await jwt_decode(token);
-    console.log("deco",decodedToken)
+    
+    const decodedEmail=await DecodedTokenHandler(token);
       const data={
-         title,
+         Email:decodedEmail.data.Email,
+         projectName:title,
          BasicDetail,
-         skill,
-         description
+         Skill:skills,
+         projectDescription:description
       }
       const response=await createProjectHandler(data);
-      console.log("res",response);
-      // Navigate.navigate("JobPage")
+      Navigate.navigate("JobPage")
   }
   return (
     <View>

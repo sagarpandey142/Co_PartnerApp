@@ -16,6 +16,7 @@ import { Octicons } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import MainFooter from '../Common/MainFooter';
 
 
 
@@ -84,10 +85,10 @@ const JobPage = () => {
   return (
     <View style={[tw`bg-white`]}>
       <MainHeader mainName="CoPartner" nameHeader="" icon1="" icon2="notifications" />
-      <ScrollView>
+      <ScrollView style={tw` h-[76.5%]`}>
         <View>
-          <View style={[tw`flex flex-row  w-11/12 mx-auto justify-between`, {}]}>
-             <TextInput placeholder='       Search for jobs' style={tw` border-[2px] border-gray-300 p-2 rounded-full w-[80%]`}/>
+          <View style={[tw`flex flex-row w-11/12 mx-auto justify-between`, {}]}>
+             <TextInput placeholder='Search for jobs' style={tw` border-[2px] border-gray-300 p-2 rounded-full w-[80%]`}/>
             <MaterialCommunityIcons name="heart-circle-outline" size={24} color="black" style={[tw`flex items-center text-5xl text-green-600`, {}]} />
           </View>
           <View style={[tw`mx-4 mt-5`]} />
@@ -182,6 +183,7 @@ const JobPage = () => {
           {recent && <View style={[tw`border border-gray-300 mx-4 mt-2 p-4`, {}]}>{'recent'}</View>}
         </View>
       </ScrollView>
+      <MainFooter/>
     </View>
   );
 };
