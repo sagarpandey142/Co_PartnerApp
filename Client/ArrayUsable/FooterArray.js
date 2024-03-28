@@ -1,8 +1,8 @@
 
 exports.FooterArray=[
      {name:"Home",icon:"home"},
-     {name:"Jobs",icon:"briefcase"},
-     { name: "Create", icon: "circle-with-plus" },
+     {name:"Jobs",icon:"briefcase-outline",iconise:true},
+     { name: "Create", icon: "create-outline",iconise:true },
      { name: "Profile", icon: "user" },
 ]
 exports.navigateArray=[ 

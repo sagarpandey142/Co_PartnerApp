@@ -11,7 +11,7 @@
      {
         images:micorsoft,
         heading:"How Mircosoft Scaled Video Production While Driving Cost saving",
-        tags:["Tech","Software","Microsoft"],
+        tags:["Tech","Software","Artificial Engineer"],
         redirect:"https://www.upwork.com/success-stories/how-microsoft-scaled-video-production-while-driving-cost-savings"
      }
  ]

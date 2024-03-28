@@ -1,21 +1,23 @@
-const User = require("../Models/User");
-const Job = require("../Models/Job")
+const Profile = require("../Models/Profile");
+const Job = require("../Models/Job");
+const Project = require("../Models/Project");
 
 exports.getSavedJobs = async (req, res) => {
     try {
+        const {Email} = req.body; 
+    
+        const ProfileInfo = await Profile.findOne({Email})
+        console.log("profile",ProfileInfo.ProjectId);
+        //tranverse
+        const arr=[
 
-        console.log("job controller")
-        const { _id } = req.body;
-        console.log("type",typeof(_id))
-
-        console.log("_id", _id)
-
-        const savedJob = await Job.findOne({ _id });
-        // const savedJobs = await Job.findOne({ _id });
-
-        console.log("savedJobs", savedJob)
-
-        if (!savedJob) {
+        ]
+        for(let i=0;i<ProjectId;i++){
+             const res=await Project.findbyid(ProjectId[i]);
+             arr.push(res)
+        }
+        
+        if (!Profile) {
             return res.status(404).json({
                 success: false,
                 message: "No Saved Jobs found"
@@ -24,8 +26,7 @@ exports.getSavedJobs = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            message: "Saved Jobs found successfully",
-            savedJobs: savedJob 
+            message: "Saved Jobs found successfully" 
         });
 
     } catch (error) {
@@ -36,3 +37,15 @@ exports.getSavedJobs = async (req, res) => {
         });
     }
 };
+
+exports.AddSavedJob=async(req,res)=>{
+    try{
+     const{Email,ProjectId}=req.body;
+     const ProfileInfo=await Profile.findOne({Email}).populate("ProjectId").exec();
+     ProfileInfo.ProjectId.push(ProjectId);
+     ProfileInfo.save()
+     return true
+    } catch(error){
+        console.log("error",error)
+    }
+}

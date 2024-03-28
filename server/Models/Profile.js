@@ -30,9 +30,9 @@ const ProfileSchema=mongoose.Schema({
       type:String,
       required:true
      },
-     Job:[{
+     ProjectId:[{
       type:mongoose.Schema.Types.ObjectId,
-      ref:'Job',
+      ref:'Project',
      }]
     
 },{ timestamps: true })

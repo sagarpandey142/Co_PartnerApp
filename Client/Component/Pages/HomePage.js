@@ -6,13 +6,14 @@ import { successArray } from "../../ArrayUsable/SucessStoryArray";
 import { useFonts } from 'expo-font';
 import { ScrollView } from 'react-native-gesture-handler';
 import MainFooter from '../Common/MainFooter';
+import Swiper from "react-native-swiper"
 
 const HomePage = () => {
-    const Successarray = [
-        { name: "All" },
-        { name: "Artificial Engineer" },
-        { name: "Work & Career" },
-        {name:"Blockchain"}
+    const SuccessarrayButton = [
+        { name: "All", tag: "" },
+        { name: "Artificial Engineer", tag: "Artificial Engineer" },
+        { name: "Work & Career", tag: "Work & Career" },
+        { name: "Blockchain", tag: "Blockchain" }
     ];
 
     const [fontsLoaded] = useFonts({
@@ -26,14 +27,18 @@ const HomePage = () => {
         Linking.openURL(redirectUrl);
     };
 
+    const filteredSuccessArray = selectedButtonIndex === 0
+        ? successArray
+        : successArray.filter(item => item.tags.includes(SuccessarrayButton[selectedButtonIndex].tag));
+
     return (
         <View style={tw`w-full h-full bg-white relative`}>
             <MainHeader mainName="CoPartner" nameHeader="" icon1="" icon2="notifications" />
             <ScrollView style={tw`flex-1`}>
                 <View style={tw`w-10/12 mx-auto`}>
-                    <Text style={[tw` text-lg`,{fontFamily:"MadimiOne"}]}>Tech Stories Simplified</Text>
+                    <Text style={[tw` text-lg`, { fontFamily: "MadimiOne" }]}>Tech Stories Simplified</Text>
                     <View style={tw`flex flex-row justify-between mt-6 gap-5`}>
-                        {Successarray.map((data, index) => (
+                        {SuccessarrayButton.map((data, index) => (
                             <View key={index}>
                                 <TouchableOpacity
                                     style={[
@@ -50,14 +55,14 @@ const HomePage = () => {
                         ))}
                     </View>
                     <View style={tw`mt-8 gap-6 border-b-2 border-gray-200 pb-6`}>
-                        {successArray.map((data, index) => (
+                        {filteredSuccessArray.map((data, index) => (
                             <TouchableOpacity key={index} onPress={() => handleItemClick(data.redirect)}>
                                 <Image style={tw` h-[14rem] w-[19rem] border border-gray-200 rounded-xl`} source={data.images} />
                                 <Text style={[tw`text-green-800 text-lg mt-2`, { fontFamily: 'MadimiOne' }]}>{data.heading}</Text>
                                 <View style={tw`flex flex-row mt-2 flex-wrap gap-3`}>
-                                    {data.tags.map((data, index) => (
+                                    {data.tags.map((tag, index) => (
                                         <View key={index}>
-                                            <Text style={tw`bg-white border border-gray-200 px-4 py-2 rounded-2xl text-gray-400 font-bold`}>{data}</Text>
+                                            <Text style={tw`bg-white border border-gray-200 px-4 py-2 rounded-2xl text-gray-400 font-bold`}>{tag}</Text>
                                         </View>
                                     ))}
                                 </View>
@@ -66,7 +71,7 @@ const HomePage = () => {
                     </View>
                 </View>
             </ScrollView>
-            <MainFooter  />
+            <MainFooter />
         </View>
     );
 }

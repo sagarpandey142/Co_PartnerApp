@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const jobSchema =  mongoose.Schema({
+const jobSchema = new mongoose.Schema({
 
     name:{
         type: String,
@@ -16,7 +16,7 @@ const jobSchema =  mongoose.Schema({
     userVerified:{
         type: Boolean,
         required: true,
-    }
+    },
 })
 
 module.exports=mongoose.model("Job",jobSchema)
