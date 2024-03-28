@@ -34,9 +34,8 @@ const JobPage = () => {
     try {
       console.log("first")
       const response = await jobsHandler();
-      console.log("response", response.data.savedJobs);
-      setJobs(response.data.savedJobs);
-      console.log("jobs",typeof(jobs))
+      console.log("response", response.data.response);
+      setJobs(response.data.response);
     } catch (error) {
       console.log("error", error.message);
     }
@@ -50,9 +49,6 @@ const JobPage = () => {
     console.log("updated jobs",jobs);
   },[jobs])
 
-  const toggleDesc = (index) => {
-    setExpandedDescriptionIndex(expandedDescriptionIndex === index ? null : index);
-  };
 
   const toggleMyFeed = () => {
     setMyFeed(!myFeed);
@@ -83,9 +79,7 @@ const JobPage = () => {
 
   const func = async () => {
     const variable = await ProjectsHandler();
-    console.log('yeee', variable?.data?.projects[7]?.Skill.length);
     setState(variable?.data?.projects);
-    console.log('state', state);
   };
 
   useEffect(() => {
@@ -101,7 +95,6 @@ const JobPage = () => {
     TwinkleStar: require("../../assets/Fonts/X7nP4b87HvSqjb_WIi2yDCRwoQ_k7367_B-i2yQag0-mac3OryLMFuOLlNldbw.ttf")
   });   
   const handleDesc = (projectName, projectDescription, Skill) =>{
-    console.log("name", projectName, projectDescription, Skill)
     dispatch(updateDesc({ projectName, projectDescription, Skill }));
     navigation.navigate('JobDesc');
   }
@@ -233,19 +226,18 @@ const JobPage = () => {
             <View style={[tw`mx-auto mt-5 pl-4 w-[100%] p-2 pr-3`]}>
                 <Text style={[tw`text-slate-500 text-xs`]}>Posted 9 hours ago</Text>
                 <View style={[tw`mt-2 pl-4 flex flex-row justify-between mb-20`, { width: '100%' }]}>
-                  {jobs
-                    .sort((a, b) => new Date(b.datePosted) - new Date(a.datePosted)) // Sort jobs by datePosted in descending order
-                    .map((save, index) => (
+                  {jobs?.map((save, index) => (
                       <View key={index}>
                         <View style={tw`  flex flex-row justify-between `}>
-                          <Text style={[tw`text-lg font-bold text-[#334155]`]}>{save.name}</Text>
+                          <Text style={[tw`text-lg font-bold text-[#334155]`]}>{save.projectName}</Text>
                           <View style={tw` flex flex-row gap-4 `}>
                             <Feather name="thumbs-down" size={24} color="#15803d" />
                             <AntDesign name="hearto" size={24} color="#15803d" />
                           </View>
                         </View>
                         <Text style={[tw`pt-3 text-gray-500`]}>Fixed price - intermediate - Est,Budget: $50</Text>
-                        <Text style={[tw`text-base text-[#020617] pt-5`, {}]}>{save.desc}</Text>
+                        <Text style={[tw`text-base text-[#020617] pt-5`, {}]}>{save.projectDescription}</Text>
+                        
                         <View style={[tw`flex flex-row mt-`]}>
                           <MaterialIcons name="verified" size={24} color="black" style={[tw`mr-1 text-gray-500 text-lg`]}/>
                           <Text style={[tw`text-gray-500 font-semibold mt-1`]}> User Verified</Text>
