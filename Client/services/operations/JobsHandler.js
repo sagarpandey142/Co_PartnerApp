@@ -3,10 +3,10 @@ import axios from "axios";
 import { jobsRoute } from "../Api";
 
 exports.jobsHandler = async() => {
-    console.log("save job front")
+    console.log("recent job front")
     try{
-        const response = await axios.post(jobsRoute.getSavedJobs);
-        console.log("response of saved jobs", response);
+        const response = await axios.post(jobsRoute.addSavedJobs);
+        console.log("response of recent jobs", response);
         if(response){
             return response;
         }

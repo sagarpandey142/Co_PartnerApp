@@ -1,32 +1,39 @@
 const Profile = require("../Models/Profile");
-const Job = require("../Models/Job");
-const Project = require("../Models/Project");
+const Project = require("../Models/Project")
 
-exports.getSavedJobs = async (req, res) => {
+
+exports.addSavedProject = async (req, res) => {
     try {
-        const {Email} = req.body; 
-    
-        const ProfileInfo = await Profile.findOne({Email})
-        console.log("profile",ProfileInfo.ProjectId);
-        //tranverse
-        const arr=[
+        const { Email, projectId } = req.body;
 
-        ]
-        for(let i=0;i<ProjectId;i++){
-             const res=await Project.findbyid(ProjectId[i]);
-             arr.push(res)
-        }
-        
-        if (!Profile) {
+        const profileInfo = await Profile.findOne({ Email }).populate("SavedJobs").exec();
+        if (!profileInfo) {
             return res.status(404).json({
                 success: false,
-                message: "No Saved Jobs found"
+                message: "Profile not found"
             });
         }
 
+        if (profileInfo.SavedJobs.some(savedJob => savedJob._id.toString() === projectId)) {
+            return res.status(400).json({
+                success: false,
+                message: "Project already saved for the profile"
+            });
+        }
+
+        profileInfo.SavedJobs.push(projectId);
+
+
+        await profileInfo.save();
+
+        // await profileInfo.populate("SavedJobs").execPopulate();
+        await profileInfo.populate("SavedJobs");
+
+        console.log("newly profile", profileInfo);
+
         res.status(200).json({
             success: true,
-            message: "Saved Jobs found successfully" 
+            message: "Job saved successfully for the profile"
         });
 
     } catch (error) {
@@ -38,14 +45,44 @@ exports.getSavedJobs = async (req, res) => {
     }
 };
 
-exports.AddSavedJob=async(req,res)=>{
+
+exports.getRecentProject = async(req,res) => {
     try{
-     const{Email,ProjectId}=req.body;
-     const ProfileInfo=await Profile.findOne({Email}).populate("ProjectId").exec();
-     ProfileInfo.ProjectId.push(ProjectId);
-     ProfileInfo.save()
-     return true
-    } catch(error){
-        console.log("error",error)
+        const response = await Project.find().sort({ createdAt: -1 });
+
+        return res.status(200).json({
+            success: true,
+            message: "Projects retrieved successfully",
+            response: response
+        })
+    }catch(err){
+        return res.status(404).json({
+            success: false,
+            message: err.message
+        })
+    }
+}
+
+exports.getSavedProject = async(req, res) =>{
+    try{
+        const {Email} = req.body;
+        const response = await Profile.find({Email}).populate("SavedJobs").exec();
+        if(!response){
+            return res.status(404).json({
+                success: false,
+                message:"please enter valid email"
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: res.message,
+            response: response
+        })
+    }catch(error){
+        return res.status(400).json({
+            success: false,
+            message: error.message
+        })
     }
 }

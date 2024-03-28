@@ -4,7 +4,7 @@ const { dbConnect } = require("./config/DbConnection");
 const Profile = require("./Routes/Profile");
 const User = require("./Routes/User");
 const Project = require('./Routes/Project')
-const Jobs = require('./Routes/Job')
+const SavedAndRecentRoute=require("./Routes/SavedAndRecent")
 const cors = require("cors");
 const PORT = 4000;
 
@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 app.use("/v1", User);
 app.use("/v1", Profile);
 app.use("/v1",Project);
-app.use("/v1",Jobs);
+app.use("/v1",SavedAndRecentRoute);
 
 
 app.listen(PORT, () => {

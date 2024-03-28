@@ -19,4 +19,5 @@ exports.projectsRoute={
 
 exports.jobsRoute = {
     getSavedJobs: "http://192.168.79.20:4000/v1/getSavedJobs",
+    getRecentJobs: "http://10.6.135.17:4000/v1/getRecentJobs",
 }

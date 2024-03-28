@@ -1,20 +1,21 @@
-const mongoose=require("mongoose")
-const ProfileSchema=mongoose.Schema({
-     name:{
-        type:String,
-        required:true
-     },
-     Email:{
-        type:String,
-        required:true
-     },
-     Proffessional_Role:{
-       type:String,
-       required:true
-     },
-     User_Bio:{
-      type:String,
-      required:true
+const mongoose = require("mongoose");
+
+const ProfileSchema = mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    Email: {
+        type: String,
+        required: true
+    },
+    Professional_Role: {
+        type: String,
+        required: true
+    },
+    User_Bio: {
+        type: String,
+        required: true
     },
      TechStack:{
         type:Array,
@@ -30,11 +31,11 @@ const ProfileSchema=mongoose.Schema({
       type:String,
       required:true
      },
-     ProjectId:[{
+     SavedJobs:[{
       type:mongoose.Schema.Types.ObjectId,
       ref:'Project',
      }]
     
 },{ timestamps: true })
 
-module.exports=mongoose.model("Profile",ProfileSchema)
+module.exports = mongoose.model("Profile", ProfileSchema);
