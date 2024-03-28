@@ -66,7 +66,7 @@ exports.getRecentJobs = async(req,res) => {
 exports.getSavedJobs = async(req, res) =>{
     try{
         const {Email} = req.body;
-        const response = await Profile.find({Email});
+        const response = await Profile.findOne({ Email }).populate('SavedJobs');
         console.log("response",response);
 
         if(!response){
