@@ -17,24 +17,25 @@ const ProfileSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    TechStack: {
-        type: Array,
-        required: true
-    },
-    GithubLink: {
-        type: String,
-    },
-    LinkedIn: {
-        type: String,
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    SavedJobs: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Project',
-    }]
-}, { timestamps: true });
+     TechStack:{
+        type:Array,
+        required:true
+     },
+     GithubLink:{
+      Type:String,
+     },
+     LinkedIn:{
+      Type:String,
+     },
+     password:{
+      type:String,
+      required:true
+     },
+     SavedJobs:[{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'Project',
+     }]
+    
+},{ timestamps: true })
 
 module.exports = mongoose.model("Profile", ProfileSchema);

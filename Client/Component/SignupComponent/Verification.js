@@ -40,9 +40,8 @@ const Verification = () => {
     setLoading(true);
     const response = await verifyOTP(email, otp);
     setLoading(false);
-    console.log("first")
     if (response.data.matched ===true) {
-      navigate.navigate?.('ProffesionalInfo');
+      navigate.navigate?.('ProfessionalInfo');
     } else{
        alert("Otp Dosen't Match")
     }

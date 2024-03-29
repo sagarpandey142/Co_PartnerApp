@@ -134,9 +134,8 @@ const Skill = () => {
             button2Text="One Last Step"
             reducerName={updateSkill} 
             data={selectedSkills} 
-            navigate="userBio" 
+            navigate="UserBio" 
         />
-
     </View>
   );
 };

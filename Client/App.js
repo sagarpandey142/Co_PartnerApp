@@ -55,14 +55,14 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName={initialRoute} screenOptions={{ headerShown: false }}>
-          {/* <Stack.Screen name="Signup" component={Signup}/>
+          <Stack.Screen name="Signup" component={Signup}/>
           <Stack.Screen name="Verification" component={Verification}/> 
           <Stack.Screen name="GetStarted" component={GetStarted}/>
           <Stack.Screen name="ProfessionalInfo" component={ProfessionalRole}/> 
           <Stack.Screen name="UserBio" component={UserBio}/>
           <Stack.Screen name="Skill" component={Skill}/> 
           <Stack.Screen name='HomePage' component={HomePage}/>
-          <Stack.Screen name="Login" component={Login}/> */}
+          <Stack.Screen name="Login" component={Login}/>
           <Stack.Screen name="JobPage" component={JobPage}/>
           <Stack.Screen name="JobDesc" component={JobDesc}/>
           <Stack.Screen name='Index' component={Index}/>

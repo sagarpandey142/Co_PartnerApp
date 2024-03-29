@@ -120,7 +120,6 @@ exports.signup = async (req, res) => {
       });
     }
 
-   
 
     const existingUser = await Profile.findOne({ Email: Email });
 
@@ -172,8 +171,6 @@ exports.login=async(req,res)=>{
     
      
       const {email,password}=req.body;
-      console.log("email pass", email, password)
-     
       //validation
       if(!email || !password){
         return  res.status(401).json({
@@ -184,9 +181,8 @@ exports.login=async(req,res)=>{
 
       //db check if user exit or not
       const user=await Profile.findOne({Email:email})
-
       if(!user){
-         return res.status(401).json({
+         return res.status(200).json({
               success:false,
               message:"Sign Up First",
           })}
@@ -194,8 +190,7 @@ exports.login=async(req,res)=>{
       
       if(await bcrypt.compare(password,user.password)){
           const payload={
-              email:user.email,
-              accountType:user.accountType,
+              email:user.Email,
               id:user._id,
           }
 
@@ -217,9 +212,10 @@ exports.login=async(req,res)=>{
           })
       }
       else{
-               res.status(500).json({
+          console.log("yes")
+              return res.status(200).json({
                   success:false,
-                  message:"password Doesnt Matches",
+                  message:"password Doesn't Matches",
                })
       }
 

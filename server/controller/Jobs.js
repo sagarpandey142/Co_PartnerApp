@@ -2,7 +2,8 @@ const Profile = require("../Models/Profile");
 const Project = require("../Models/Project")
 
 
-exports.addSavedJobs = async (req, res) => {
+exports.addSavedProject = async (req, res) => {
+    console.log("saved backend ")
     try {
         const { Email, projectId } = req.body;
 
@@ -46,7 +47,8 @@ exports.addSavedJobs = async (req, res) => {
 };
 
 
-exports.getRecentJobs = async(req,res) => {
+exports.getRecentProject = async(req,res) => {
+    console.log("saved backend ")
     try{
         const response = await Project.find().sort({ createdAt: -1 });
 
@@ -63,12 +65,13 @@ exports.getRecentJobs = async(req,res) => {
     }
 }
 
-exports.getSavedJobs = async(req, res) =>{
+exports.getSavedProject = async(req, res) =>{
+    console.log("saved backend ")
     try{
+        console.log("saved try")
         const {Email} = req.body;
-        const response = await Profile.findOne({ Email }).populate('SavedJobs');
-        console.log("response",response);
-
+        const response = await Profile.find({Email}).populate("SavedJobs").exec();
+        console.log("respnse" , response)
         if(!response){
             return res.status(404).json({
                 success: false,

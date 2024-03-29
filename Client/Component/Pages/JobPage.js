@@ -14,7 +14,10 @@ import { updateDesc } from '../../reducers/signupReducer';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { Entypo,FontAwesome6 } from '@expo/vector-icons';
-import { jobsHandler } from '../../services/operations/JobsHandler';
+import { getSavedProject, getRecentProject, addSavedProject } from '../../services/operations/savedProjectHandler';
+import TimeAgoText from './TimeAgoText'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {DecodedTokenHandler} from '../../services/operations/generate&verifyOTP'
 
 const JobPage = () => {
 
@@ -30,23 +33,47 @@ const JobPage = () => {
   const [jobs, setJobs] = useState([]);
   const [expandedDescriptionIndex, setExpandedDescriptionIndex] = useState(null);
   
-  const findSavedJobs = async () => {
+  // const SavedProject = async () => {
+  //   try {
+  //     console.log("getSavedJobs")
+  //     const response = await getSavedProject();
+  //     console.log("response", response);
+  //     setJobs(response.data.response);
+  //   } catch (error) {
+  //     console.log("error", error.message);
+  //   }
+  // }
+
+
+  const RecentProject = async () => {
     try {
-      console.log("first")
-      const response = await jobsHandler();
+      console.log("getRecentJobs")
+      const response = await getRecentProject();
       console.log("response", response.data.response);
       setJobs(response.data.response);
     } catch (error) {
       console.log("error", error.message);
     }
   }
+  // const addProject = async () => {
+  //   try {
+  //     console.log("addSavedJobs")
+  //     const response = await addSavedProject();
+  //     console.log("response", response.data.response);
+  //     setJobs(response.data.response);
+  //   } catch (error) {
+  //     console.log("error", error.message);
+  //   }
+  // }
 
   useEffect(() => {
-    findSavedJobs();
+    // SavedProject();
+    RecentProject();
+    // addSavedProject();
   }, []);
 
   useEffect(()=>{
-    console.log("updated jobs",jobs);
+    console.log("recent project",jobs);
   },[jobs])
 
 
@@ -99,6 +126,15 @@ const JobPage = () => {
     navigation.navigate('JobDesc');
   }
 
+  const goToSavedField = async() => {
+    console.log("tttt")
+  const Token  = await AsyncStorage.getItem('token');
+  console.log("Token", Token)
+  const email = await DecodedTokenHandler(Token);
+  console.log("email", email)
+
+  }
+
 
   return (
     <View style={[tw`bg-white`]}>
@@ -134,7 +170,7 @@ const JobPage = () => {
                             <Text style={[tw`text-lg font-bold text-[#334155]`]}>{project.projectName}</Text>
                             <View style={tw` flex flex-row gap-4 `}>
                              <Feather name="thumbs-down" size={24} color="#15803d" />
-                                <AntDesign name="hearto" size={24} color="#15803d" />
+                              <AntDesign name="hearto" size={24} color="#15803d" onPress={goToSavedField}/>
                             </View>
                          </View>
                         <Text style={[tw`pt-3 text-gray-500`]}>Fixed price - intermediate - Est,Budget: $50</Text>
@@ -224,11 +260,14 @@ const JobPage = () => {
           
           {recent && (
             <View style={[tw`mx-auto mt-5 pl-4 w-[100%] p-2 pr-3`]}>
-                <Text style={[tw`text-slate-500 text-xs`]}>Posted 9 hours ago</Text>
+                {/* <Text style={[tw`text-slate-500 text-xs`]}>Posted 9 hours ago</Text> */}
+               
+
                 <View style={[tw`mt-2 pl-4 flex flex-row justify-between mb-20`, { width: '100%' }]}>
                   {jobs?.map((save, index) => (
-                      <View key={index}>
-                        <View style={tw`  flex flex-row justify-between `}>
+                    <View key={index}>
+                      <View key={index} style={tw`  w-[100%] mt-3 pb-6  border-b-2 border-gray-200 `}>
+                        <TimeAgoText createdAt={save.createdAt} />
                           <Text style={[tw`text-lg font-bold text-[#334155]`]}>{save.projectName}</Text>
                           <View style={tw` flex flex-row gap-4 `}>
                             <Feather name="thumbs-down" size={24} color="#15803d" />
