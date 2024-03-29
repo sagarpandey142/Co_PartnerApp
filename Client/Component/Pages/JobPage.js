@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, TextInput, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity, ScrollView ,Image} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import MainHeader from '../Common/MainHeader';
 import tw from 'twrnc';
@@ -18,6 +18,8 @@ import { getSavedProject, getRecentProject, addSavedProject } from '../../servic
 import TimeAgoText from './TimeAgoText'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {DecodedTokenHandler} from '../../services/operations/generate&verifyOTP'
+import MainFooter from '../Common/MainFooter';
+import searchIcon from "../../assets/search.png"
 
 const JobPage = () => {
 
@@ -126,25 +128,32 @@ const JobPage = () => {
     navigation.navigate('JobDesc');
   }
 
-  const goToSavedField = async() => {
-    console.log("tttt")
+  const goToSavedField = async({projectId}) => {
+
   const Token  = await AsyncStorage.getItem('token');
-  console.log("Token", Token)
+
   const email = await DecodedTokenHandler(Token);
-  console.log("email", email)
+  const response = await addSavedProject(email, projectId)
+  console.log("response addsaved ka", response)
 
   }
 
 
   return (
-    <View style={[tw`bg-white`]}>
-      <MainHeader mainName="CoPartner" nameHeader="" icon1="" icon2="notifications" />
+    <View style={[tw`bg-white h-[100%]`]}>
+      <MainHeader mainName="Projects" icon1="" icon2="notifications" />
       <ScrollView>
         <View>
-          <View style={[tw`flex flex-row w-11/12 mx-auto justify-between`, {}]}>
-             <TextInput placeholder='Search for jobs' style={tw` border-[2px] border-gray-300 p-2 rounded-full w-[80%]`}/>
-            <MaterialCommunityIcons name="heart-circle-outline" size={24} color="black" style={[tw`flex items-center text-5xl text-green-600`, {}]} />
+        <View style={[tw`flex flex-row w-11/12 mx-auto justify-between`, {}]}>
+          <View style={[tw`relative flex flex-col items-center`, {}]}>
+            <View style={tw`absolute  w-11/12 mt-2 `}>
+                <Image source={searchIcon} style={tw` h-7 w-7 `}/>
+            </View>
+            <TextInput placeholder=' Search for jobs' style={tw`relative rounded-3xl border-[3px] p-2 pl-10 w-[16rem] border-gray-300`} />
           </View>
+          <MaterialCommunityIcons name="heart-circle-outline" size={24} color="black" style={[tw`flex items-center text-5xl text-green-600`, {}]} />
+      </View>
+
           <View style={[tw`mx-4 mt-5`]} />
           <View style={[tw`flex flex-row gap-5 mx-auto mt-3 p-3`, {}]}>
             <TouchableOpacity onPress={toggleMyFeed} style={[myFeed && tw`border-b-2 border-green-700`]}>
@@ -271,7 +280,7 @@ const JobPage = () => {
                           <Text style={[tw`text-lg font-bold text-[#334155]`]}>{save.projectName}</Text>
                           <View style={tw` flex flex-row gap-4 `}>
                             <Feather name="thumbs-down" size={24} color="#15803d" />
-                            <AntDesign name="hearto" size={24} color="#15803d" />
+                            <AntDesign name="hearto" size={24} color="#15803d" onPress={goToSavedField(save.projectId)}/>
                           </View>
                         </View>
                         <Text style={[tw`pt-3 text-gray-500`]}>Fixed price - intermediate - Est,Budget: $50</Text>
@@ -289,6 +298,7 @@ const JobPage = () => {
 
         </View>
       </ScrollView>
+      <MainFooter/>
     </View>
   );
 };

@@ -119,10 +119,9 @@ exports.signup = async (req, res) => {
         message: "All Field are Required",
       });
     }
-
+   
 
     const existingUser = await Profile.findOne({ Email: Email });
-
     if (existingUser !== null) {
       return res.status(400).json({
         message: "Email Already Exists",
@@ -134,25 +133,27 @@ exports.signup = async (req, res) => {
     //converting values
     const techArray = Object.values(req.body.Tech);
     // Create a new profile
+    console.log("req",req.body,hashedPassword,techArray)
     const profile = await Profile.create({
       name: Full_Name,
       Email: Email,
-      Proffessional_Role:proffesional_Role,
+      Professional_Role:proffesional_Role,
       User_Bio:user_Dec,
       LinkedIn:LinkedinLink,
       GithubLink:GithubLink,
       TechStack: techArray,
       password: hashedPassword,
+      SavedJobs:[]
     });
  
-
+    console.log("user",profile)
     const user = await User.create({
       profileInf: profile._id,
       Project: [],
     });
 
 
-  
+    
     return res.status(200).json({
       success: true,
       message: "User Created Successfully",
@@ -187,15 +188,16 @@ exports.login=async(req,res)=>{
               message:"Sign Up First",
           })}
           //jwt token
-      
+       console.log("user",user)
       if(await bcrypt.compare(password,user.password)){
           const payload={
               email:user.Email,
               id:user._id,
           }
 
+
           let token=jwt.sign(payload,process.env.JWT_SECRET,{
-              expiresIn:"24h",
+              expiresIn:"1000h",
           });
 
           user.token=token;
@@ -212,7 +214,6 @@ exports.login=async(req,res)=>{
           })
       }
       else{
-          console.log("yes")
               return res.status(200).json({
                   success:false,
                   message:"password Doesn't Matches",

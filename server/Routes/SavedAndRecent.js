@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router()
 
-const {getSavedProject, addSavedProject, getRecentProject} = require("../controller/Jobs");
+const {getSavedProject, addSavedProject, getRecentProject} = require("../controller/SavedAndRecentProject");
 
 router.get("/getRecentProject", getRecentProject);
 router.post("/addSavedProject", addSavedProject);

@@ -8,6 +8,7 @@ exports.addSavedProject = async (req, res) => {
         const { Email, projectId } = req.body;
 
         const profileInfo = await Profile.findOne({ Email }).populate("SavedJobs").exec();
+        console.log("profileInfo", profileInfo)
         if (!profileInfo) {
             return res.status(404).json({
                 success: false,

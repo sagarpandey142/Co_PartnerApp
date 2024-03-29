@@ -19,7 +19,7 @@ const UserBio = () => {
    const[loading,setLoading]=useState(false);
    const navigate=useNavigation()
    const dispatch=useDispatch()
-   const{professionalRole,description}=useSelector((state=>state.professionalRole));
+   const{professionalRole,description,GithubLink,LinkedInLink}=useSelector((state=>state.professionalRole));
 
   const updatedDesc=description.text
     const [fontsLoaded] = useFonts({
@@ -36,14 +36,12 @@ const UserBio = () => {
       const Tech={
           ...skill
       }
-      const GithubLink="sagarpandey141"
-      const LinkedinLink="pandeyshs"
+     
       
-      const updatedData = { ...data,Tech, proffesional_Role:professionalRole, user_Dec:updatedDesc ,GithubLink,LinkedinLink};
+      const updatedData = { ...data,Tech, proffesional_Role:professionalRole, user_Dec:updatedDesc ,GithubLink:GithubLink,LinkedinLink:LinkedInLink};
       setLoading(true);
       const response=await signupHandler(updatedData);
       setLoading(false);
-      console.log("res",response);
         if(response.status===200){
            navigate.navigate("HomePage")
         }

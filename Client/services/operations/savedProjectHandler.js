@@ -2,10 +2,10 @@ import axios from "axios";
 
 import { savedProjectRoute } from "../Api";
 
-exports.addSavedProject = async() => {
+exports.addSavedProject = async({email,projectId}) => {
     console.log("addSavedProject hai")
     try{
-        const response = await axios.post(savedProjectRoute.addSavedProject);
+        const response = await axios.post(savedProjectRoute.addSavedProject,{Email:email, projectId});
         console.log("response of recent jobs", response);
         if(response){
             return response;

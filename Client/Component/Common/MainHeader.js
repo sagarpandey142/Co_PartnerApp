@@ -5,7 +5,7 @@ import tw from "twrnc"
 import image1 from "../../assets/logo.jpg"
 import { useFonts } from 'expo-font';
 
-const MainHeader = ( {mainName, nameHeader, icon1, icon2} ) => {
+const MainHeader = ( {mainName, icon1, icon2} ) => {
    
     const [fontsLoaded] = useFonts({
         MadimiOne: require("../../assets/Fonts/2V0YKIEADpA8U6RygDnZZFQoBoHMd2U.ttf"),
@@ -15,16 +15,7 @@ const MainHeader = ( {mainName, nameHeader, icon1, icon2} ) => {
   return (
     <View style={tw` w-10/12 mx-auto mt-10 bg-white flex flex-row justify-between items-center mb-7 `}>
          <View>
-                {mainName ? (
-                <View>
-                    <Text style={[tw`  text-3xl  text-green-500`,{fontFamily:'MadimiOne'}]}>{mainName}</Text>
-                </View>
-            ) : (
-                <View>
-                     <Text>{nameHeader}</Text>
-                </View>
-            )}
-      
+             <Text style={[tw`  text-3xl  text-green-500`,{fontFamily:'MadimiOne'}]}>{mainName}</Text>
          </View>
           <View>
           <View style={tw`flex flex-row  gap-6`}>
