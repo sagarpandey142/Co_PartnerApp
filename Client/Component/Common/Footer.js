@@ -12,7 +12,6 @@ const Footer = ({button1Text,button2Text,reducerName,data,navigate}) => {
   async function handlePress(e){
     e.preventDefault();
      if(data===''){
-     console.log("first")
       Toast.error("All Field Are Mandatory")
       return;
      }

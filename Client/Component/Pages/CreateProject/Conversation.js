@@ -55,6 +55,7 @@ const Conversation = () => {
     const token = allItems[0][1]; 
     
     const decodedEmail=await DecodedTokenHandler(token);
+    console.log("em",decodedEmail)
       const data={
          Email:decodedEmail.data.Email,
          projectName:title,

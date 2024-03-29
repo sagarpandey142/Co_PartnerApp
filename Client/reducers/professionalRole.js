@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     professionalRole: '',
-    description: ''
+    description: '',
+    LinkedInLink:'',
+    GithubLink:'',
 }
 
 const professionalRoleSlice = createSlice({
@@ -14,9 +16,15 @@ const professionalRoleSlice = createSlice({
         },
         updateProfessionalDes : (state, action) => {
             state.description = action.payload
-        }
+        },
+        updateLinkedinUrl:(state,actions)=>{
+            state.LinkedInLink=actions.payload
+        },
+        updateGithubUrl:(state,actions)=>{
+            state.GithubLink=actions.payload
+        },
     }
 });
 
-export const {updateProfessionalRole, updateProfessionalDes} = professionalRoleSlice.actions;
+export const {updateProfessionalRole, updateProfessionalDes,updateGithubUrl,updateLinkedinUrl} = professionalRoleSlice.actions;
 export default professionalRoleSlice.reducer;
