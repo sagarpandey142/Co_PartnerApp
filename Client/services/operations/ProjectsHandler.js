@@ -3,8 +3,11 @@ import axios from 'axios';
 import { projectsRoute } from '../Api'; 
 
 exports.ProjectsHandler = async() => {
+    console.log("handler serverice")
        try{
+        console.log("hndi ser")
             const response = await axios.get(projectsRoute.project);
+            console.log("reshandler", response)
             if(response){
                 return response;
             }

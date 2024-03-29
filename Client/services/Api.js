@@ -17,7 +17,8 @@ exports.projectsRoute={
     projectByName : "http://192.168.79.20:4000/v1/projects/findProjectByProjectName"
 }
 
-exports.jobsRoute = {
-    getSavedJobs: "http://192.168.79.20:4000/v1/getSavedJobs",
-    getRecentJobs: "http://10.6.135.17:4000/v1/getRecentJobs",
+exports.savedProjectRoute = {
+    getSavedProject: "http://192.168.79.20:4000/v1/getSavedProject",
+    getRecentProject: "http://192.168.79.20:4000/v1/getRecentProject",
+    addSavedProject: "http://192.168.79.20:4000/v1/addSavedProject",
 }

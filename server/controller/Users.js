@@ -187,13 +187,14 @@ exports.login=async(req,res)=>{
               success:false,
               message:"Sign Up First",
           })}
+          
           //jwt token
-       console.log("user",user)
       if(await bcrypt.compare(password,user.password)){
           const payload={
               email:user.Email,
               id:user._id,
           }
+
 
           let token=jwt.sign(payload,process.env.JWT_SECRET,{
               expiresIn:"1000h",

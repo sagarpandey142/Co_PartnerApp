@@ -14,7 +14,10 @@ import { updateDesc } from '../../reducers/signupReducer';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { Entypo,FontAwesome6 } from '@expo/vector-icons';
-import { jobsHandler } from '../../services/operations/JobsHandler';
+import { getSavedProject, getRecentProject, addSavedProject } from '../../services/operations/savedProjectHandler';
+import TimeAgoText from './TimeAgoText'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {DecodedTokenHandler} from '../../services/operations/generate&verifyOTP'
 import MainFooter from '../Common/MainFooter';
 import searchIcon from "../../assets/search.png"
 
@@ -32,23 +35,34 @@ const JobPage = () => {
   const [jobs, setJobs] = useState([]);
   const [expandedDescriptionIndex, setExpandedDescriptionIndex] = useState(null);
   
-  const findSavedJobs = async () => {
+  const SavedProject = async () => {
     try {
-      console.log("first")
-      const response = await jobsHandler();
-      console.log("response", response.data.response);
+      const responseEmail = await DecodedTokenHandler(Token);
+      const response = await getSavedProject(responseEmail.data.Email);
+      console.log("response", response);
       setJobs(response.data.response);
     } catch (error) {
       console.log("error", error.message);
     }
   }
 
+
+  const RecentProject = async () => {
+    try {
+      const response = await getRecentProject();
+      setJobs(response.data.response);
+    } catch (error) {
+      console.log("error", error.message);
+    }
+  }
+ 
   useEffect(() => {
-    findSavedJobs();
+    SavedProject();
+    RecentProject();
   }, []);
 
   useEffect(()=>{
-    console.log("updated jobs",jobs);
+    
   },[jobs])
 
 
@@ -89,7 +103,7 @@ const JobPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log('Updated state:', state);
+   
   }, [state]);
 
   const [fontsLoaded] = useFonts({
@@ -99,6 +113,15 @@ const JobPage = () => {
   const handleDesc = (projectName, projectDescription, Skill) =>{
     dispatch(updateDesc({ projectName, projectDescription, Skill }));
     navigation.navigate('JobDesc');
+  }
+
+  const goToSavedField = async(projectId) => {
+
+  const Token  = await AsyncStorage.getItem('token');
+  
+  const responseEmail = await DecodedTokenHandler(Token);
+  const response = await addSavedProject(responseEmail.data.Email, projectId)
+  
   }
 
 
@@ -118,7 +141,7 @@ const JobPage = () => {
       </View>
 
           <View style={[tw`mx-4 mt-5`]} />
-          <View style={[tw`flex flex-row gap-5 mx-auto mt-3 p-3`, {}]}>
+          <View style={[tw`flex border-b-2 border-slate-300 flex-row gap-5 mx-auto  ml-3 mt-3 p-3 w-[100%]`, {}]}>
             <TouchableOpacity onPress={toggleMyFeed} style={[myFeed && tw`border-b-2 border-green-700`]}>
               <Text style={[tw`text-lg text-gray-400 font-semibold pb-1`, myFeed && tw`text-semibold text-green-600`]}>{'My Feed'}</Text>
             </TouchableOpacity>
@@ -142,7 +165,7 @@ const JobPage = () => {
                             <Text style={[tw`text-lg font-bold text-[#334155]`]}>{project.projectName}</Text>
                             <View style={tw` flex flex-row gap-4 `}>
                              <Feather name="thumbs-down" size={24} color="#15803d" />
-                                <AntDesign name="hearto" size={24} color="#15803d" />
+                              <AntDesign name="hearto" size={24} color="#15803d" onPress={()=>goToSavedField(project._id)}/>
                             </View>
                          </View>
                         <Text style={[tw`pt-3 text-gray-500`]}>Fixed price - intermediate - Est,Budget: $50</Text>
@@ -206,19 +229,19 @@ const JobPage = () => {
           {matches && (
             <View style={[tw`mx-auto mt-5 pl-4 w-[100%] p-2 pr-3`]}>
               <Text style={[tw`text-slate-500 text-xs  ml-4`]}>Posted 8 hours ago</Text>
-              <View style={[tw`mt-2 pl-4 flex flex-row justify-between mb-20`, { width: '100%' }]}>
+              <View style={[tw`mt-2 pl-4 flex flex-col justify-between mb-20`, { width: '100%' }]}>
                   {
                     jobs.map((save, index)=>(
                       <View key={index}>
                       <View style={tw`  flex flex-row justify-between `}>
-                          <Text style={[tw`text-lg font-bold text-[#334155]`]}>{save.name}</Text>
+                          <Text style={[tw`text-lg font-bold text-[#334155]`]}>{save.projectName}</Text>
                           <View style={tw` flex flex-row gap-4 `}>
                               <Feather name="thumbs-down" size={24} color="#15803d" />
                               <AntDesign name="hearto" size={24} color="#15803d" />
                           </View>
                       </View>
                           <Text style={[tw`pt-3 text-gray-500`]}>Fixed price - intermediate - Est,Budget: $50</Text>
-                          <Text style={[tw`text-base text-[#020617] pt-5`, {}]}>{save.desc}</Text>
+                          <Text style={[tw`text-base text-[#020617] pt-5`, {}]}>{save.projectDescription}</Text>
                           <View style={[tw`flex flex-row mt-2`]}>
                               <MaterialIcons name="verified" size={24} color="black" style={[tw`mr-1 text-gray-500 text-lg`]}/>
                               <Text style={[tw`text-gray-500 font-semibold mt-1`]}> User Verified</Text>
@@ -231,22 +254,27 @@ const JobPage = () => {
           )}
           
           {recent && (
-            <View style={[tw`mx-auto mt-5 pl-4 w-[100%] p-2 pr-3`]}>
-                <Text style={[tw`text-slate-500 text-xs`]}>Posted 9 hours ago</Text>
-                <View style={[tw`mt-2 pl-4 flex flex-row justify-between mb-20`, { width: '100%' }]}>
+            <View style={[tw`mx-auto  pl-4 w-[100%] p-2 pr-3`]}>
+                {/* <Text style={[tw`text-slate-500 text-xs`]}>Posted 9 hours ago</Text> */}
+               
+
+                <View style={[tw`mt-2 pl-4 flex flex-col justify-between mb-20`, { width: '100%' }]}>
                   {jobs?.map((save, index) => (
-                      <View key={index}>
-                        <View style={tw`  flex flex-row justify-between `}>
-                          <Text style={[tw`text-lg font-bold text-[#334155]`]}>{save.projectName}</Text>
-                          <View style={tw` flex flex-row gap-4 `}>
-                            <Feather name="thumbs-down" size={24} color="#15803d" />
-                            <AntDesign name="hearto" size={24} color="#15803d" />
-                          </View>
+                    <View key={index} style={tw` pb-2 border-b-2 border-gray-200`}>
+                      <View key={index} style={tw`  w-[100%] mt-3 pb-6  `}>
+                        <TimeAgoText createdAt={save.createdAt} />
+                         <View style={tw`flex flex-row justify-between`}>
+                            <Text style={[tw`text-lg font-bold text-[#334155]`]}>{save.projectName}</Text>
+                            <View style={tw` flex flex-row gap-4 `}>
+                              <Feather name="thumbs-down" size={24} color="#15803d" />
+                              <AntDesign name="hearto" size={24} color="#15803d" onPress={goToSavedField(save.projectId)}/>
+                            </View>
+                         </View>
                         </View>
-                        <Text style={[tw`pt-3 text-gray-500`]}>Fixed price - intermediate - Est,Budget: $50</Text>
+                        <Text style={[tw` text-gray-500`]}>Fixed price - intermediate - Est,Budget: $50</Text>
                         <Text style={[tw`text-base text-[#020617] pt-5`, {}]}>{save.projectDescription}</Text>
                         
-                        <View style={[tw`flex flex-row mt-`]}>
+                        <View style={[tw`flex flex-row `]}>
                           <MaterialIcons name="verified" size={24} color="black" style={[tw`mr-1 text-gray-500 text-lg`]}/>
                           <Text style={[tw`text-gray-500 font-semibold mt-1`]}> User Verified</Text>
                         </View>

@@ -5,7 +5,6 @@ const Project = require("../Models/Project")
 exports.addSavedProject = async (req, res) => {
     try {
         const { Email, projectId } = req.body;
-
         const profileInfo = await Profile.findOne({ Email }).populate("SavedJobs").exec();
         if (!profileInfo) {
             return res.status(404).json({
@@ -29,11 +28,11 @@ exports.addSavedProject = async (req, res) => {
         // await profileInfo.populate("SavedJobs").execPopulate();
         await profileInfo.populate("SavedJobs");
 
-        console.log("newly profile", profileInfo);
 
-        res.status(200).json({
+      return  res.status(200).json({
             success: true,
-            message: "Job saved successfully for the profile"
+            message: "Job saved successfully for the profile",
+            profileInfo
         });
 
     } catch (error) {
@@ -66,7 +65,9 @@ exports.getRecentProject = async(req,res) => {
 exports.getSavedProject = async(req, res) =>{
     try{
         const {Email} = req.body;
+        console.log("hii")
         const response = await Profile.find({Email}).populate("SavedJobs").exec();
+        console.log("respnse" , response)
         if(!response){
             return res.status(404).json({
                 success: false,
