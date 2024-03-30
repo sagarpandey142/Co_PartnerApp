@@ -6,6 +6,7 @@ exports.addSavedProject = async (req, res) => {
     console.log("saved backend ")
     try {
         const { Email, projectId } = req.body;
+        console.log("ab aaya backend me", Email, projectId)
 
         const profileInfo = await Profile.findOne({ Email }).populate("SavedJobs").exec();
         console.log("profileInfo", profileInfo)
@@ -17,7 +18,7 @@ exports.addSavedProject = async (req, res) => {
         }
 
         if (profileInfo.SavedJobs.some(savedJob => savedJob._id.toString() === projectId)) {
-            return res.status(400).json({
+            return res.status(200).json({
                 success: false,
                 message: "Project already saved for the profile"
             });
@@ -33,9 +34,10 @@ exports.addSavedProject = async (req, res) => {
 
         console.log("newly profile", profileInfo);
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
-            message: "Job saved successfully for the profile"
+            message: "Job saved successfully for the profile",
+            profileInfo:profileInfo
         });
 
     } catch (error) {
@@ -51,7 +53,8 @@ exports.addSavedProject = async (req, res) => {
 exports.getRecentProject = async(req,res) => {
     console.log("saved backend ")
     try{
-        const response = await Project.find().sort({ createdAt: -1 });
+        const response = await Project.find().sort({ createdAt: -1 }).exec();
+        console.log("response", response)
 
         return res.status(200).json({
             success: true,
@@ -71,7 +74,7 @@ exports.getSavedProject = async(req, res) =>{
     try{
         console.log("saved try")
         const {Email} = req.body;
-        const response = await Profile.find({Email}).populate("SavedJobs").exec();
+        const response = await Profile.findOne({Email}).populate("SavedJobs").exec();
         console.log("respnse" , response)
         if(!response){
             return res.status(404).json({
