@@ -18,7 +18,7 @@ exports.ProjectsHandler = async() => {
 
 exports.ProjectsByNameHandler = async(projectName) => {
     try{
-         const response = await axios.post(projectsRoute.projectByName, projectName);
+         const response = await axios.post(projectsRoute.projectByName, {projectName});
          if(response){
              return response;
          }

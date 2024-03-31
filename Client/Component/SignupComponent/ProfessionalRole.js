@@ -8,7 +8,7 @@ import { updateGithubUrl, updateLinkedinUrl, updateProfessionalRole } from '../.
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -16,9 +16,10 @@ const ProfessionalRole = () => {
   const [value, setValue] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const[LinkedFocused,SetLinkedInFocused]=useState(false);
-  const[LinkedInLink,setLinkedinLink]=useState('');
-  const[GithubLink,setGithubLink]=useState('')
+  const[LinkedInLinkLocal,setLinkedinLink]=useState('');
+  const[GithubLinkLocal,setGithubLink]=useState('')
   const[loading,setLoading]=useState(false);
+  const{professionalRole,LinkedInLink,GithubLink}=useSelector((state)=>state.professionalRole)
   const dispatch=useDispatch();
   const navigate=useNavigation();
   const [fontsLoaded] = useFonts({
@@ -30,8 +31,8 @@ const ProfessionalRole = () => {
   {
     setLoading(true);
     dispatch(updateProfessionalRole(value));
-    dispatch(updateLinkedinUrl("https://"+LinkedInLink));
-    dispatch(updateGithubUrl("https://"+GithubLink));
+    dispatch(updateLinkedinUrl("https://www.linkedin.com/"+LinkedInLinkLocal));
+    dispatch(updateGithubUrl("https://github.com/"+GithubLinkLocal));
     setLoading(false);
     navigate?.navigate("Skill")
   }   
@@ -66,9 +67,10 @@ const ProfessionalRole = () => {
         <Text style={[styles.emailSuffix, isFocused && styles.emailSuffixFocused]}>https://</Text>
           <TextInput
             style={[styles.input,isFocused && styles.inputGithubFocused]} 
-            placeholder='Github Url'
+            value={GithubLinkLocal}
+            placeholder="your's Github UserName"
             onChangeText={(text) => {
-            setLinkedinLink(text);
+            setGithubLink(text);
           }}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
@@ -79,9 +81,9 @@ const ProfessionalRole = () => {
          <Text style={[styles.emailSuffix, LinkedFocused && styles.emailSuffixFocused]}>https://</Text>
           <TextInput
              style={[styles.input]} 
-             placeholder="Your's LinkedIn Url"
+             placeholder="Your's LinkedIn UserName"
               onChangeText={(text) => {
-              setGithubLink(text);
+              setLinkedinLink(text);
             }}
              onFocus={() => SetLinkedInFocused(true)}
              onBlur={() => SetLinkedInFocused(false)}
@@ -90,7 +92,9 @@ const ProfessionalRole = () => {
       </View>
       <View style={tw` flex-1 justify-end `}>
         <View style={{ borderTopWidth: 5, borderTopColor: '#E5E7EB',padding:17,display:'flex',flexDirection:'row', justifyContent:'space-between' }}>
-            <TouchableOpacity>        
+            <TouchableOpacity onPress={()=>{
+               navigate?.navigate("Signup")
+            }}>        
                     <Text style={tw` border border-gray-300 p-2 rounded-full px-5`}>Back</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handlePress}>

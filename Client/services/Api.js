@@ -10,6 +10,9 @@ exports.SignupRoute={
     signup:"http://192.168.79.20:4000/v1/signup"
 }
 
+exports.Profile={
+    profileInfo:"http://192.168.79.20:4000/v1/FindByEmail"
+}
 exports.projectsRoute={
     projectByName : "http://192.168.79.20:4000/v1/projects/findProjectByProjectName",
     createProject:"http://192.168.79.20:4000/v1/projects/addProject",
