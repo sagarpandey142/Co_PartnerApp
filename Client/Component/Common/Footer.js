@@ -18,11 +18,12 @@ const Footer = ({button1Text,button2Text,reducerName,data,navigate,button1Naviga
       dispatch(reducerName(data));
       navigation?.navigate(navigate)
   }
+ console.log("button1",button1Navigate)
   return (
     <View style={tw` flex-1 justify-end `}>
         <View style={{ borderTopWidth: 5, borderTopColor: '#E5E7EB',padding:17,display:'flex',flexDirection:'row', justifyContent:'space-between' }}>
             <TouchableOpacity onPress={()=>{
-               navigation?.navigate({button1Navigate})
+               navigation?.navigate(button1Navigate)
             }}>
                  {
                   button1Text && (

@@ -36,3 +36,14 @@ exports.getRecentProject = async() => {
         console.log("error", error.message);
     }
 }
+
+exports.RemoveSavedProject = async(Email,ProjectId) => {
+    try{
+        const response = await axios.post(savedProjectRoute?.RemoveSavedProject,{Email,ProjectId});
+        if(response){
+            return response;
+        }
+    }catch(error){
+        console.log("error", error.message);
+    }
+}

@@ -81,7 +81,7 @@ const Skill = () => {
        </View>
        <Footer
          button1Text="Back"
-         button1Navigate="ProfessionalRole"
+         button1Navigate="ProfessionalInfo"
          button2Text="One Last Step"
          reducerName={updateSkill}
          data={selectedButton}

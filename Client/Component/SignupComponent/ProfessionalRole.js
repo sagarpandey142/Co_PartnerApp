@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Linking } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Linking ,ToastAndroid} from 'react-native';
 import tw from 'twrnc';
 import Navbar from '../Common/Navbar';
 import { useFonts } from 'expo-font';
@@ -27,12 +27,28 @@ const ProfessionalRole = () => {
     TwinkleStar: require('../../assets/Fonts/pe0pMI6IL4dPoFl9LGEmY6WaA_Rue1UwVg.ttf'),
   });
   
+  useEffect(() => {
+    if (value === '') {
+      setValue(professionalRole);
+      setLinkedinLink(LinkedInLink);
+      setGithubLink(GithubLink);
+    }
+  }, [value]);
+
   async function handlePress()
   {
+    if(!value || !LinkedInLinkLocal || !GithubLinkLocal){
+      ToastAndroid.showWithGravity(
+        'All Field Required',
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
+      return;
+    }
     setLoading(true);
     dispatch(updateProfessionalRole(value));
-    dispatch(updateLinkedinUrl("https://www.linkedin.com/"+LinkedInLinkLocal));
-    dispatch(updateGithubUrl("https://github.com/"+GithubLinkLocal));
+    dispatch(updateLinkedinUrl(LinkedInLinkLocal));
+    dispatch(updateGithubUrl(GithubLinkLocal));
     setLoading(false);
     navigate?.navigate("Skill")
   }   

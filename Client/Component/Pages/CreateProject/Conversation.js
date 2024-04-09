@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, Alert, Platform } from 'react-native';
+import { Text, View, TouchableOpacity, Alert, Platform ,ToastAndroid} from 'react-native';
 import { useSelector } from 'react-redux';
 import tw from "twrnc";
 import Navbar from '../../Common/Navbar';
@@ -11,12 +11,14 @@ import { useNavigation } from '@react-navigation/native';
 import jwt_decode from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {DecodedTokenHandler} from "../../../services/operations/generate&verifyOTP"
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 
 const Conversation = () => {
   const { step ,title,skills,BasicDetail} = useSelector((state) => state.createProject);
   const [description, setDescription] = useState('');
+  const[loading,setLoading]=useState(false);
   const Navigate=useNavigation();
   const maxLength = 150;
 
@@ -49,13 +51,20 @@ const Conversation = () => {
   };
  
   async function PostAJob(){
+    if(!description){
+      ToastAndroid.showWithGravity(
+        'All Field Required',
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
+      return;
+    }
     const allKeys = await AsyncStorage.getAllKeys();
 
     const allItems = await AsyncStorage.multiGet(allKeys);
     const token = allItems[0][1]; 
-    
+    setLoading(true)
     const decodedEmail=await DecodedTokenHandler(token);
-    console.log("em",decodedEmail)
       const data={
          Email:decodedEmail.data.Email,
          projectName:title,
@@ -63,7 +72,8 @@ const Conversation = () => {
          Skill:skills,
          projectDescription:description
       }
-      const response=await createProjectHandler(data);
+     const response=await createProjectHandler(data);
+     setLoading(false)
       Navigate.navigate("JobPage")
   }
   return (
@@ -89,7 +99,8 @@ const Conversation = () => {
           <Text style={tw`text-xl font-bold`}>·</Text>Provide clear expectations for your tasks or objectives.
         </Text>
         <Text style={[tw`mt-7 text-xl`, { fontFamily: "MadimiOne" }]}>Describe what you need</Text>
-
+         {/*spinner*/}
+         <Spinner visible={loading}/>
         <TextInput
           multiline
           numberOfLines={13}

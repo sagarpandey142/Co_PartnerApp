@@ -74,7 +74,7 @@ exports.DeleteProfile=async(req,res)=>{
 exports.FindByEmail=async(req,res)=>{
     try{
        const {Email} =req.body
-       const response=await Profile.findOne({Email:Email})
+       const response=await Profile.findOne({Email:Email}).populate("SavedJobs")
        return res.status(200).json({response})
     } catch(error){
       return res.status(404).json({

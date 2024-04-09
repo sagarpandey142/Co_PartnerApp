@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView ,TouchableOpacity} from "react-native";
+import { View, Text, ScrollView ,TouchableOpacity,ToastAndroid} from "react-native";
 import tw from "twrnc";
 import CheckBox from "expo-checkbox"; 
 import Navbar from '../../Common/Navbar';
@@ -25,12 +25,20 @@ const ScopeView = () => {
      const data1={
         ...projectLength,...spanPeriod,...LevelExperience
      }
-     console.log("data1",data1)
+     if(!projectLength|| !spanPeriod || !LevelExperience){
+      ToastAndroid.showWithGravity(
+        'All Field Required',
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
+      return;
+     }
      const data={
        projectLength,
        spanPeriod,
        LevelExperience
      }
+    
       dispatch(updateStep(5));
       dispatch(updateBasicDetail(data))
   }

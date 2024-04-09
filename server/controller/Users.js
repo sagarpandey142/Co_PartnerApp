@@ -22,11 +22,11 @@ exports.GetOtp = async (req, res) => {
 
     // Check if the profile with the provided email exists
     const userProfile = await Profile.findOne({ Email });
-
+    console.log("user",userProfile)
     if (userProfile) {
-      return res.status(404).json({
+      return res.status(200).json({
         success: false,
-        message: "Profile not found",
+        message: "Profile found",
       });
     }
 
@@ -105,7 +105,6 @@ exports.signup = async (req, res) => {
       proffesional_Role,
       user_Dec
     } = req.body;
-
     if (
       !Full_Name ||
       !proffesional_Role ||
@@ -197,7 +196,7 @@ exports.login=async(req,res)=>{
 
 
           let token=jwt.sign(payload,process.env.JWT_SECRET,{
-              expiresIn:"1000h",
+           
           });
 
           user.token=token;

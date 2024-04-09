@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View ,Text,Image,TouchableOpacity} from 'react-native'
+import { View ,Text,Image,TouchableOpacity,ToastAndroid} from 'react-native'
 import image1 from "../../../assets/circle-star.png"
 import tw from "twrnc"
 import { useFonts } from 'expo-font'
@@ -25,9 +25,16 @@ const SkillsPage = () => {
       });
 
       const setSkillState=()=>{
+        if(selectedButton.length<=2){
+          ToastAndroid.showWithGravity(
+            'Please Select Atleast 3 Skills ',
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER,
+          );
+          return;
+        }
            setLoading(true)
            dispatch(updateStep(3));
-           console.log("ele",selectedButton)
            dispatch(updateSkills(selectedButton));
            setLoading(false)
       }

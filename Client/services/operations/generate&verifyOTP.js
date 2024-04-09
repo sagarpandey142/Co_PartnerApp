@@ -5,7 +5,7 @@ const { generateVerifyOTP } = require("../Api")
 exports.generateOTP = async(email) => {
     try{
         const response = await axios.post(generateVerifyOTP.generateOTP, {Email: email})
-        console.log("response", response);
+        return response;
     }catch(error){
         console.error("Error:", error);
     }

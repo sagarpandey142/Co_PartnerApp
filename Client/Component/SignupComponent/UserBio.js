@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Text, View ,TextInput,Image,TouchableOpacity} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Text, View ,TextInput,Image,TouchableOpacity,ToastAndroid} from 'react-native'
 import Navbar from '../Common/Navbar'
 import { useFonts } from 'expo-font';
 import tw from "twrnc"
@@ -32,13 +32,21 @@ const UserBio = () => {
       }
     
     async  function handlePress(){
-     await dispatch(updateProfessionalDes(value));
+      if(!value){
+        ToastAndroid.showWithGravity(
+          'All Field Required',
+          ToastAndroid.SHORT,
+          ToastAndroid.CENTER,
+        );
+        return;
+      }
+       dispatch(updateProfessionalDes(value));
       const Tech={
           ...skill
       }
      
       
-      const updatedData = { ...data,Tech, proffesional_Role:professionalRole, user_Dec:updatedDesc ,GithubLink:GithubLink,LinkedinLink:LinkedInLink};
+      const updatedData = { ...data,Tech, proffesional_Role:professionalRole, user_Dec:updatedDesc ,GithubLink:"https://github.com/"+GithubLink,LinkedinLink:"https://www.linkedin.com/"+LinkedInLink};
       setLoading(true);
       const response=await signupHandler(updatedData);
       setLoading(false);
@@ -46,6 +54,7 @@ const UserBio = () => {
            navigate.navigate("HomePage")
         }
       }
+   
   return (
 
      <View style={tw`  h-[100%] `}>

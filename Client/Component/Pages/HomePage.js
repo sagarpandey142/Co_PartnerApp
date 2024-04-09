@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, Image, Linking } from 'react-native';
+import React, { useState,useEffect } from 'react';
+import { Text, View, TouchableOpacity, Image, Linking,ActivityIndicator } from 'react-native';
 import tw from "twrnc";
 import MainHeader from '../Common/MainHeader';
 import { successArray } from "../../ArrayUsable/SucessStoryArray";
@@ -7,6 +7,8 @@ import { useFonts } from 'expo-font';
 import { ScrollView } from 'react-native-gesture-handler';
 import MainFooter from '../Common/MainFooter';
 import Swiper from "react-native-swiper"
+import { useNavigation } from '@react-navigation/native';
+import image1 from '../../assets/logo.jpg'
 
 const HomePage = () => {
 
@@ -14,9 +16,24 @@ const HomePage = () => {
         MadimiOne: require("../../assets/Fonts/2V0YKIEADpA8U6RygDnZZFQoBoHMd2U.ttf"),
         TwinkleStar: require("../../assets/Fonts/X7nP4b87HvSqjb_WIi2yDCRwoQ_k7367_B-i2yQag0-mac3OryLMFuOLlNldbw.ttf")
     });
+    const navigation=useNavigation();
+    const [isLoading, setIsLoading] = useState(true);
 
-    const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
+    useEffect(() => {
+        const delay = setTimeout(() => {
+            setIsLoading(false); 
+        }, 6000); 
 
+        return () => clearTimeout(delay); 
+    }, [fontsLoaded])
+   
+    if (!fontsLoaded || isLoading) {
+        return (
+            <View style={tw` h-[100%] w-[100%] items-center justify-center bg-white`}>
+                <Image source={image1}/>
+            </View>
+        );
+    }
     const handleItemClick = (redirectUrl) => {
         Linking.openURL(redirectUrl);
     };

@@ -17,6 +17,7 @@ import LinkedinIcon from "../../assets/LinkedIn_icon_circle.png"
 import GithubIcon from "../../assets/github_icon.webp"
 import gmailIcon from "../../assets/gmail-icon-free-png.webp"
 import { AntDesign } from '@expo/vector-icons';
+import {addSavedProject,RemoveSavedProject} from "../../services/operations/savedProjectHandler"
 
 
 const JobDesc = () => {
@@ -24,6 +25,7 @@ const JobDesc = () => {
   const[userData,setUserData]=useState()
   const {desc} = useSelector((state)=>state.signup);
  const{projectName,projectDescription,Skill}=desc
+ const [isSaved, setIsSaved] = useState(false);
   const [fontsLoaded] = useFonts({
     MadimiOne: require("../../assets/Fonts/2V0YKIEADpA8U6RygDnZZFQoBoHMd2U.ttf"),
     TwinkleStar: require("../../assets/Fonts/X7nP4b87HvSqjb_WIi2yDCRwoQ_k7367_B-i2yQag0-mac3OryLMFuOLlNldbw.ttf")
@@ -43,16 +45,26 @@ const JobDesc = () => {
 
     const token=await AsyncStorage.getItem('token');
     const EmailInfo=await DecodedTokenHandler(token);
-    const responseActudalDetail=await GetUserDetail(EmailInfo.data.Email)
-    setUserData(responseActudalDetail.data.response)
+    const responseActualDetail=await GetUserDetail(EmailInfo.data.Email)
+    setUserData(responseActualDetail.data.response)
+
+    if (responseActualDetail.data.response) {
+      const savedJobs = responseActualDetail.data.response.SavedJobs || [];
+      const isSaved = savedJobs.some((job) => job._id === project?._id);
+      setIsSaved(isSaved);
+    }
   }
+
+
   useEffect(() => {
     fetchProjectById();
-  }, [projectName]);
+  }, [projectName,isSaved]);
 
   useEffect(()=>{
     GetUserDetails();
   },[])
+
+
   
   function handleLinkedinIcon(){
        Linking.openURL("https://www.linkedin.com/in/"+userData?.LinkedIn);
@@ -72,6 +84,17 @@ const JobDesc = () => {
       Linking.openURL(mailtoLink);
      return;
   }
+
+  async function handleSavedProject(projectId){
+       if(isSaved===false){
+          await addSavedProject(userData?.Email,projectId)
+          setIsSaved(true)
+          // popup project saved
+       } else{
+           await RemoveSavedProject(userData?.Email,projectId)
+           setIsSaved(false)
+       }
+  } 
   return (
     <View style={[tw` bg-white h-[100%]`]}>
        <Navbar header="Job Details"/>  
@@ -165,17 +188,17 @@ const JobDesc = () => {
             </View>
         </View>
       </ScrollView>
-      <View style={tw`  `}>
-        <View style={[tw`gap-3`,{ borderTopWidth: 5, borderTopColor: '#E5E7EB',padding:17,display:'flex',flexDirection:'row', justifyContent:'space-between' }]}>
+      <View style={tw`-ml-3`}>
+        <View style={[tw`gap-3  `,{ borderTopWidth: 5, borderTopColor: '#E5E7EB',padding:17,display:'flex',flexDirection:'row', justifyContent:'space-between' }]}>
             <TouchableOpacity onPress={handleGmailIcon}>
           
                     <Text style={tw` border border-gray-300 bg-green-600 text-white font-bold p-3 rounded-full px-5`}>Mail To {userData?.name}</Text>
                  
             </TouchableOpacity>
-            <TouchableOpacity >
-                 <View style={tw`border-[3px] border-green-600 p-2   px-3 rounded-full font-bold flex flex-row justify-center items-center gap-3`}>
-                      <AntDesign name="hearto" size={24} color="#15803d"/>
-                      <Text style={tw`font-bold`}>Saved Job</Text>
+            <TouchableOpacity onPress={()=>handleSavedProject(project?._id)} >
+                 <View style={tw`  border-[3px] border-green-600 p-2    px-3 rounded-full font-bold flex flex-row justify-center items-center gap-3`}>
+                      {isSaved ? <AntDesign name="heart" size={24} color="#15803d" /> :  <AntDesign name="hearto" size={24} color="#15803d"/>}
+                      <Text style={tw`font-bold`}> {isSaved ? 'Unsave Project' : 'Saved Project'}</Text>
                  </View>
             </TouchableOpacity>
         </View>

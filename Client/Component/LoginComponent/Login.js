@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Text, View, TextInput, TouchableOpacity, Alert, Image, StyleSheet } from 'react-native';
+import React, { useState,useEffect } from 'react';
+import { Text, View, TextInput, TouchableOpacity, Alert, Image, StyleSheet ,ToastAndroid} from 'react-native';
 import { useFonts } from 'expo-font';
 import tw from 'twrnc';
 import { login } from '../../services/operations/generate&verifyOTP';
@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import signinImages from "../../assets/loginim.png";
 import Spinner from 'react-native-loading-spinner-overlay';
+import image1 from "../../assets/logo.jpg"
 
 const Login = () => {
   const [fontsLoaded] = useFonts({
@@ -26,26 +27,41 @@ const Login = () => {
 
   const handleLogin = async () => {
     if (email.trim() === '' || password.trim() === '') {
-      Alert.alert('Error', 'Please enter both email and password');
-      return;
-    }
-    if (email.toLowerCase().endsWith('@gmail.com')) {
-      Alert.alert(
-        'Default Email Addition',
-        'gmail.com will be added by default.'
+       ToastAndroid.showWithGravity(
+        "Please enter both email and password",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
       );
       return;
     }
-    // setLoading(true);
+    if (email.toLowerCase().endsWith('@gmail.com')) {
+      ToastAndroid.showWithGravity(
+        "gmail.com will be added by default.",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
+      return;
+    }
+    setLoading(true);
     const response = await login(email+"@gmail.com", password);
     if(response.data.message==="password Doesn't Matches"){
        setPasswordMatched(false);
        setLoading(false);
-       return;
+       ToastAndroid.showWithGravity(
+        "password Doesn't Matches",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
+      return;
     }
     if(response.data.message==="Sign Up First"){
       setUserVerified(false);
       setLoading(false);
+      ToastAndroid.showWithGravity(
+        "Sign Up First",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
       return;
     }
     await AsyncStorage.setItem('token', response.data.token);
@@ -53,8 +69,22 @@ const Login = () => {
     navigate.navigate?.('HomePage');
   };
 
-  if (!fontsLoaded) {
-    return null;
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+      const delay = setTimeout(() => {
+          setIsLoading(false); 
+      }, 6000); 
+
+      return () => clearTimeout(delay); 
+  }, [fontsLoaded])
+ 
+  if (!fontsLoaded || isLoading) {
+      return (
+          <View style={tw` h-[100%] w-[100%] items-center justify-center bg-white`}>
+              <Image source={image1}/>
+          </View>
+      );
   }
 
   return (

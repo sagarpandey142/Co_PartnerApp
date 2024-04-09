@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {View,Text,TextInput,TouchableOpacity} from "react-native"
+import {View,Text,TextInput,TouchableOpacity,ToastAndroid} from "react-native"
 import tw from "twrnc"
 import { useFonts } from 'expo-font'
 import Footer from '../../Common/Footer'
@@ -20,6 +20,14 @@ const TitlePage = () => {
       });
   
     async function setTitleState(){
+      if(!data){
+        ToastAndroid.showWithGravity(
+          'All Field Required',
+          ToastAndroid.SHORT,
+          ToastAndroid.CENTER,
+        );
+        return;
+      }
           setLoading(true)
           console.log("data",data)
           dispatch(updateTitle(data))
