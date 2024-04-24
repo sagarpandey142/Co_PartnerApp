@@ -31,10 +31,8 @@ exports.getSavedProject = async(email) => {
 }
 
 exports.getRecentProject = async() => {
-    console.log("getRecentProject hai")
     try{
         const response = await axios.get(savedProjectRoute.getRecentProject);
-        console.log("response of recent jobs", response);
         if(response){
             return response;
         }

@@ -187,8 +187,8 @@ exports.login=async(req,res)=>{
               success:false,
               message:"Sign Up First",
           })}
+          
           //jwt token
-       console.log("user",user)
       if(await bcrypt.compare(password,user.password)){
           const payload={
               email:user.Email,

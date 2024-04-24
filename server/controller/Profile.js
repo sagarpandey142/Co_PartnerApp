@@ -71,15 +71,17 @@ exports.DeleteProfile=async(req,res)=>{
 }
 
 // find by id
-exports.FindById=async(req,res)=>{
+exports.FindByEmail=async(req,res)=>{
     try{
-       console.log("req",req.body);
-       const {id} =req.body
-       const response=await Project.findById("65fd86417aa3f5be1848489a")
-       console.log("res",response)
-
-       return response
+      console.log("find email k andar")
+       const {Email} =req.body
+       console.log("email", Email)
+       const response=await Profile.findOne({Email:Email}).populate("SavedJobs").exec();
+       return res.status(200).json({response})
     } catch(error){
-       console.log("error",error)
+      return res.status(404).json({
+         success:false,
+         error:error
+      })
     }
 }

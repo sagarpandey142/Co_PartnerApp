@@ -37,23 +37,11 @@ const JobPage = () => {
   const [recentProject, setRecentProject] = useState([])
   const [expandedDescriptionIndex, setExpandedDescriptionIndex] = useState(null);
   
-  // const SavedProject = async () => {
-  //   try {
-  //     console.log("getSavedJobs")
-  //     const response = await getSavedProject();
-  //     console.log("response", response);
-  //     setJobs(response.data.response);
-  //   } catch (error) {
-  //     console.log("error", error.message);
-  //   }
-  // }
-
-
-  const RecentProject = async () => {
+  const SavedProject = async () => {
     try {
-      console.log("getRecentJobs")
-      const response = await getRecentProject();
-      console.log("response", response.data.response);
+      const responseEmail = await DecodedTokenHandler(Token);
+      const response = await getSavedProject(responseEmail.data.Email);
+      console.log("response", response);
       setJobs(response.data.response);
     } catch (error) {
       console.log("error", error.message);
@@ -70,14 +58,23 @@ const JobPage = () => {
     }
   }
 
+
+  const RecentProject = async () => {
+    try {
+      const response = await getRecentProject();
+      setJobs(response.data.response);
+    } catch (error) {
+      console.log("error", error.message);
+    }
+  }
+ 
   useEffect(() => {
-    // SavedProject();
+    SavedProject();
     RecentProject();
-    // addSavedProject();
   }, []);
 
   useEffect(()=>{
-    console.log("recent project",jobs);
+    
   },[jobs])
 
 
@@ -118,7 +115,7 @@ const JobPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log('Updated state:', state);
+   
   }, [state]);
 
   const [fontsLoaded] = useFonts({
@@ -193,7 +190,7 @@ const JobPage = () => {
       </View>
 
           <View style={[tw`mx-4 mt-5`]} />
-          <View style={[tw`flex flex-row gap-5 mx-auto mt-3 p-3`, {}]}>
+          <View style={[tw`flex border-b-2 border-slate-300 flex-row gap-5 mx-auto  ml-3 mt-3 p-3 w-[100%]`, {}]}>
             <TouchableOpacity onPress={toggleMyFeed} style={[myFeed && tw`border-b-2 border-green-700`]}>
               <Text style={[tw`text-lg text-gray-400 font-semibold pb-1`, myFeed && tw`text-semibold text-green-600`]}>{'My Feed'}</Text>
             </TouchableOpacity>

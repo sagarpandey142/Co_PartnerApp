@@ -20,10 +20,11 @@ import Index from "./Component/Pages/CreateProject/Index";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { updateToken } from './reducers/signupReducer';
 import AppLoading from 'expo-app-loading';
+import Profile from '././Component/Pages/ProfilePage/Profile'
 
 export default function App() {
   const Stack = createStackNavigator();
-  const [initialRoute, setInitialRoute] = useState("Login");
+  const [initialRoute, setInitialRoute] = useState("Signup");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -54,7 +55,7 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName={initialRoute} screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Signup" component={Signup}/>
+          {/* <Stack.Screen name="Signup" component={Signup}/>
           <Stack.Screen name="Verification" component={Verification}/> 
           <Stack.Screen name="GetStarted" component={GetStarted}/>
           <Stack.Screen name="ProfessionalInfo" component={ProfessionalRole}/> 
@@ -72,7 +73,8 @@ export default function App() {
           <Stack.Screen name="Login" component={Login}/>
           <Stack.Screen name="JobPage" component={JobPage}/>
           <Stack.Screen name="JobDesc" component={JobDesc}/>
-          <Stack.Screen name='Index' component={Index}/>
+          <Stack.Screen name='Index' component={Index}/> */}
+          <Stack.Screen name='Profile' component={Profile}/>
         </Stack.Navigator> 
       </NavigationContainer>
     </Provider>
