@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Profile } from '../Api'
 const { SignupRoute } = require("../Api")
-exports.signupHandler = async(data) => {
+export const signupHandler = async(data) => {
     try{
         const response = await axios.post(SignupRoute.signup, data)
         if(response){
@@ -12,7 +12,7 @@ exports.signupHandler = async(data) => {
     }
 }
 
-exports.GetUserDetail=async(email)=>{
+export const GetUserDetail=async(email)=>{
     try{
        const response=await axios.post(Profile.profileInfo,{Email:email});
        return response

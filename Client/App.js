@@ -31,6 +31,7 @@ export default function App() {
     async function checkUserAuth() {
       try {
         const token = await AsyncStorage.getItem('token');
+        console.log("token",token)
         if (token) {
           setInitialRoute('HomePage');
         } else {
@@ -54,15 +55,14 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={initialRoute} screenOptions={{ headerShown: false }}>
-          {/* <Stack.Screen name="Signup" component={Signup}/>
+        <Stack.Navigator initialRouteName={"Signup"} screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Signup" component={Signup}/>
           <Stack.Screen name="Verification" component={Verification}/> 
           <Stack.Screen name="GetStarted" component={GetStarted}/>
           <Stack.Screen name="ProfessionalInfo" component={ProfessionalRole}/> 
           <Stack.Screen name="UserBio" component={UserBio}/>
           <Stack.Screen name="Skill" component={Skill}/> 
           <Stack.Screen name='HomePage' component={HomePage} options={{
-            // When navigating to HomePage, reset the navigation stack
             gestureEnabled: false,
             animationEnabled: false,
             ...CommonActions.reset({
@@ -73,7 +73,7 @@ export default function App() {
           <Stack.Screen name="Login" component={Login}/>
           <Stack.Screen name="JobPage" component={JobPage}/>
           <Stack.Screen name="JobDesc" component={JobDesc}/>
-          <Stack.Screen name='Index' component={Index}/> */}
+          <Stack.Screen name='Index' component={Index}/>
           <Stack.Screen name='Profile' component={Profile}/>
         </Stack.Navigator> 
       </NavigationContainer>

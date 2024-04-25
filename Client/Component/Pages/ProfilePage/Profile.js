@@ -8,6 +8,7 @@ import tw from "twrnc";
 import { useFonts } from 'expo-font';
 
 
+
 const Profile = () => {
 
     const [profile, setProfile] = useState([]);

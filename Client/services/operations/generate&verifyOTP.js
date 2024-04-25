@@ -2,16 +2,16 @@ import axios from 'axios'
 
 const { generateVerifyOTP } = require("../Api")
 
-exports.generateOTP = async(email) => {
+export const generateOTP = async(email) => {
     try{
         const response = await axios.post(generateVerifyOTP.generateOTP, {Email: email})
-        console.log("response", response);
+        return response;
     }catch(error){
         console.error("Error:", error);
     }
 }
 
-exports.verifyOTP = async(email, user_Otp) => {
+export const verifyOTP = async(email, user_Otp) => {
     try{
         const response = await axios.post(generateVerifyOTP.verifyOTP, {Email: email, user_Otp: user_Otp})
         console.log("response", response);
@@ -21,7 +21,7 @@ exports.verifyOTP = async(email, user_Otp) => {
     }
 }
 
-exports.login = async(email, password) => {
+export const login = async(email, password) => {
     try{
 
         const response = await axios.post(generateVerifyOTP.login, {email,password})
@@ -32,7 +32,7 @@ exports.login = async(email, password) => {
     }
 }
 
-exports.DecodedTokenHandler=async(token)=>{
+export const DecodedTokenHandler=async(token)=>{
     try{
     const response=await axios.post(generateVerifyOTP.DecodedApi,{token});
     console.log("serive ka response in token", response)

@@ -180,12 +180,13 @@ const JobPage = () => {
       <ScrollView>
         <View>
         <View style={[tw`flex flex-row w-11/12 mx-auto justify-between`, {}]}>
-          <View style={[tw`relative flex flex-col items-center`, {}]}>
-            <View style={tw`absolute  w-11/12 mt-2 `}>
-                <Image source={searchIcon} style={tw` h-7 w-7 `}/>
-            </View>
-            <TextInput placeholder=' Search for jobs' style={tw`relative rounded-3xl border-[3px] p-2 pl-10 w-[16rem] border-gray-300`} />
-          </View>
+        <View style={[tw`flex flex-col items-center`, { position: 'relative' }]}>
+            <AntDesign name="search1" size={24} color="black" style={tw`absolute left-5 top-2`} />
+            <TextInput
+                placeholder='Search for Projects...'
+                style={[tw`relative rounded-3xl border-[3px] p-1 pl-12 w-[16rem] border-gray-300`, { fontFamily: 'MadimiOne' }]}
+            />
+        </View>
           <MaterialCommunityIcons name="heart-circle-outline" size={24} color="black" style={[tw`flex items-center text-5xl text-green-600`, {}]} />
       </View>
 

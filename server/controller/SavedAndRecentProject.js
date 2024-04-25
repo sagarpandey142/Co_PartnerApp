@@ -89,3 +89,36 @@ exports.getSavedProject = async(req, res) =>{
         })
     }
 }
+
+
+exports.removeSavedProject= async(req,res)=>{
+    try{
+        const{Email,ProjectId}=req.body;
+        console.log("email",Email,ProjectId)
+        if(!Email || !ProjectId){
+              res.status(404).json({
+                success:false,
+                message:"All Field Required"
+              })
+        }
+        const updatedProfile = await Profile.findOne(
+            { Email: Email },
+          );
+       
+          updatedProfile.SavedJobs=updatedProfile.SavedJobs.filter((id)=>id.toString()!==ProjectId)
+          updatedProfile.save();
+
+          return res.status(200).json({
+            success:true,
+            message:updatedProfile
+          })
+
+    } catch(e){
+         console.log("error",e)
+         res.status(500).json({
+            success:false,
+            message:"Some error Ocuured",
+            error:e
+         })
+    }
+}

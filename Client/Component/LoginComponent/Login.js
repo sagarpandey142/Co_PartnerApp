@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, TouchableOpacity, Alert, Image, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 import tw from 'twrnc';
@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import signinImages from "../../assets/loginim.png";
 import Spinner from 'react-native-loading-spinner-overlay';
+import image1 from "../../assets/logo.jpg";
 
 const Login = () => {
   const [fontsLoaded] = useFonts({
@@ -17,35 +18,34 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isFocused, setIsFocused] = useState(false);
-  const[loading,setLoading]=useState(false)
-  const[passwordMatched,setPasswordMatched]=useState(true)
-  const[userVerified,setUserVerified]=useState(true)
+  const [loading, setLoading] = useState(false);
+  const [passwordMatched, setPasswordMatched] = useState(true);
+  const [userVerified, setUserVerified] = useState(true);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
-  const navigation=useNavigation();
+  const navigation = useNavigation();
   const navigate = useNavigation();
 
   const handleLogin = async () => {
     if (email.trim() === '' || password.trim() === '') {
-      Alert.alert('Error', 'Please enter both email and password');
+      Alert.alert("Please enter both email and password");
       return;
     }
     if (email.toLowerCase().endsWith('@gmail.com')) {
-      Alert.alert(
-        'Default Email Addition',
-        'gmail.com will be added by default.'
-      );
+      Alert.alert("gmail.com will be added by default.");
       return;
     }
-    // setLoading(true);
-    const response = await login(email+"@gmail.com", password);
-    if(response.data.message==="password Doesn't Matches"){
-       setPasswordMatched(false);
-       setLoading(false);
-       return;
+    setLoading(true);
+    const response = await login(email + "@gmail.com", password);
+    if (response.data.message === "password Doesn't Matches") {
+      setPasswordMatched(false);
+      setLoading(false);
+      Alert.alert("Password Doesn't Matches");
+      return;
     }
-    if(response.data.message==="Sign Up First"){
+    if (response.data.message === "Sign Up First") {
       setUserVerified(false);
       setLoading(false);
+      Alert.alert("Sign Up First");
       return;
     }
     await AsyncStorage.setItem('token', response.data.token);
@@ -53,14 +53,28 @@ const Login = () => {
     navigate.navigate?.('HomePage');
   };
 
-  if (!fontsLoaded) {
-    return null;
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      setIsLoading(false);
+    }, 6000);
+
+    return () => clearTimeout(delay);
+  }, [fontsLoaded])
+
+  if (!fontsLoaded || isLoading) {
+    return (
+      <View style={tw` h-[100%] w-[100%] items-center justify-center bg-white`}>
+        <Image source={image1} />
+      </View>
+    );
   }
 
   return (
     <View style={[tw`h-full w-full bg-white mt-5 flex flex-col `]}>
       <View style={tw`w-11/12 mx-auto`}>
-        <Image source={signinImages} style={[tw``, {marginTop: 70, height: 200, width: 300 }]} />
+        <Image source={signinImages} style={[tw``, { marginTop: 70, height: 200, width: 300 }]} />
         <Text style={[tw`text-2xl mt-4`, { fontFamily: "MadimiOne" }]}>Login</Text>
         <Text style={tw`mt-2 text-slate-500 text-lg`}>Please Sign in to continue</Text>
         <View style={styles.container}>
@@ -76,26 +90,26 @@ const Login = () => {
             <Text style={[styles.emailSuffix, isFocused && styles.emailSuffixFocused]}>@gmail.com</Text>
           </View>
           {
-             userVerified===false && (
+            userVerified === false && (
               <Text style={[tw`text-red-700  pb-2`, { fontFamily: "MadimiOne" }]}>User Not Registered</Text>
-             )
+            )
           }
           <View style={styles.searchContainer}>
-          <TextInput
-            style={[styles.input, isPasswordFocused && styles.inputPasswordFocused]} 
-            placeholder="Password"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={setPassword}
-            onFocus={() => setIsPasswordFocused(true)}
-            onBlur={() => setIsPasswordFocused(false)}
-          />
-         
+            <TextInput
+              style={[styles.input, isPasswordFocused && styles.inputPasswordFocused]}
+              placeholder="Password"
+              secureTextEntry={true}
+              value={password}
+              onChangeText={setPassword}
+              onFocus={() => setIsPasswordFocused(true)}
+              onBlur={() => setIsPasswordFocused(false)}
+            />
+
           </View>
           {
-             passwordMatched===false && (
+            passwordMatched === false && (
               <Text style={[tw`text-red-700  pb-2`, { fontFamily: "MadimiOne" }]}>Password Dosen't Match</Text>
-             )
+            )
           }
           {/*spinner*/}
           <Spinner
@@ -103,12 +117,12 @@ const Login = () => {
           />
         </View>
         <TouchableOpacity style={tw` mx-auto p-4 px-22  rounded-full  bg-green-400`} onPress={handleLogin}>
-          <Text style={[tw` text-white text-lg`,{fontFamily:"MadimiOne"}]}>Login</Text>
+          <Text style={[tw` text-white text-lg`, { fontFamily: "MadimiOne" }]}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>{
-           navigation?.navigate("Signup")
+        <TouchableOpacity onPress={() => {
+          navigation?.navigate("Signup")
         }}>
-            <Text  style={[tw` mt-4 mx-auto text-[16px] text-green-600`,{fontFamily:"MadimiOne"}]}>Don't Have an account? Sign up</Text>
+          <Text style={[tw` mt-4 mx-auto text-[16px] text-green-600`, { fontFamily: "MadimiOne" }]}>Don't Have an account? Sign up</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -146,10 +160,10 @@ const styles = StyleSheet.create({
     color: '#99A3BA',
   },
   inputFocused: {
-    borderColor: '#15803d', 
+    borderColor: '#15803d',
   },
   inputPasswordFocused: {
-    borderColor: '#15803d', 
+    borderColor: '#15803d',
   },
   emailSuffix: {
     height: "100%",
