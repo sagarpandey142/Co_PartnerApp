@@ -169,7 +169,7 @@ exports.signup = async (req, res) => {
 exports.login=async(req,res)=>{
   try{
     
-     
+      console.log("hello",req.body)
       const {email,password}=req.body;
       //validation
       if(!email || !password){

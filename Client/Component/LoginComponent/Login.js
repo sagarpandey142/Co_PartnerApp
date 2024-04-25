@@ -44,9 +44,10 @@ const Login = () => {
     }
     setLoading(true);
     const response = await login(email+"@gmail.com", password);
+    setLoading(false);
+    console.log("res",response)
     if(response.data.message==="password Doesn't Matches"){
        setPasswordMatched(false);
-       setLoading(false);
        ToastAndroid.showWithGravity(
         "password Doesn't Matches",
         ToastAndroid.SHORT,
@@ -56,7 +57,6 @@ const Login = () => {
     }
     if(response.data.message==="Sign Up First"){
       setUserVerified(false);
-      setLoading(false);
       ToastAndroid.showWithGravity(
         "Sign Up First",
         ToastAndroid.SHORT,
@@ -65,7 +65,6 @@ const Login = () => {
       return;
     }
     await AsyncStorage.setItem('token', response.data.token);
-    setLoading(false);
     navigate.navigate?.('HomePage');
   };
 

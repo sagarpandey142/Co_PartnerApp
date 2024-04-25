@@ -20,6 +20,7 @@ import Index from "./Component/Pages/CreateProject/Index";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { updateToken } from './reducers/signupReducer';
 import AppLoading from 'expo-app-loading';
+import SearchPage from './Component/Pages/SearchPage';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -38,9 +39,8 @@ export default function App() {
         }
       } catch (error) {
         console.error('Error while checking user authentication:', error);
-        // Handle error
       } finally {
-        setIsLoading(false); // Set loading state to false after authentication check
+        setIsLoading(false);
       }
     }
 
@@ -54,7 +54,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={initialRoute} screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName={"Signup"} screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Signup" component={Signup}/>
           <Stack.Screen name="Verification" component={Verification}/> 
           <Stack.Screen name="GetStarted" component={GetStarted}/>
@@ -73,6 +73,7 @@ export default function App() {
           <Stack.Screen name="JobPage" component={JobPage}/>
           <Stack.Screen name="JobDesc" component={JobDesc}/>
           <Stack.Screen name='Index' component={Index}/>
+          <Stack.Screen name='SearchPage' component={SearchPage}/>
         </Stack.Navigator> 
       </NavigationContainer>
     </Provider>

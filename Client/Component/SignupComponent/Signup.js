@@ -20,7 +20,7 @@ const Signup = () => {
   const [lastName, setLastName] = useState( data.Full_Name?.split('  ')[1]);
   const [email, setEmail] = useState(data.Email);
   const [password, setPassword] = useState(data.password);
-  const [country, setCountry] = useState(data.country);
+  const [country, setCountry] = useState("India");
   const [agreeTerms, setAgreeTerms] = useState(data.agreeTerms);
   const [isSelected, setSelection] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -47,7 +47,7 @@ const Signup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault()
-   
+      console.log("first",firstName ,lastName ,email ,password ,country ,agreeTerms)
           if (!firstName || !lastName || !email || !password || !country || !agreeTerms) {
                 ToastAndroid.showWithGravity(
                   'All Field Required',

@@ -26,7 +26,7 @@ const HomePage = () => {
 
         return () => clearTimeout(delay); 
     }, [fontsLoaded])
-   
+     console.log("is",isLoading,fontsLoaded)
     if (!fontsLoaded || isLoading) {
         return (
             <View style={tw` h-[100%] w-[100%] items-center justify-center bg-white`}>
