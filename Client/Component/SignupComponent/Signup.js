@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Image,ToastAndroid, StyleSheet, Modal, Button } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, StyleSheet, Modal, Button, Alert } from 'react-native'; // Import Alert from 'react-native'
 import { Picker } from '@react-native-picker/picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateSignupData } from '../../reducers/signupReducer';
@@ -9,7 +9,6 @@ import logo from '../../assets/logo.jpg'
 import { generateOTP } from '../../services/operations/generate&verifyOTP';
 import { useNavigation } from '@react-navigation/native'
 import CheckBox from 'expo-checkbox';
-import { useToast } from "react-native-toast-notifications";
 import Spinner from 'react-native-loading-spinner-overlay';
 
 
@@ -27,7 +26,6 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigation();
   const dispatch = useDispatch();
-  const toast = useToast()
   const [fontsLoaded] = useFonts({
     MadimiOne: require("../../assets/Fonts/2V0YKIEADpA8U6RygDnZZFQoBoHMd2U.ttf"),
     TwinkleStar: require("../../assets/Fonts/X7nP4b87HvSqjb_WIi2yDCRwoQ_k7367_B-i2yQag0-mac3OryLMFuOLlNldbw.ttf")
@@ -46,12 +44,16 @@ const Signup = () => {
 
 
   const handleSignup = async (e) => {
+    console.log("data ka baap", Full_Name, email, password, country, agreeTerms)
     e.preventDefault()
           if (!firstName || !lastName || !email || !password || !country || !agreeTerms) {
-                ToastAndroid.showWithGravity(
+                Alert.alert(
                   'All Field Required',
-                  ToastAndroid.SHORT,
-                  ToastAndroid.CENTER,
+                  '',
+                  [
+                    { text: 'OK', onPress: () => console.log('OK Pressed') }
+                  ],
+                  { cancelable: false }
                 );
                 return;
           }
@@ -71,16 +73,21 @@ const Signup = () => {
             country,
             agreeTerms,
           };
+
+          
           
      
      setLoading(true)
       const OtpGenrateResponse=await generateOTP(email ? email : data.Email)
      setLoading(false)
       if(OtpGenrateResponse.data.message==="Profile found"){
-        ToastAndroid.showWithGravity(
-          'User Already Registered Please Try With Another Email',
-          ToastAndroid.SHORT,
-          ToastAndroid.CENTER,
+        Alert.alert(
+          'User Already Registered',
+          'Please Try With Another Email',
+          [
+            { text: 'OK', onPress: () => console.log('OK Pressed') }
+          ],
+          { cancelable: false }
         );
         return;
       }

@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { Text, View, TouchableOpacity, Image, Linking,ActivityIndicator } from 'react-native';
 import tw from "twrnc";
 import MainHeader from '../Common/MainHeader';
-import { successArray } from "../../ArrayUsable/SucessStoryArray";
+import { successArray } from "../../ArrayUsable/SucessStoryArray"
 import { useFonts } from 'expo-font';
 import { ScrollView } from 'react-native-gesture-handler';
 import MainFooter from '../Common/MainFooter';

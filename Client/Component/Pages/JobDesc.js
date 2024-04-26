@@ -24,8 +24,7 @@ const JobDesc = () => {
   const [project, setProject] = useState([]);
   const[userData,setUserData]=useState()
   const {desc} = useSelector((state)=>state.signup);
- const{projectName,projectDescription,Skill}=desc
- const [isSaved, setIsSaved] = useState(false);
+ const{projectName,projectDescription,Skill}=desc;
   const [fontsLoaded] = useFonts({
     MadimiOne: require("../../assets/Fonts/2V0YKIEADpA8U6RygDnZZFQoBoHMd2U.ttf"),
     TwinkleStar: require("../../assets/Fonts/X7nP4b87HvSqjb_WIi2yDCRwoQ_k7367_B-i2yQag0-mac3OryLMFuOLlNldbw.ttf")

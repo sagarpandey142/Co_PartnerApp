@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { projectsRoute } from '../Api'; 
 
-exports.ProjectsHandler = async() => {
+export const ProjectsHandler = async() => {
     console.log("handler serverice")
        try{
         console.log("hndi ser")
@@ -16,7 +16,7 @@ exports.ProjectsHandler = async() => {
        }
 }
 
-exports.ProjectsByNameHandler = async(projectName) => {
+export const ProjectsByNameHandler = async(projectName) => {
     try{
          const response = await axios.post(projectsRoute.projectByName, {projectName});
          if(response){
@@ -27,7 +27,7 @@ exports.ProjectsByNameHandler = async(projectName) => {
     }
 }
 
-exports.createProjectHandler=async(data)=>{
+export const createProjectHandler=async(data)=>{
     try{
          console.log("come",data)
          const data1=data;

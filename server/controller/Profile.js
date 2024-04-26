@@ -73,8 +73,10 @@ exports.DeleteProfile=async(req,res)=>{
 // find by id
 exports.FindByEmail=async(req,res)=>{
     try{
+      console.log("find email k andar")
        const {Email} =req.body
-       const response=await Profile.findOne({Email:Email}).populate("SavedJobs")
+       console.log("email", Email)
+       const response=await Profile.findOne({Email:Email}).populate("SavedJobs").exec();
        return res.status(200).json({response})
     } catch(error){
       return res.status(404).json({
