@@ -3,7 +3,7 @@ import { View ,Text, TouchableOpacity} from 'react-native'
 import tw from 'twrnc'
 import {useDispatch} from "react-redux"
 import { useNavigation } from '@react-navigation/native'
-import ToastManager, { Toast } from 'toastify-react-native'
+// import ToastManager, { Toast } from 'toastify-react-native'
 
 const Footer = ({button1Text,button2Text,reducerName,data,navigate,button1Navigate}) => {
   const dispatch= useDispatch();
@@ -12,7 +12,7 @@ const Footer = ({button1Text,button2Text,reducerName,data,navigate,button1Naviga
   async function handlePress(e){
     e.preventDefault();
      if(data===''){
-      Toast.error("All Field Are Mandatory")
+      // Toast.error("All Field Are Mandatory")
       return;
      }
       dispatch(reducerName(data));
