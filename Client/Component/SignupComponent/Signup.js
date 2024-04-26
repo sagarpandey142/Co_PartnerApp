@@ -47,7 +47,6 @@ const Signup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault()
-      console.log("first",firstName ,lastName ,email ,password ,country ,agreeTerms)
           if (!firstName || !lastName || !email || !password || !country || !agreeTerms) {
                 ToastAndroid.showWithGravity(
                   'All Field Required',
