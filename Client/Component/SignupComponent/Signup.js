@@ -46,7 +46,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
     console.log("data ka baap", Full_Name, email, password, country, agreeTerms)
     e.preventDefault()
-   
+      console.log("first",firstName ,lastName ,email ,password ,country ,agreeTerms)
           if (!firstName || !lastName || !email || !password || !country || !agreeTerms) {
                 Alert.alert(
                   'All Field Required',

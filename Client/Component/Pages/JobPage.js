@@ -138,6 +138,7 @@ const JobPage = () => {
   console.log("response addsaved ka", res)
 
   }
+   
 
   const findSavedJob = async() => {
       try{
@@ -182,10 +183,12 @@ const JobPage = () => {
         <View style={[tw`flex flex-row w-11/12 mx-auto justify-between`, {}]}>
         <View style={[tw`flex flex-col items-center`, { position: 'relative' }]}>
             <AntDesign name="search1" size={24} color="black" style={tw`absolute left-5 top-2`} />
+        <TouchableOpacity >
             <TextInput
                 placeholder='Search for Projects...'
                 style={[tw`relative rounded-3xl border-[3px] p-1 pl-12 w-[16rem] border-gray-300`, { fontFamily: 'MadimiOne' }]}
             />
+        </TouchableOpacity>
         </View>
           <MaterialCommunityIcons name="heart-circle-outline" size={24} color="black" style={[tw`flex items-center text-5xl text-green-600`, {}]} />
       </View>

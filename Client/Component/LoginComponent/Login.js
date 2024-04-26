@@ -49,7 +49,6 @@ const Login = () => {
       return;
     }
     await AsyncStorage.setItem('token', response.data.token);
-    setLoading(false);
     navigate.navigate?.('HomePage');
   };
 

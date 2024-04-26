@@ -23,7 +23,6 @@ export const verifyOTP = async(email, user_Otp) => {
 
 export const login = async(email, password) => {
     try{
-
         const response = await axios.post(generateVerifyOTP.login, {email,password})
         console.log("response", response);
         return response;
