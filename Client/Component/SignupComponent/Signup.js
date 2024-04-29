@@ -44,7 +44,8 @@ const Signup = () => {
 
 
   const handleSignup = async (e) => {
-    console.log("data ka baap", Full_Name, email, password, country, agreeTerms)
+
+    console.log("data k andar", Full_Name, email, password, country, agreeTerms)
     e.preventDefault()
           if (!firstName || !lastName || !email || !password || !country || !agreeTerms) {
                 Alert.alert(
@@ -79,6 +80,7 @@ const Signup = () => {
      
      setLoading(true)
       const OtpGenrateResponse=await generateOTP(email ? email : data.Email)
+      console.log("OtpGenrateResponse", OtpGenrateResponse)
      setLoading(false)
       if(OtpGenrateResponse.data.message==="Profile found"){
         Alert.alert(

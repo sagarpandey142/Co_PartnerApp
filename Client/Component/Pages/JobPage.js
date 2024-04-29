@@ -71,7 +71,7 @@ const JobPage = () => {
   useEffect(() => {
     SavedProject();
     RecentProject();
-  }, []);
+  }, [myFeed,recent]);
 
   useEffect(()=>{
     

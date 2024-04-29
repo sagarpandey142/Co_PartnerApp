@@ -77,11 +77,12 @@ const SkillsPage = () => {
                     <Text style={[tw` mt-7 text-xl  `, { fontFamily: "MadimiOne" }]}>Popular Skill For Full Stack Developer </Text>
                     <View style={tw` flex flex-row max-w-[97%] gap-1  flex-wrap`}>
                         {
-                            SkillRequired.map((data,index) => (
-                                <SkillButton key={index} text={data.name}  setSelectedButton={setSelectedButton}  selectedButton={selectedButton}  flag="false"/>
+                            SkillRequired.filter(skill => !selectedButton.includes(skill.name)).map((data,index) => (
+                                <SkillButton key={index} text={data.name} setSelectedButton={setSelectedButton} selectedButton={selectedButton} flag="false" />
                             ))
                         }
                     </View>
+
                 </ScrollView>
                 {/*spinner*/}
                 <Spinner

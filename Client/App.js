@@ -20,6 +20,7 @@ import Index from "./Component/Pages/CreateProject/Index";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { updateToken } from './reducers/signupReducer';
 import AppLoading from 'expo-app-loading';
+import { DecodedTokenHandler } from './services/operations/generate&verifyOTP';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -30,8 +31,8 @@ export default function App() {
     async function checkUserAuth() {
       try {
         const token = await AsyncStorage.getItem('token');
-        console.log("token",token)
-        if (token) {
+        const responseEmail = await DecodedTokenHandler(token);
+        if (!responseEmail.response=="Invalid Signature") {
           setInitialRoute('HomePage');
         } else {
           setInitialRoute('Login');
@@ -53,7 +54,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={initialRoute} screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName={"Signup"} screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Signup" component={Signup}/>
           <Stack.Screen name="Verification" component={Verification}/> 
           <Stack.Screen name="GetStarted" component={GetStarted}/>

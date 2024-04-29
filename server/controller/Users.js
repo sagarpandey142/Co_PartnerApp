@@ -11,7 +11,6 @@ exports.GetOtp = async (req, res) => {
   
   try {
     const { Email } = req.body;
-    console.log("Email",Email)
     // Check if the email is provided
     if (!Email) {
       return res.status(400).json({
@@ -22,7 +21,6 @@ exports.GetOtp = async (req, res) => {
 
     // Check if the profile with the provided email exists
     const userProfile = await Profile.findOne({ Email });
-    console.log("user",userProfile)
     if (userProfile) {
       return res.status(200).json({
         success: false,
@@ -40,7 +38,6 @@ exports.GetOtp = async (req, res) => {
     });
 
     await otpDocument.save();
-      console.log("otp",otpDocument)
     // sending mail in email
     const sendingMail=await nodemailerSender(Email,"Email Verification Code",otpTemplate(generatedOtp))
     return res.status(200).json({
@@ -69,14 +66,12 @@ exports.verifyOtp = async (req, res) => {
            message: "No OTP found for the provided email.",
         });
      }
-     console.log("data", typeof( parseInt(user_Otp)),typeof(OtpModel.otp))
      if ( parseInt(user_Otp) !== OtpModel.otp) {
         return res.status(200).json({
            success: false,
            message: "OTP doesn't match.",
         });
      }
-    console.log("done")
      return res.status(200).json({
         success: true,
         matched:true,
@@ -132,7 +127,7 @@ exports.signup = async (req, res) => {
     //converting values
     const techArray = Object.values(req.body.Tech);
     // Create a new profile
-    console.log("req",req.body,hashedPassword,techArray)
+
     const profile = await Profile.create({
       name: Full_Name,
       Email: Email,
@@ -145,7 +140,6 @@ exports.signup = async (req, res) => {
       SavedJobs:[]
     });
  
-    console.log("user",profile)
     const user = await User.create({
       profileInf: profile._id,
       Project: [],
@@ -169,7 +163,6 @@ exports.signup = async (req, res) => {
 exports.login=async(req,res)=>{
   try{
     
-      console.log("hello",req.body)
       const {email,password}=req.body;
       //validation
       if(!email || !password){

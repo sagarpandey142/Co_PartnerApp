@@ -116,7 +116,7 @@ const ScopeView = () => {
               </View>
               <TouchableOpacity onPress={() => {
                 setChance(1),
-                  setProjectLength("");
+                setProjectLength("");
                 setSpanPeriod("");
               }} style={tw` border-[3px] border-gray-300 rounded-full p-2`}>
                 <FontAwesome5 name="pencil-alt" size={17} color="#15803d" />
@@ -172,9 +172,14 @@ const ScopeView = () => {
                 <View>
                   <Text style={[tw`text-lg`, { fontFamily: "MadimiOne" }]}>{spanPeriod === "7" ? "More Than 7 months" : spanPeriod === "3" ? "More Than 3 month" : "More Than 1 Month"}</Text>
                 </View>
+              <TouchableOpacity onPress={()=>{
+                setChance(2)
+                setSpanPeriod("")
+              }}>
                 <View style={tw` border-[3px] border-gray-300 rounded-full p-2  mr-5`}>
                   <FontAwesome5 name="pencil-alt" size={17} color="#15803d" />
                 </View>
+              </TouchableOpacity>
               </View>
             )
           }

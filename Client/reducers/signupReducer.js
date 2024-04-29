@@ -13,19 +13,15 @@ const signupSlice = createSlice({
     reducers: {
         updateToken: (state, action) => {
             state.token= action.payload
-            console.log("token", token);
         },
         updateSignupData: (state, action) => {
                 state.data= action.payload
-                console.log("token", token);
         },
         updateSkill: (state, action) => {
             state.skill = action.payload
-            console.log("token", token);
         },
         updateDesc : (state,action) =>{
             state.desc = action.payload
-            console.log("token", token);
         }
     }
 });

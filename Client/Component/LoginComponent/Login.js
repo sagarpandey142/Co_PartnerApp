@@ -86,7 +86,7 @@ const Login = () => {
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
             />
-            <Text style={[styles.emailSuffix, isFocused && styles.emailSuffixFocused]}>@gmail.com</Text>
+            <Text style={[styles.emailSuffix, styles.emailSuffixFocused]}>@gmail.com</Text>
           </View>
           {
             userVerified === false && (

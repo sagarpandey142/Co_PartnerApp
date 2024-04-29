@@ -22,7 +22,7 @@ const MainFooter = () => {
 
   return (
     <View style={tw`justify-end `}>
-    <View style={[tw`w-full py-2 border border-gray-300 rounded-[1rem] `,]}>
+    <View style={[tw`w-full py-1 border border-gray-300 rounded-[1rem] `,]}>
         <View style={tw`w-10/12 mx-auto flex flex-row justify-between items-center`}>
             {FooterArray.map((item, index) => (
                 <TouchableOpacity
@@ -30,7 +30,7 @@ const MainFooter = () => {
                     style={tw`flex items-center`}
                     onPress={() => handleButtonClick(item.index)}
                 >
-                    <View style={index === selectedId ? tw`h-[7px] w-8 bg-green-700 rounded-xl` : tw`hidden`} />
+                    <View style={index === selectedId ? tw`-mt-1 h-[5px] w-8 bg-green-700 rounded-xl` : tw`hidden`} />
                     {item.iconise ? (
                         <Ionicons
                             name={item.icon}

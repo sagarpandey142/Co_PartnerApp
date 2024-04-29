@@ -33,6 +33,7 @@ export const login = async(email, password) => {
 
 export const DecodedTokenHandler=async(token)=>{
     try{
+        console.log("token",token)
     const response=await axios.post(generateVerifyOTP.DecodedApi,{token});
     console.log("serive ka response in token", response)
     return response

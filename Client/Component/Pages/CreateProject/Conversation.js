@@ -36,8 +36,14 @@ const Conversation = () => {
     const allKeys = await AsyncStorage.getAllKeys();
 
     const allItems = await AsyncStorage.multiGet(allKeys);
-    const token = allItems[0][1];
-    setLoading(true);
+    let token;
+    for (const [key, value] of allItems) {
+        if (key === 'token') {
+            token = value;
+            break;
+        }
+    }
+    setLoading(true)
     const decodedEmail = await DecodedTokenHandler(token);
     const data = {
       Email: decodedEmail.data.Email,
