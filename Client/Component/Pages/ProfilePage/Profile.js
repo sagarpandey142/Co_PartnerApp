@@ -21,13 +21,9 @@ const Profile = () => {
     const findProfileByEmail = async() =>{
         try{
             const Token = await AsyncStorage.getItem('token');
-           
-            console.log("Token", Token)
+         
             const res = await DecodedTokenHandler(Token);
-            console.log("res", res);
             const email = res.data.Email;
-            console.log("email", email)
-            console.log("email", email)
             const response = await FindByEmail(email);
             console.log("response", response.data.response);
             setProfile(response.data.response);

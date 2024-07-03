@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderLeftColor: "#d1d5db",
     color: '#99A3BA',
+    borderRadius:10
   },
   emailSuffixFocused: {
     backgroundColor: '#15803d',

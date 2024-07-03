@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { NavigationContainer, CommonActions } from '@react-navigation/native'; // Import CommonActions
+import { View, Image } from 'react-native';
+import { NavigationContainer, CommonActions, useNavigation } from '@react-navigation/native'; // Import CommonActions
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
 import store from './store/configureStore';
@@ -14,25 +15,27 @@ import Upload from './Component/SignupComponent/Upload';
 import HomePage from './Component/Pages/HomePage';
 import Verification from "./Component/SignupComponent/Verification";
 import Skill from './Component/SignupComponent/Skill';
-import { ToastContainer } from 'react-native-toast-message';
 import Login from './Component/LoginComponent/Login';
 import Index from "./Component/Pages/CreateProject/Index";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { updateToken } from './reducers/signupReducer';
-import AppLoading from 'expo-app-loading';
+import image1 from "./assets/logo.jpg"
 import { DecodedTokenHandler } from './services/operations/generate&verifyOTP';
+import tw from "twrnc"
+import  Profile  from "./Component/Pages/ProfilePage/Profile"
+
+
 
 export default function App() {
   const Stack = createStackNavigator();
   const [initialRoute, setInitialRoute] = useState("Signup");
   const [isLoading, setIsLoading] = useState(true);
-
+   
   useEffect(() => {
     async function checkUserAuth() {
       try {
         const token = await AsyncStorage.getItem('token');
-        const responseEmail = await DecodedTokenHandler(token);
-        if (!responseEmail.response=="Invalid Signature") {
+       
+        if (token) {
           setInitialRoute('HomePage');
         } else {
           setInitialRoute('Login');
@@ -48,13 +51,17 @@ export default function App() {
   }, []);
 
   if (isLoading) {
-    return <AppLoading/>
+    return (
+        <View style={tw` h-[100%] w-[100%] items-center justify-center bg-white`}>
+          <Image source={image1} />
+      </View>
+    )
   }
 
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={"Signup"} screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName={initialRoute} screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Signup" component={Signup}/>
           <Stack.Screen name="Verification" component={Verification}/> 
           <Stack.Screen name="GetStarted" component={GetStarted}/>
@@ -73,6 +80,7 @@ export default function App() {
           <Stack.Screen name="JobPage" component={JobPage}/>
           <Stack.Screen name="JobDesc" component={JobDesc}/>
           <Stack.Screen name='Index' component={Index}/>
+          <Stack.Screen name='Profile' component={Profile}/>
         </Stack.Navigator> 
       </NavigationContainer>
     </Provider>

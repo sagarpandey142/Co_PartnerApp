@@ -1,10 +1,10 @@
 import axios from 'axios';
-import {profileRoute} from '../Api';
+import {Profile, profileRoute} from '../Api';
 
 exports.FindByEmail = async (email) => {
     try{
         console.log("email service k andar", email)
-        const response = await axios.post(profileRoute.FindByEmail, {Email:email});
+        const response = await axios.post(Profile.profileInfo, {Email:email});
         console.log("response", response)
         if(response){
             return response;
